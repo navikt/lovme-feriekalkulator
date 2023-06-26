@@ -4,3 +4,7 @@ Hei fra Jonas
 Hei fra Stein Olav
 
 ### Teknologier brukt
+
+- React + Typescript
+
+
