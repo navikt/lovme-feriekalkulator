@@ -1,6 +1,7 @@
 {
   "name": "lovme-feriekalkulator",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@navikt/ds-css": "^4.4.0",
