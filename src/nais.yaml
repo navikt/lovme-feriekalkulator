@@ -1,9 +1,0 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
-metadata:
-  name: lovme-feriekalkulator
-  namespace: lovme
-  labels:
-    team: lovme
-spec:
-  image: europe-north1-docker.pkg.dev/[mgmt-id]/[team-name]/[image-name]:tag
