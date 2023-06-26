@@ -1,9 +1,33 @@
-apiVersion: "nais.io/v1alpha1"
-kind: "Application"
+apiVersion: nais.io/v1alpha1
+kind: Application
 metadata:
   name: lovme-feriekalkulator
-  namespace: lovme
+  namespace: medlemskap
   labels:
-    team: lovme
+    team: medlemskap
 spec:
-  image: europe-north1-docker.pkg.dev/[mgmt-id]/[team-name]/[image-name]:tag
+  image: {{ image }}
+  port: 3000
+  liveness:
+    path: /isalive
+    port: 3000
+    initialDelay: 20
+    timeout: 60
+  readiness:
+    path: /isready
+    port: 3000
+    initialDelay: 20
+    timeout: 60
+  resources:
+    limits:
+      cpu: 200m
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi
+  replicas:
+    min: 1
+    max: 1
+    cpuThresholdPercentage: 80
+  ingresses:
+    - https://lovme-feriekalkulator.ekstern.dev.nav.no

@@ -1,0 +1,34 @@
+name: Deploy frontend
+
+on:
+  push: [main]
+
+jobs:
+  build:
+    name: Build and deploy to NAIS
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      - name: Yarn install
+        run: yarn install
+      - name: Yarn build
+        run: yarn build
+      - uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          team: medlemskap
+          dockerfile: Dockerfile
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: nais.yaml
+          VAR: image=${{ steps.docker-push.outputs.image }}
