@@ -4,8 +4,10 @@
   "type": "module",
   "private": true,
   "dependencies": {
+    "@navikt/aksel-icons": "^4.4.1",
     "@navikt/ds-css": "^4.4.0",
     "@navikt/ds-react": "^4.4.0",
+    "@navikt/ds-tokens": "^4.4.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
