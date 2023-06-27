@@ -66,18 +66,11 @@ Visjon:
 3. Steg 3
 4. Forventet output 
 ```javascript 
-Skriv inn inntekten i 2021:
-500000
-Skriv inn inntekten i 2020:
-450000
-Skriv inn inntekten i 2019:
-400000
-Gratulerer! Du har rett til dagpenger.
-Dette er dagsatsen din: 1924.0 K
+Her kommer det eksempel på noe output
 ```
 
 ## Languages and Tools
-[![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)](https://aws.amazon.com/corretto/?filtered-posts.sort-by=item.additionalFields.createdDate&filtered-posts.sort-order=desc)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 
 
 
