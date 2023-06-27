@@ -6,9 +6,9 @@ const DateChooser = () => {
 
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [diffDays, setDiffDays] = useState(0);
+  //const [diffDays, setDiffDays] = useState(0);
  // Trenger kansje ikke denne
-  const [newDate, setNewDate] = useState(new Date());
+  //const [newDate, setNewDate] = useState(new Date());
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -32,12 +32,13 @@ const DateChooser = () => {
     return lastOfDecember;
   }
 
+  /*
   const dateDifference = () => {
     var diff = Math.abs(fromDate.getTime() - toDate.getTime());
     var diffDays = Math.ceil(diff/ (1000*3600*24));
     console.log("Difference in days", diffDays);
     return diffDays;
-  } 
+  } */
 
 
   const { datepickerProps, toInputProps, fromInputProps, selectedRange } =
@@ -45,7 +46,7 @@ const DateChooser = () => {
       fromDate: fromDate,
       toDate: toDate, 
       onRangeChange: () => {
-        setDiffDays(dateDifference)
+        //setDiffDays(dateDifference)
       }, 
       
     });
