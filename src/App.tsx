@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Dato from './components/Dato';
+import DateChooser from './components/DateChooser';
 import "@navikt/ds-css";
 import Land from './components/Land';
 
@@ -15,8 +15,8 @@ function App() {
         <Land></Land>
       </div>
       
-      <div className="kalkulator">
-        <Dato></Dato>
+      <div className="datovelger">
+        <DateChooser></DateChooser>
       </div>
     </div>
   );
