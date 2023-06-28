@@ -30,4 +30,4 @@ spec:
     max: 1
     cpuThresholdPercentage: 80
   ingresses:
-    - https://lovme-feriekalkulator.ekstern.dev.nav.no
+    - https://lovme-feriekalkulator.intern.dev.nav.no
