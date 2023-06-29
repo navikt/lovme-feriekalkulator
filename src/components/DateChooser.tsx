@@ -64,13 +64,7 @@ const DateChooser = () => {
           <DatePicker.Input {...toInputProps} label="Til"/>
         </div>
       </DatePicker>
-      {selectedRange && (
-        <div className="pt-4">
-          <div>{selectedRange?.from && selectedRange.from.toDateString()}</div>
-          <div>{selectedRange?.to && selectedRange.to.toDateString()}</div>
-          <div></div>
-        </div>
-      )}
+      <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
     </div>
   );
 }
