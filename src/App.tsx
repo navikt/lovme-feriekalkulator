@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import DateChooser from './components/DateChooser';
 import "@navikt/ds-css";
-import Land from './components/Land';
 
 
 function App() {
