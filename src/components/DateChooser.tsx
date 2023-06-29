@@ -7,15 +7,13 @@ const DateChooser = () => {
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   // TODO: Display disse til bruker
-  const [diffDays, setDiffDays] = useState<Number>(0);
+  const [differenceInDays, setDifferenceInDays] = useState<Number>(0);
 
   const fiveYearsAgo = () => {
     const today = new Date();
     const fiveYearsAgo = subYears(today, 5);
   
     const firstOfJanuary = startOfYear(fiveYearsAgo);
-
-    console.log("FraDato :", firstOfJanuary);
 
     return firstOfJanuary;
   }
@@ -25,9 +23,6 @@ const DateChooser = () => {
     const twoForward = addYears(today, 2);
 
     const lastOfDecember = endOfYear(twoForward);
-    const formattedLastOfDecember = format(lastOfDecember, 'yyyy-MM-dd');
-    console.log(formattedLastOfDecember);
-
     return lastOfDecember;
   }
 
@@ -36,6 +31,7 @@ const DateChooser = () => {
     var diff = Math.abs(from.getTime() - to.getTime());
     var diffDays = Math.ceil(diff/ (1000*3600*24));
     console.log("Difference in days", diffDays);
+    setDifferenceInDays(diffDays);
     return diffDays;
   } 
 
@@ -45,17 +41,11 @@ const DateChooser = () => {
       fromDate: fromDate,
       toDate: toDate, 
       onRangeChange: (selectedRange) => {
-        /*
-        if (selectedRange?.from !== undefined) {
-          setFromDate(selectedRange?.from);
-        }
-        if (selectedRange?.to !== undefined) {
-          setToDate(selectedRange?.to);
-        }
-        */
+   
         if (selectedRange?.from !== undefined && selectedRange?.to !== undefined) {
-          setDiffDays(daysBetweenDates(selectedRange.from, selectedRange.to));
-          console.log(diffDays);
+          daysBetweenDates(selectedRange.from, selectedRange.to);
+          console.log(differenceInDays);
+          console.log(fromDate, toDate)
         }
       }, 
     });
