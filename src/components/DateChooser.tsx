@@ -36,7 +36,7 @@ const DateChooser = () => {
   } 
 
 
-  const { datepickerProps, toInputProps, fromInputProps, selectedRange } =
+  const { datepickerProps, toInputProps, fromInputProps} =
     useRangeDatepicker({
       fromDate: fromDate,
       toDate: toDate, 
