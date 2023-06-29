@@ -1,0 +1,5 @@
+interface Reise {
+
+}
+
+export {}

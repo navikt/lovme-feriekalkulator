@@ -1,4 +1,4 @@
-import { DatePicker, useRangeDatepicker,  } from "@navikt/ds-react";
+import { RadioGroup, DatePicker, Radio, useRangeDatepicker,  } from "@navikt/ds-react";
 import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
 import { useEffect, useState } from "react";
 
@@ -65,6 +65,13 @@ const DateChooser = () => {
         </div>
       </DatePicker>
       <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
+
+      <RadioGroup legend="Utenfor EØS?">
+        <Radio value="Ja">Ja</Radio>
+        <Radio value="Nei">Nei</Radio>
+      </RadioGroup>
+
+      
     </div>
   );
 }
