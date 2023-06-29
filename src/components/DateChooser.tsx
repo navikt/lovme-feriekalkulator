@@ -1,5 +1,5 @@
 import { DatePicker, useRangeDatepicker,  } from "@navikt/ds-react";
-import { format, subYears, startOfYear, addYears, endOfYear } from 'date-fns';
+import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
 import { useEffect, useState } from "react";
 
 const DateChooser = () => {
