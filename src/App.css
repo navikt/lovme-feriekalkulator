@@ -1,0 +1,22 @@
+body, html {
+    background-color: var(--a-gray-100);
+    margin: 0;
+    padding: 0;
+}
+.dropdown {
+    justify-content: left;
+}
+.datepicker {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+
+}
+.App {
+    background-color: var(-a--white) ;
+    display: flex;
+    width: 520px;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 30px;
+}

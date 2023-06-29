@@ -9,13 +9,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        
       </header>
 
-      <div className="kalkulator">
-        <Land></Land>
-      </div>
-      
-      <div className="datovelger">
+      <div className="dateChooser">
         <DateChooser></DateChooser>
       </div>
     </div>

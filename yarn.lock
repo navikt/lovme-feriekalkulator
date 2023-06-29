@@ -1681,6 +1681,11 @@
     react-day-picker "8.3.4"
     react-modal "3.15.1"
 
+"@navikt/ds-tailwind@^4.4.2":
+  version "4.4.2"
+  resolved "https://registry.yarnpkg.com/@navikt/ds-tailwind/-/ds-tailwind-4.4.2.tgz#9ff9ce2058d21d0d45cc8ec2379363f3bddd10d8"
+  integrity sha512-7QkLilQiZxwTU4afQg6OsYtKH3zwI2jiY37M9hn46MTASXA03ZouZUQFXV7Z/P1FnIzSORhvwnFke2sExzxNbg==
+
 "@navikt/ds-tokens@^4.4.1":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@navikt/ds-tokens/-/ds-tokens-4.4.1.tgz#da94f84bf4f99fd863074b44b94fd3add04fd405"

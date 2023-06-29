@@ -1,6 +1,8 @@
-import { RadioGroup, DatePicker, Radio, useRangeDatepicker,  } from "@navikt/ds-react";
+import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading,  } from "@navikt/ds-react";
 import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
 import { useEffect, useState } from "react";
+import "./DateChooser.css"
+import Land from "./Land";
 
 const DateChooser = () => {
 
@@ -57,9 +59,15 @@ const DateChooser = () => {
  
 
   return (
-    <div className="min-h-96">
+    <div className="card">
+      <Heading level="1" size="xlarge">
+      Feriekalkulator
+    </Heading>
+      <div>
+        <Land></Land>
+      </div>
       <DatePicker {...datepickerProps} dropdownCaption >
-        <div className="flex flex-wrap justify-center gap-4">
+        <div className="datepicker">
           <DatePicker.Input {...fromInputProps} label="Fra"/>
           <DatePicker.Input {...toInputProps} label="Til"/>
         </div>
@@ -70,6 +78,15 @@ const DateChooser = () => {
         <Radio value="Ja">Ja</Radio>
         <Radio value="Nei">Nei</Radio>
       </RadioGroup>
+
+      <Select className="dropdown" label="Formål med reisen?">
+        <option value="Velg formål">Velg formål</option>
+        <option value="ferie">Ferie</option>
+        <option value="jobb">Jobb</option>
+        <option value="annet">Annet</option>
+      </Select>
+
+      <Button variant="primary">Legg til</Button>
 
 
     </div>

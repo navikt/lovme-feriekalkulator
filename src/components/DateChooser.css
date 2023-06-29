@@ -1,0 +1,9 @@
+.card {
+    background-color: var(--a-white) ;
+    display: flex;
+    padding: 80px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 20px;
+    align-self: stretch;
+}
