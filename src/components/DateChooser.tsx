@@ -74,7 +74,7 @@ const DateChooser = () => {
       </DatePicker>
       <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
 
-      <RadioGroup legend="Utenfor EØS?">
+      <RadioGroup legend="Innenfor EØS?">
         <Radio value="Ja">Ja</Radio>
         <Radio value="Nei">Nei</Radio>
       </RadioGroup>
