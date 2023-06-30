@@ -1,5 +1,4 @@
-interface Reise {
+export interface Reise {
 
 }
 
-export {}
