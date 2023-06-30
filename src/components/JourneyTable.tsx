@@ -1,6 +1,6 @@
 import { Table } from "@navikt/ds-react";
 import { format } from "date-fns";
-import { useState, SetStateAction } from "react";
+import { useState } from "react";
 
 interface Journey {
   name: string;
