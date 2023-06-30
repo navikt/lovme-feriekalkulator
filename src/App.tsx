@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import DateChooser from './components/DateChooser';
 import "@navikt/ds-css";
+import JourneyTable from './components/JourneyTable';
+import JourneyTableJava from './components/JourneyTableJava';
 
 
 function App() {
@@ -13,6 +15,14 @@ function App() {
 
       <div className="dateChooser">
         <DateChooser></DateChooser>
+      </div>
+
+      <div>
+        <JourneyTable></JourneyTable>
+      </div>
+
+      <div>
+        <JourneyTableJava></JourneyTableJava>
       </div>
     </div>
   );
