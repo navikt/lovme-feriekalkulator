@@ -8,13 +8,14 @@ interface Journey {
   start: string;
 }
 
+
 type SortState = {
   orderBy: keyof Journey;
   direction: "ascending" | "descending";
 };
 
 const JourneyTable: React.FC = () => {
-  const [sort, setSort] = useState<SortState | undefined>(undefined);
+  const [sort, setSort] = useState<SortState>(); 
 
   const handleSort = (sortKey: keyof Journey) => {
     setSort((sort) => {
@@ -29,20 +30,19 @@ const JourneyTable: React.FC = () => {
         return {
           orderBy: sortKey,
           direction: "descending",
-        };
       }
-
-      return {
-        orderBy: sortKey,
-        direction: "ascending",
       };
+      return undefined;
     });
   };
 
   let sortData: Journey[] = data;
 
   sortData = sortData.slice().sort((a, b) => {
-    if (sort) {
+    if(sort === undefined){
+        return 1;
+    }
+    else if (sort) {
       const comparator = (a: Journey, b: Journey, orderBy: keyof Journey) => {
         if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
           return -1;
