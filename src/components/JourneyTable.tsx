@@ -1,23 +1,20 @@
 import { Table } from "@navikt/ds-react";
 import { format } from "date-fns";
 import { useState } from "react";
+import { Reise } from "../models/Reise";
 
-interface Journey {
-  name: string;
-  fnr: string;
-  start: string;
-}
+
 
 
 type SortState = {
-  orderBy: keyof Journey;
+  orderBy: keyof Reise;
   direction: "ascending" | "descending";
 };
 
 const JourneyTable: React.FC = () => {
   const [sort, setSort] = useState<SortState>(); 
 
-  const handleSort = (sortKey: keyof Journey) => {
+  const handleSort = (sortKey: keyof Reise) => {
     setSort((sort) => {
       if (!sort) {
         return {
@@ -36,14 +33,14 @@ const JourneyTable: React.FC = () => {
     });
   };
 
-  let sortData: Journey[] = data;
+  let sortData: Reise[] = data;
 
   sortData = sortData.slice().sort((a, b) => {
     if(sort === undefined){
         return 1;
     }
     else if (sort) {
-      const comparator = (a: Journey, b: Journey, orderBy: keyof Journey) => {
+      const comparator = (a: Reise, b: Reise, orderBy: keyof Reise) => {
         if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
           return -1;
         }
@@ -64,27 +61,45 @@ const JourneyTable: React.FC = () => {
     <>
       <Table
         sort={sort}
-        onSortChange={(sortKey) => handleSort(sortKey as keyof Journey)}
+        onSortChange={(sortKey) => handleSort(sortKey as keyof Reise)}
       >
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeader sortKey="name" sortable>
-              Navn
+            <Table.ColumnHeader sortKey="land" sortable>
+              Land
             </Table.ColumnHeader>
-            <Table.HeaderCell scope="col">Fødseslnr.</Table.HeaderCell>
-            <Table.ColumnHeader sortKey="start" sortable>
-              Start
+            <Table.ColumnHeader sortKey="fraDato" sortable>
+              Fra (Dato)
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="tilDato" sortable>
+              Til (Dato)
+            </Table.ColumnHeader>
+            <Table.ColumnHeader sortKey="varighet" sortable>
+              Varighet
+            </Table.ColumnHeader>
+            <Table.HeaderCell scope="col">EØS</Table.HeaderCell>
+            <Table.ColumnHeader sortKey="formål" sortable>
+              Formål
             </Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {sortData.map(({ name, fnr, start }, i) => {
+          {sortData.map(({ land, fraDato, tilDato, varighet, EØS, formål }, i) => {
             return (
-              <Table.Row key={i + fnr}>
-                <Table.HeaderCell scope="row">{name}</Table.HeaderCell>
-                <Table.DataCell>{fnr}</Table.DataCell>
+              <Table.Row key={i}>
+                <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
+                <Table.DataCell>{fraDato.toDateString()}</Table.DataCell>
                 <Table.DataCell>
-                  {format(new Date(start), "dd.MM.yyyy")}
+                  {format(new Date(tilDato), "dd.MM.yyyy")}
+                </Table.DataCell>
+                <Table.DataCell>
+                  {varighet}
+                </Table.DataCell>
+                <Table.DataCell>
+                  {EØS.valueOf()}
+                </Table.DataCell>
+                <Table.DataCell>
+                  {formål}
                 </Table.DataCell>
               </Table.Row>
             );
@@ -95,22 +110,23 @@ const JourneyTable: React.FC = () => {
   );
 };
 
-const data: Journey[] = [
+const data: Reise[] = [
   {
-    name: "Jakobsen, Markus",
-    fnr: "22106248460",
-    start: "2016-08-18T09:41:26.131Z",
+    land: "Spania",
+    fraDato: new Date(),
+    tilDato: new Date(),
+    varighet: 29,
+    EØS: true,
+    formål: "Ferie"
   },
   {
-    name: "Andersen, Ingrid",
-    fnr: "11037638557",
-    start: "2018-08-01T10:26:12.176Z",
-  },
-  {
-    name: "Evensen, Jonas",
-    fnr: "18106248460",
-    start: "2010-07-17T11:13:26.116Z",
-  },
+    land: "Thailand",
+    fraDato: new Date(),
+    tilDato: new Date(),
+    varighet: 60,
+    EØS: false,
+    formål: "Ferie"
+  }
 ];
 
 export default JourneyTable;
