@@ -9,8 +9,9 @@ const DateChooser = () => {
 
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  // TODO: Display disse til bruker
   const [differenceInDays, setDifferenceInDays] = useState<number>(0);
+  const [tableData, setTableData] = useState<Reise []>([]);
+  
   
 
   const fiveYearsAgo = () => {
@@ -59,19 +60,26 @@ const DateChooser = () => {
     setToDate(twoYearsForward)
    }, [])  
 
-   const handleSubmit = async (event: React.FormEvent) => {
+   // land, fraDato, tilDato, varighet, EØS, formål
+   function handleSubmit(event: any) {
+
     event.preventDefault();
-    //adde input til liste
-    console.log("hei")
-    const nyReise: Reise = {
-      land: "Japan",
-      fraDato: new Date(),
-      tilDato: new Date(),
-      varighet: 40,
-      EØS: false,
-      formål: "Jobb"
+
+    const target = event.target;
+
+    let nyReise: Reise = {
+      land: target.land.value,
+      fraDato: target.fraDato.value,
+      tilDato: target.tilDato.value,
+      varighet: differenceInDays,
+      EØS: target.EØS.value,
+      formål: target.formål.value
     }
-    
+      const copy: Reise[] = [...tableData];
+      copy.push(nyReise);
+      setTableData(copy);
+      console.log(nyReise);
+      console.log(tableData);
     }
 
   return (
@@ -81,22 +89,28 @@ const DateChooser = () => {
     </Heading>
     <form onSubmit={handleSubmit}>
       <div>
-        <Land></Land>
+        {/*<Land></Land>*/}
+        <Select className="dropdown" id="land" label="Hvilket land har du oppholdt deg i?">
+        <option value="">Velg land</option>
+        <option value="norge">Norge</option>
+        <option value="sverige">Sverige</option>
+        <option value="danmark">Danmark</option>
+    </Select>
       </div>
       <DatePicker {...datepickerProps} dropdownCaption >
         <div className="datepicker">
-          <DatePicker.Input {...fromInputProps} label="Fra"/>
-          <DatePicker.Input {...toInputProps} label="Til"/>
+          <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra"/>
+          <DatePicker.Input id="tilDato" {...toInputProps} label="Til"/>
         </div>
       </DatePicker>
       <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
 
-      <RadioGroup legend="Innenfor EØS?">
+      <RadioGroup legend="Innenfor EØS?" id="EØS">
         <Radio value="Ja">Ja</Radio>
         <Radio value="Nei">Nei</Radio>
       </RadioGroup>
 
-      <Select className="dropdown" label="Formål med reisen?">
+      <Select className="dropdown" id="formål" label="Formål med reisen?">
         <option value="Velg formål">Velg formål</option>
         <option value="ferie">Ferie</option>
         <option value="jobb">Jobb</option>
