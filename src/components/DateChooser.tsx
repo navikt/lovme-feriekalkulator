@@ -1,15 +1,17 @@
-import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading,  } from "@navikt/ds-react";
+import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading, Dropdown,  } from "@navikt/ds-react";
 import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./DateChooser.css"
 import Land from "./Land";
+import { Reise } from "../models/Reise";
 
 const DateChooser = () => {
 
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   // TODO: Display disse til bruker
-  const [differenceInDays, setDifferenceInDays] = useState<Number>(0);
+  const [differenceInDays, setDifferenceInDays] = useState<number>(0);
+  
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -56,13 +58,28 @@ const DateChooser = () => {
     setFromDate(fiveYearsAgo)
     setToDate(twoYearsForward)
    }, [])  
- 
+
+   const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    //adde input til liste
+    console.log("hei")
+    const nyReise: Reise = {
+      land: "Japan",
+      fraDato: new Date(),
+      tilDato: new Date(),
+      varighet: 40,
+      EØS: false,
+      formål: "Jobb"
+    }
+    
+    }
 
   return (
     <div className="card">
       <Heading level="1" size="xlarge">
       Feriekalkulator
     </Heading>
+    <form onSubmit={handleSubmit}>
       <div>
         <Land></Land>
       </div>
@@ -86,8 +103,8 @@ const DateChooser = () => {
         <option value="annet">Annet</option>
       </Select>
 
-      <Button variant="primary">Legg til</Button>
-
+      <Button variant="primary" type="submit" >Legg til</Button>
+      </form>
 
     </div>
   );

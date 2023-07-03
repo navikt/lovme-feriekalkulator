@@ -96,7 +96,9 @@ const JourneyTable: React.FC = () => {
                   {varighet}
                 </Table.DataCell>
                 <Table.DataCell>
-                  {EØS.valueOf()}
+                  {EØS? "Ja"
+                  :"Nei"  
+                }
                 </Table.DataCell>
                 <Table.DataCell>
                   {formål}
