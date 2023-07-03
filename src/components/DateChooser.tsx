@@ -1,8 +1,7 @@
-import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading, Dropdown,  } from "@navikt/ds-react";
+import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading} from "@navikt/ds-react";
 import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./DateChooser.css"
-import Land from "./Land";
 import { Reise } from "../models/Reise";
 
 const DateChooser = () => {
