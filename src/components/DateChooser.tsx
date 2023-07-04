@@ -3,6 +3,7 @@ import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
 import { useEffect, useState } from "react";
 import "./DateChooser.css"
 import { Reise } from "../models/Reise";
+import Land from "./Land";
 
 const DateChooser = () => {
 
@@ -88,13 +89,8 @@ const DateChooser = () => {
     </Heading>
     <form onSubmit={handleSubmit}>
       <div>
-        {/*<Land></Land>*/}
-        <Select className="dropdown" id="land" label="Hvilket land har du oppholdt deg i?">
-        <option value="">Velg land</option>
-        <option value="norge">Norge</option>
-        <option value="sverige">Sverige</option>
-        <option value="danmark">Danmark</option>
-    </Select>
+        <Land></Land>
+      
       </div>
       <DatePicker {...datepickerProps} dropdownCaption >
         <div className="datepicker">
