@@ -7,10 +7,16 @@ import Land from "./Land";
 
 const DateChooser = ({ data, setTableData } : { data: Array<Reise>, setTableData: Dispatch<SetStateAction<Array<Reise>>>}) => {
   
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [initialStartDate, setInitialStartDate] = useState(new Date());
+  const [initialEndDate, setInitialEndDate] = useState(new Date());
   const [differenceInDays, setDifferenceInDays] = useState<number>(0);
+  const [land, setLand] = useState("");
+  const [fromDate, setFromDate] = useState(new Date());
+  const [toDate, setToDate] = useState(new Date())
+  const [EØS, setEØS] = useState([]);
+  const [formål, setFormål] = useState("");
   
+
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -41,21 +47,21 @@ const DateChooser = ({ data, setTableData } : { data: Array<Reise>, setTableData
 
   const { datepickerProps, toInputProps, fromInputProps } =
     useRangeDatepicker({
-      fromDate: fromDate,
-      toDate: toDate, 
+      fromDate: initialStartDate,
+      toDate: initialEndDate, 
       onRangeChange: (selectedRange) => {
    
         if (selectedRange?.from !== undefined && selectedRange?.to !== undefined) {
           daysBetweenDates(selectedRange.from, selectedRange.to);
           console.log(differenceInDays);
-          console.log(fromDate, toDate)
+          console.log(initialStartDate, initialEndDate)
         }
       }, 
     });
     
    useEffect(() => {
-    setFromDate(fiveYearsAgo)
-    setToDate(twoYearsForward)
+    setInitialStartDate(fiveYearsAgo)
+    setInitialEndDate(twoYearsForward)
    }, [])  
 
    // land, fraDato, tilDato, varighet, EØS, formål
@@ -63,21 +69,56 @@ const DateChooser = ({ data, setTableData } : { data: Array<Reise>, setTableData
 
     event.preventDefault();
 
-    const target = event.target;
-
     let nyReise: Reise = {
-      land: target.land.value,
-      fraDato: target.fraDato.value,
-      tilDato: target.tilDato.value,
+      land: land,
+      fraDato: fromDate,
+      tilDato: toDate,
       varighet: differenceInDays,
-      EØS: target.EØS.value,
-      formål: target.formål.value
+      EØS: EØS[0],
+      formål: formål
     }
       const copy = [...data];
       copy.push(nyReise);
       setTableData(copy);
-      console.log(setTableData);
+
+      resetInputFields();
+
     }
+
+    const resetInputFields = () => {
+      setLand("");
+      setFromDate(new Date());
+      setToDate(new Date());
+      setDifferenceInDays(0);
+      setEØS([]);
+      setFormål("");
+    }
+
+    const handleFromDateChange = (event: any🦟) => {
+      event.preventDefault();
+      const target = event.target;
+      setFromDate(target.value);
+    }
+
+    const handleToDateChange = (event: any) => {
+      event.preventDefault();
+      const target = event.target;
+      setToDate(target.value);
+    }
+
+    const handleEøsChange = (event: any) => {
+      event.preventDefault();
+      const target = event.target;
+      setEØS(target.value);
+    }
+
+    const handleFormålChange = (event: any) => {
+      event.preventDefault();
+      const target = event.target;
+      setFormål(target.value);
+    }
+
+    
 
   return (
     <div className="card">
@@ -86,23 +127,22 @@ const DateChooser = ({ data, setTableData } : { data: Array<Reise>, setTableData
     </Heading>
     <form onSubmit={handleSubmit}>
       <div>
-        <Land/>
+        <Land setLand={setLand}/>
       </div>
       <DatePicker {...datepickerProps} dropdownCaption >
         <div className="datepicker">
-          <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra"/>
-          <DatePicker.Input id="tilDato" {...toInputProps} label="Til"/>
+          <DatePicker.Input id="fraDato" onChange={handleFromDateChange} {...fromInputProps} label="Fra"/>
+          <DatePicker.Input id="tilDato" onChange={handleToDateChange} {...toInputProps} label="Til"/>
         </div>
       </DatePicker>
       <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
 
-      <RadioGroup legend="Innenfor EØS?" id="EØS">
+      <RadioGroup legend="Innenfor EØS?" id="EØS" onChange={handleEøsChange}>
         <Radio value="Ja">Ja</Radio>
         <Radio value="Nei">Nei</Radio>
       </RadioGroup>
 
-      <Select className="dropdown" id="formål" label="Formål med reisen?">
-        <option value="Velg formål">Velg formål</option>
+      <Select className="dropdown" id="formål" label="Formål med reisen?" onChange={handleFormålChange}>
         <option value="Ferie">Ferie</option>
         <option value="Jobb">Jobb</option>
         <option value="Annet">Annet</option>

@@ -1,8 +1,15 @@
-import { Select } from "@navikt/ds-react";
+import { Dropdown, Select } from "@navikt/ds-react";
+import { Dispatch, SetStateAction } from "react";
 
-const Land = () => {
+const Land = ({setLand} : {setLand: Dispatch<SetStateAction<string>>}) => {
+  const handleChange = (event: any) => {
+    event.preventDefault();
+    
+    setLand(event.target.value);
+  }
+  
   return (
-    <Select className="dropdown" id="land" label="Hvilket land har du oppholdt deg i?">
+    <Select onChange={handleChange} className="dropdown" id="land" label="Hvilket land har du oppholdt deg i?">
       <option value="">Velg land</option>
       <option value="Norge">Norge</option>
       <option value="Sverige">Sverige</option>
