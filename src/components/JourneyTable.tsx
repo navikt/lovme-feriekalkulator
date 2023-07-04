@@ -11,7 +11,7 @@ type SortState = {
   direction: "ascending" | "descending";
 };
 
-const JourneyTable: React.FC = () => {
+const JourneyTable = ({data} : {data: Reise[]}) => {
   const [sort, setSort] = useState<SortState>(); 
 
   const handleSort = (sortKey: keyof Reise) => {
@@ -88,7 +88,9 @@ const JourneyTable: React.FC = () => {
             return (
               <Table.Row key={i}>
                 <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
-                <Table.DataCell>{fraDato.toDateString()}</Table.DataCell>
+                <Table.DataCell>
+                  {format(new Date(fraDato), "dd.MM.yyyy")}
+                </Table.DataCell>
                 <Table.DataCell>
                   {format(new Date(tilDato), "dd.MM.yyyy")}
                 </Table.DataCell>
@@ -96,8 +98,8 @@ const JourneyTable: React.FC = () => {
                   {varighet}
                 </Table.DataCell>
                 <Table.DataCell>
-                  {EØS? "Ja"
-                  :"Nei"  
+                  {EØS? "Nei"
+                  :"Ja"  
                 }
                 </Table.DataCell>
                 <Table.DataCell>
@@ -112,6 +114,7 @@ const JourneyTable: React.FC = () => {
   );
 };
 
+/*
 const data: Reise[] = [
   {
     land: "Spania",
@@ -130,5 +133,6 @@ const data: Reise[] = [
     formål: "Ferie"
   }
 ];
+*/
 
 export default JourneyTable;

@@ -1,17 +1,15 @@
 import { RadioGroup, DatePicker, Radio, useRangeDatepicker, Select, Button, Heading} from "@navikt/ds-react";
 import { subYears, startOfYear, addYears, endOfYear } from 'date-fns';
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./DateChooser.css"
 import { Reise } from "../models/Reise";
 import Land from "./Land";
 
-const DateChooser = () => {
-
+const DateChooser = ({ data, setTableData } : { data: Array<Reise>, setTableData: Dispatch<SetStateAction<Array<Reise>>>}) => {
+  
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [differenceInDays, setDifferenceInDays] = useState<number>(0);
-  const [tableData, setTableData] = useState<Reise []>([]);
-  
   
 
   const fiveYearsAgo = () => {
@@ -75,11 +73,10 @@ const DateChooser = () => {
       EØS: target.EØS.value,
       formål: target.formål.value
     }
-      const copy: Reise[] = [...tableData];
+      const copy = [...data];
       copy.push(nyReise);
       setTableData(copy);
-      console.log(nyReise);
-      console.log(tableData);
+      console.log(setTableData);
     }
 
   return (
@@ -89,8 +86,7 @@ const DateChooser = () => {
     </Heading>
     <form onSubmit={handleSubmit}>
       <div>
-        <Land></Land>
-      
+        <Land/>
       </div>
       <DatePicker {...datepickerProps} dropdownCaption >
         <div className="datepicker">
@@ -107,9 +103,9 @@ const DateChooser = () => {
 
       <Select className="dropdown" id="formål" label="Formål med reisen?">
         <option value="Velg formål">Velg formål</option>
-        <option value="ferie">Ferie</option>
-        <option value="jobb">Jobb</option>
-        <option value="annet">Annet</option>
+        <option value="Ferie">Ferie</option>
+        <option value="Jobb">Jobb</option>
+        <option value="Annet">Annet</option>
       </Select>
 
       <Button variant="primary" type="submit" >Legg til</Button>
