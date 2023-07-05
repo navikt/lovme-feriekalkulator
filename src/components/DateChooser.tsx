@@ -24,8 +24,8 @@ const DateChooser = ({
   const [initialEndDate, setInitialEndDate] = useState(new Date());
   const [differenceInDays, setDifferenceInDays] = useState<number>(0);
   const [land, setLand] = useState("");
-  const [fromDate, setFromDate] = useState<Date | undefined>(new Date());
-  const [toDate, setToDate] = useState<Date | undefined>(new Date());
+  const [fromDate, setFromDate] = useState<Date | undefined>();
+  const [toDate, setToDate] = useState<Date | undefined>();
   const [EØS, setEØS] = useState(Boolean);
   const [formål, setFormål] = useState("Ferie");
 
@@ -54,21 +54,22 @@ const DateChooser = ({
     return diffDays;
   };
 
-  const { datepickerProps, toInputProps, fromInputProps } = useRangeDatepicker({
-    fromDate: initialStartDate,
-    toDate: initialEndDate,
-    onRangeChange: (selectedRange) => {
-      console.log("here");
-      if (
-        selectedRange?.from !== undefined &&
-        selectedRange?.to !== undefined
-      ) {
-        daysBetweenDates(selectedRange.from, selectedRange.to);
-        setToDate(selectedRange.to);
-        setFromDate(selectedRange.from);
-      }
-    },
-  });
+  const { datepickerProps, toInputProps, fromInputProps, reset } =
+    useRangeDatepicker({
+      fromDate: initialStartDate,
+      toDate: initialEndDate,
+      onRangeChange: (selectedRange) => {
+        console.log("here");
+        if (
+          selectedRange?.from !== undefined &&
+          selectedRange?.to !== undefined
+        ) {
+          daysBetweenDates(selectedRange.from, selectedRange.to);
+          setToDate(selectedRange.to);
+          setFromDate(selectedRange.from);
+        }
+      },
+    });
 
   useEffect(() => {
     setInitialStartDate(fiveYearsAgo);
@@ -81,8 +82,8 @@ const DateChooser = ({
 
     let nyReise: Reise = {
       land: land,
-      fraDato: fromDate ?? new Date(0),
-      tilDato: toDate ?? new Date(0),
+      fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
+      tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       varighet: differenceInDays,
       EØS: EØS,
       formål: formål,
@@ -96,8 +97,9 @@ const DateChooser = ({
 
   const resetInputFields = () => {
     setLand("");
-    setFromDate(new Date(0));
-    setToDate(new Date(0));
+    reset();
+    setFromDate(undefined);
+    setToDate(undefined);
     setDifferenceInDays(0);
     setEØS(Boolean);
     setFormål("Ferie");
@@ -121,17 +123,7 @@ const DateChooser = ({
         <div>
           <Land land={land} setLand={setLand} />
         </div>
-        <DatePicker
-          {...datepickerProps}
-          mode="range"
-          onSelect={(dateRange) => {
-            setFromDate(dateRange?.from);
-            setToDate(dateRange?.to);
-          }}
-          defaultSelected={{ from: fromDate, to: toDate }}
-          selected={{ to: toDate, from: fromDate }}
-          dropdownCaption
-        >
+        <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
             <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra" />
             <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
