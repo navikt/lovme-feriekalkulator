@@ -117,7 +117,7 @@ const DateChooser = ({
       </Heading>
       <form onSubmit={handleSubmit}>
         <div>
-          <Land land={land} setLand={setLand} />
+          <Land valgtLand={land} setLand={setLand} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
