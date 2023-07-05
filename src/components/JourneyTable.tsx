@@ -104,25 +104,4 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
   );
 };
 
-/*
-const data: Reise[] = [
-  {
-    land: "Spania",
-    fraDato: new Date(),
-    tilDato: new Date(),
-    varighet: 29,
-    EØS: true,
-    formål: "Ferie"
-  },
-  {
-    land: "Thailand",
-    fraDato: new Date(),
-    tilDato: new Date(),
-    varighet: 60,
-    EØS: false,
-    formål: "Ferie"
-  }
-];
-*/
-
 export default JourneyTable;

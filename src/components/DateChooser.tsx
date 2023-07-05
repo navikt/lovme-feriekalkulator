@@ -63,8 +63,8 @@ const DateChooser = ({
         selectedRange?.to !== undefined
       ) {
         daysBetweenDates(selectedRange.from, selectedRange.to);
-        console.log(differenceInDays);
-        console.log(initialStartDate, initialEndDate);
+        setToDate(selectedRange.to);
+        setFromDate(selectedRange.from);
       }
     },
   });
@@ -102,14 +102,6 @@ const DateChooser = ({
     setFormål("Ferie");
   };
 
-  const handleFromDateChange = (value: any) => {
-    setFromDate(value);
-  };
-
-  const handleToDateChange = (value: any) => {
-    setToDate(value);
-  };
-
   const handleEøsChange = (value: any) => {
     setEØS(value);
   };
@@ -130,18 +122,8 @@ const DateChooser = ({
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
-            <DatePicker.Input
-              id="fraDato"
-              onChange={handleFromDateChange}
-              {...fromInputProps}
-              label="Fra"
-            />
-            <DatePicker.Input
-              id="tilDato"
-              onChange={handleToDateChange}
-              {...toInputProps}
-              label="Til"
-            />
+            <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra" />
+            <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
           </div>
         </DatePicker>
         <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
