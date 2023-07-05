@@ -1,11 +1,12 @@
 import { Select } from "@navikt/ds-react";
 import { Dispatch, SetStateAction } from "react";
+import { landliste } from "../resources/utenfor";
 
 const Land = ({
-  land,
+  valgtLand,
   setLand,
 }: {
-  land: string;
+  valgtLand: string;
   setLand: Dispatch<SetStateAction<string>>;
 }) => {
   const handleChange = (event: any) => {
@@ -18,14 +19,18 @@ const Land = ({
     <Select
       onChange={handleChange}
       className="dropdown"
-      value={land}
+      value={valgtLand}
       id="land"
       label="Hvilket land har du oppholdt deg i?"
     >
       <option value="">Velg land</option>
+      {landliste.map((land) => {
+        return <option value={land.name}>{land.name}</option>;
+      })}
+      {/*<option value="">Velg land</option>
       <option value="Norge">Norge</option>
       <option value="Sverige">Sverige</option>
-      <option value="Danmark">Danmark</option>
+      <option value="Danmark">Danmark</option>*/}
     </Select>
   );
 };

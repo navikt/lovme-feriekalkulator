@@ -79,13 +79,12 @@ const DateChooser = ({
   // land, fraDato, tilDato, varighet, EØS, formål
   function handleSubmit(event: any) {
     event.preventDefault();
-
     let nyReise: Reise = {
       land: land,
       fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       varighet: differenceInDays,
-      EØS: EØS,
+      EØS: EØS ?? false,
       formål: formål,
     };
     const copy = [...data];
@@ -101,7 +100,7 @@ const DateChooser = ({
     setFromDate(undefined);
     setToDate(undefined);
     setDifferenceInDays(0);
-    setEØS(Boolean);
+    setEØS(undefined);
     setFormål("Ferie");
   };
 
@@ -121,7 +120,7 @@ const DateChooser = ({
       </Heading>
       <form onSubmit={handleSubmit}>
         <div>
-          <Land land={land} setLand={setLand} />
+          <Land valgtLand={land} setLand={setLand} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
