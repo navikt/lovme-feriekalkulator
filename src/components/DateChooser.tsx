@@ -24,8 +24,8 @@ const DateChooser = ({
   const [initialEndDate, setInitialEndDate] = useState(new Date());
   const [differenceInDays, setDifferenceInDays] = useState<number>(0);
   const [land, setLand] = useState("");
-  const [fromDate, setFromDate] = useState(new Date());
-  const [toDate, setToDate] = useState(new Date());
+  const [fromDate, setFromDate] = useState<Date | undefined>(new Date());
+  const [toDate, setToDate] = useState<Date | undefined>(new Date());
   const [EØS, setEØS] = useState(Boolean);
   const [formål, setFormål] = useState("Ferie");
 
@@ -58,6 +58,7 @@ const DateChooser = ({
     fromDate: initialStartDate,
     toDate: initialEndDate,
     onRangeChange: (selectedRange) => {
+      console.log("here");
       if (
         selectedRange?.from !== undefined &&
         selectedRange?.to !== undefined
@@ -80,8 +81,8 @@ const DateChooser = ({
 
     let nyReise: Reise = {
       land: land,
-      fraDato: fromDate,
-      tilDato: toDate,
+      fraDato: fromDate ?? new Date(0),
+      tilDato: toDate ?? new Date(0),
       varighet: differenceInDays,
       EØS: EØS,
       formål: formål,
@@ -95,8 +96,8 @@ const DateChooser = ({
 
   const resetInputFields = () => {
     setLand("");
-    setFromDate(new Date());
-    setToDate(new Date());
+    setFromDate(new Date(0));
+    setToDate(new Date(0));
     setDifferenceInDays(0);
     setEØS(Boolean);
     setFormål("Ferie");
@@ -110,7 +111,7 @@ const DateChooser = ({
     const target = event.target;
     setFormål(target.value);
   };
-
+  console.log(fromDate, toDate);
   return (
     <div className="card">
       <Heading level="1" size="xlarge">
@@ -120,7 +121,17 @@ const DateChooser = ({
         <div>
           <Land land={land} setLand={setLand} />
         </div>
-        <DatePicker {...datepickerProps} dropdownCaption>
+        <DatePicker
+          {...datepickerProps}
+          mode="range"
+          onSelect={(dateRange) => {
+            setFromDate(dateRange?.from);
+            setToDate(dateRange?.to);
+          }}
+          defaultSelected={{ from: fromDate, to: toDate }}
+          selected={{ to: toDate, from: fromDate }}
+          dropdownCaption
+        >
           <div className="datepicker">
             <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra" />
             <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
