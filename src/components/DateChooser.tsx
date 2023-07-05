@@ -26,7 +26,7 @@ const DateChooser = ({
   const [land, setLand] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [EØS, setEØS] = useState([]);
+  const [EØS, setEØS] = useState(Boolean);
   const [formål, setFormål] = useState("Ferie");
 
   const fiveYearsAgo = () => {
@@ -83,7 +83,7 @@ const DateChooser = ({
       fraDato: fromDate,
       tilDato: toDate,
       varighet: differenceInDays,
-      EØS: EØS[0],
+      EØS: EØS,
       formål: formål,
     };
     const copy = [...data];
@@ -98,7 +98,7 @@ const DateChooser = ({
     setFromDate(new Date());
     setToDate(new Date());
     setDifferenceInDays(0);
-    setEØS([]);
+    setEØS(Boolean);
     setFormål("Ferie");
   };
 
@@ -152,8 +152,8 @@ const DateChooser = ({
           legend="Innenfor EØS?"
           id="EØS"
         >
-          <Radio value="Ja">Ja</Radio>
-          <Radio value="Nei">Nei</Radio>
+          <Radio value={true}>Ja</Radio>
+          <Radio value={false}>Nei</Radio>
         </RadioGroup>
 
         <Select

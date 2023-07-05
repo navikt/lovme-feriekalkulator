@@ -92,7 +92,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
                     {format(new Date(tilDato), "dd.MM.yyyy")}
                   </Table.DataCell>
                   <Table.DataCell>{varighet} dager</Table.DataCell>
-                  <Table.DataCell>{EØS ? "Nei" : "Ja"}</Table.DataCell>
+                  <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
                 </Table.Row>
               );
