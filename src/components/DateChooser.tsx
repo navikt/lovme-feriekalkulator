@@ -26,7 +26,7 @@ const DateChooser = ({
   const [land, setLand] = useState("");
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
-  const [EØS, setEØS] = useState(Boolean);
+  const [EØS, setEØS] = useState<boolean>();
   const [formål, setFormål] = useState("Ferie");
 
   const fiveYearsAgo = () => {
@@ -77,13 +77,12 @@ const DateChooser = ({
   // land, fraDato, tilDato, varighet, EØS, formål
   function handleSubmit(event: any) {
     event.preventDefault();
-
     let nyReise: Reise = {
       land: land,
       fraDato: fromDate,
       tilDato: toDate,
       varighet: differenceInDays,
-      EØS: EØS,
+      EØS: EØS ?? false,
       formål: formål,
     };
     const copy = [...data];
@@ -98,7 +97,7 @@ const DateChooser = ({
     setFromDate(new Date());
     setToDate(new Date());
     setDifferenceInDays(0);
-    setEØS(Boolean);
+    setEØS(undefined);
     setFormål("Ferie");
   };
 
