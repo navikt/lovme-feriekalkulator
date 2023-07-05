@@ -27,7 +27,7 @@ const DateChooser = ({
   const [fromDate, setFromDate] = useState(new Date());
   const [toDate, setToDate] = useState(new Date());
   const [EØS, setEØS] = useState([]);
-  const [formål, setFormål] = useState("");
+  const [formål, setFormål] = useState("Ferie");
 
   const fiveYearsAgo = () => {
     const today = new Date();

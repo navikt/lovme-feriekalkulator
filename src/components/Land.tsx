@@ -1,4 +1,4 @@
-import { Dropdown, Select } from "@navikt/ds-react";
+import { Select } from "@navikt/ds-react";
 import { Dispatch, SetStateAction } from "react";
 
 const Land = ({

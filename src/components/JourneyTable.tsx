@@ -3,16 +3,13 @@ import { format } from "date-fns";
 import { useState } from "react";
 import { Reise } from "../models/Reise";
 
-
-
-
 type SortState = {
   orderBy: keyof Reise;
   direction: "ascending" | "descending";
 };
 
-const JourneyTable = ({data} : {data: Reise[]}) => {
-  const [sort, setSort] = useState<SortState>(); 
+const JourneyTable = ({ data }: { data: Reise[] }) => {
+  const [sort, setSort] = useState<SortState>();
 
   const handleSort = (sortKey: keyof Reise) => {
     setSort((sort) => {
@@ -27,8 +24,8 @@ const JourneyTable = ({data} : {data: Reise[]}) => {
         return {
           orderBy: sortKey,
           direction: "descending",
+        };
       }
-      };
       return undefined;
     });
   };
@@ -36,10 +33,9 @@ const JourneyTable = ({data} : {data: Reise[]}) => {
   let sortData: Reise[] = data;
 
   sortData = sortData.slice().sort((a, b) => {
-    if(sort === undefined){
-        return 1;
-    }
-    else if (sort) {
+    if (sort === undefined) {
+      return 1;
+    } else if (sort) {
       const comparator = (a: Reise, b: Reise, orderBy: keyof Reise) => {
         if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
           return -1;
@@ -84,30 +80,24 @@ const JourneyTable = ({data} : {data: Reise[]}) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {sortData.map(({ land, fraDato, tilDato, varighet, EØS, formål }, i) => {
-            return (
-              <Table.Row key={i}>
-                <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
-                <Table.DataCell>
-                  {format(new Date(fraDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {format(new Date(tilDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {varighet}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {EØS? "Nei"
-                  :"Ja"  
-                }
-                </Table.DataCell>
-                <Table.DataCell>
-                  {formål}
-                </Table.DataCell>
-              </Table.Row>
-            );
-          })}
+          {sortData.map(
+            ({ land, fraDato, tilDato, varighet, EØS, formål }, i) => {
+              return (
+                <Table.Row key={i}>
+                  <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
+                  <Table.DataCell>
+                    {format(new Date(fraDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    {format(new Date(tilDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>{varighet} dager</Table.DataCell>
+                  <Table.DataCell>{EØS ? "Nei" : "Ja"}</Table.DataCell>
+                  <Table.DataCell>{formål}</Table.DataCell>
+                </Table.Row>
+              );
+            }
+          )}
         </Table.Body>
       </Table>
     </>
