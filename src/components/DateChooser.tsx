@@ -26,7 +26,7 @@ const DateChooser = ({
   const [land, setLand] = useState("");
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
-  const [EØS, setEØS] = useState(Boolean);
+  const [EØS, setEØS] = useState<boolean>();
   const [formål, setFormål] = useState("Ferie");
 
   const fiveYearsAgo = () => {
