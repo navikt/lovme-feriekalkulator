@@ -1,4 +1,4 @@
-import { Search, Select } from "@navikt/ds-react";
+import { Select } from "@navikt/ds-react";
 import { Dispatch, SetStateAction } from "react";
 import { Land } from "../models/Land";
 
