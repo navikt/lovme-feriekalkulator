@@ -5,12 +5,14 @@
 
 #### Installere avhengigheter
 ```
-yarn install
+yarn install #or
+npm install
 ```
 
-#### Start opp frontend-applikasjonen
+#### Start opp applikasjonen
 ```
-yarn start
+yarn start #or
+npm start
 ```
 
 
