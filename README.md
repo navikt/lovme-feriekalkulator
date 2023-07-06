@@ -5,7 +5,6 @@
 
 #### Installere avhengigheter
 ```
-cd lovme-feriekalkulator
 yarn install
 ```
 
@@ -64,7 +63,7 @@ Visjon:
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.  
-Interne henvendelser kan sendes via Slack i kanalen #team-lovme.
+Interne henvendelser kan sendes via Slack i kanalen #team-ferie-værsågod.
 
 ## Languages and Tools
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
