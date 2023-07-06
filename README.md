@@ -61,13 +61,21 @@ Visjon:
 
 ## Bruk
 
-1. Steg 1
-2. Steg 2
-3. Steg 3
-4. Forventet output 
-```javascript 
-Her kommer det eksempel på noe output
+#### Installere avhengigheter
 ```
+cd lovme-feriekalkulator
+yarn install
+```
+
+#### Start opp frontend-applikasjonen
+```
+yarn start
+```
+
+## Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.  
+Interne henvendelser kan sendes via Slack i kanalen #team-lovme.
 
 ## Languages and Tools
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
