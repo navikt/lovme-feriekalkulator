@@ -11,7 +11,7 @@ import { subYears, startOfYear, addYears, endOfYear } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./DateChooser.css";
 import { Reise } from "../models/Reise";
-import Land from "./Land";
+import LandVelger from "./LandVelger";
 
 const DateChooser = ({
   data,
@@ -32,7 +32,6 @@ const DateChooser = ({
   const fiveYearsAgo = () => {
     const today = new Date();
     const fiveYearsAgo = subYears(today, 5);
-
     const firstOfJanuary = startOfYear(fiveYearsAgo);
 
     return firstOfJanuary;
@@ -41,8 +40,8 @@ const DateChooser = ({
   const twoYearsForward = () => {
     const today = new Date();
     const twoForward = addYears(today, 2);
-
     const lastOfDecember = endOfYear(twoForward);
+
     return lastOfDecember;
   };
 
@@ -51,6 +50,7 @@ const DateChooser = ({
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     console.log("Difference in days", diffDays);
     setDifferenceInDays(diffDays);
+    
     return diffDays;
   };
 
@@ -120,7 +120,7 @@ const DateChooser = ({
       </Heading>
       <form onSubmit={handleSubmit}>
         <div>
-          <Land valgtLand={land} setLand={setLand} />
+          <LandVelger valgtLand={land} setLand={setLand} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
