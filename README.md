@@ -1,17 +1,19 @@
 # LovMe-Feriekalkulator
 
 
-## Teknologier brukt
+## Bruk
 
+#### Installere avhengigheter
+```
+yarn install #or
+npm install
+```
 
-|        Title         |           Name            | 
-|:--------------------:|:-------------------------:|
-|        Språk         |     React + Typescript    | 
-|        Tests         |                           |  
-|        Container     |          Docker           | 
-|        Hosting       |           NAIS            | 
-|        Design        |          Aksel            | 
-
+#### Start opp applikasjonen
+```
+yarn start #or
+npm start
+```
 
 
 ## Struktur
@@ -59,15 +61,11 @@ Visjon:
 - NAV legger opplysningene til grunn på et senere tidspunkt.
 - Feriekalkulatoren kan lages for brukere som er bosatt (trygdemessig) i Norge og som ønsker å tilbringe flere perioder utenfor Norge
 
-## Bruk
 
-1. Steg 1
-2. Steg 2
-3. Steg 3
-4. Forventet output 
-```javascript 
-Her kommer det eksempel på noe output
-```
+## Henvendelser
+
+Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.  
+Interne henvendelser kan sendes via Slack i kanalen #team-ferie-værsågod.
 
 ## Languages and Tools
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
