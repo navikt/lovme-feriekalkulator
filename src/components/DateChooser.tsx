@@ -1,7 +1,5 @@
 import {
-  RadioGroup,
   DatePicker,
-  Radio,
   useRangeDatepicker,
   Select,
   Button,
@@ -26,7 +24,7 @@ const DateChooser = ({
   const [land, setLand] = useState("");
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
-  const [EØS, setEØS] = useState<boolean>();
+  const [EØS, setEØS] = useState<boolean>(false);
   const [formål, setFormål] = useState("Ferie");
   const [disabledDates, setDisabledDates] = useState<
     Array<{ from: Date; to: Date }>
@@ -62,7 +60,6 @@ const DateChooser = ({
       toDate: initialEndDate,
       disabled: disabledDates,
       onRangeChange: (selectedRange) => {
-        console.log("here");
         if (
           selectedRange?.from !== undefined &&
           selectedRange?.to !== undefined
@@ -79,7 +76,6 @@ const DateChooser = ({
     setInitialEndDate(twoYearsForward);
   }, []);
 
-  // land, fraDato, tilDato, varighet, EØS, formål
   function handleSubmit(event: any) {
     event.preventDefault();
     let nyReise: Reise = {
@@ -111,17 +107,12 @@ const DateChooser = ({
     setFromDate(undefined);
     setToDate(undefined);
     setDifferenceInDays(0);
-    setEØS(undefined);
+    setEØS(false);
     setFormål("Ferie");
   };
 
-  const handleEøsChange = (value: any) => {
-    setEØS(value);
-  };
-
   const handleFormålChange = (event: any) => {
-    const target = event.target;
-    setFormål(target.value);
+    setFormål(event.target.value);
   };
 
   return (
@@ -131,7 +122,7 @@ const DateChooser = ({
       </Heading>
       <form onSubmit={handleSubmit}>
         <div>
-          <LandVelger valgtLand={land} setLand={setLand} />
+          <LandVelger valgtLand={land} setLand={setLand}/>
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
@@ -144,16 +135,6 @@ const DateChooser = ({
             Du har vært {differenceInDays.toString()} dager i utlandet
           </div>
         )}
-
-        <RadioGroup
-          value={EØS}
-          onChange={handleEøsChange}
-          legend="Innenfor EØS?"
-          id="EØS"
-        >
-          <Radio value={true}>Ja</Radio>
-          <Radio value={false}>Nei</Radio>
-        </RadioGroup>
 
         <Select
           className="dropdown"

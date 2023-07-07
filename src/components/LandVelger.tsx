@@ -1,6 +1,7 @@
 import { Select } from "@navikt/ds-react";
 import { Dispatch, SetStateAction } from "react";
 import { Land } from "../models/Land";
+import world from "../resources/no/world.json"
 
 const LandVelger = ({
   valgtLand,
@@ -11,11 +12,8 @@ const LandVelger = ({
 }) => {
   const handleChange = (event: any) => {
     event.preventDefault();
-
     setLand(event.target.value);
   };
-
-  const world = require("../resources/no/world.json");
 
   return (
     <div>
@@ -29,7 +27,7 @@ const LandVelger = ({
         >
           <option value="">Velg land</option>
           {world.map((land: Land) => {
-            return <option value={land.name}>{land.name}</option>;
+            return <option key={land.alpha3} value={land.name}>{land.name}</option>;
           })}
         </Select>
       </div>
