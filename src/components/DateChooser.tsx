@@ -50,7 +50,7 @@ const DateChooser = ({
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
     console.log("Difference in days", diffDays);
     setDifferenceInDays(diffDays);
-    
+
     return diffDays;
   };
 
@@ -128,7 +128,11 @@ const DateChooser = ({
             <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
           </div>
         </DatePicker>
-        <div>Du har vært {differenceInDays.toString()} dager i utlandet</div>
+        {differenceInDays >= 1 && (
+          <div id="diffrenceDays">
+            Du har vært {differenceInDays.toString()} dager i utlandet
+          </div>
+        )}
 
         <RadioGroup
           value={EØS}
