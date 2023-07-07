@@ -73,7 +73,10 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
             <Table.ColumnHeader sortKey="varighet" sortable>
               Varighet
             </Table.ColumnHeader>
-            <Table.HeaderCell scope="col">EØS</Table.HeaderCell>
+
+            <Table.ColumnHeader sortKey="EØS" sortable>
+              EØS
+            </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="formål" sortable>
               Formål
             </Table.ColumnHeader>
