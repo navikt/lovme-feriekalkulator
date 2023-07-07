@@ -28,6 +28,9 @@ const DateChooser = ({
   const [toDate, setToDate] = useState<Date | undefined>();
   const [EØS, setEØS] = useState<boolean>();
   const [formål, setFormål] = useState("Ferie");
+  const [disabledDates, setDisabledDates] = useState<
+    Array<{ from: Date; to: Date }>
+  >([]);
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -48,7 +51,6 @@ const DateChooser = ({
   const daysBetweenDates = (from: Date, to: Date): Number => {
     var diff = Math.abs(from.getTime() - to.getTime());
     var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    console.log("Difference in days", diffDays);
     setDifferenceInDays(diffDays);
 
     return diffDays;
@@ -58,6 +60,7 @@ const DateChooser = ({
     useRangeDatepicker({
       fromDate: initialStartDate,
       toDate: initialEndDate,
+      disabled: disabledDates,
       onRangeChange: (selectedRange) => {
         console.log("here");
         if (
@@ -91,8 +94,16 @@ const DateChooser = ({
     copy.push(nyReise);
     setTableData(copy);
 
+    addDisabledDates(fromDate ?? new Date(0), toDate ?? new Date(0));
+
     resetInputFields();
   }
+
+  const addDisabledDates = (fromDate: Date, toDate: Date) => {
+    const copy = [...disabledDates];
+    copy.push({ from: fromDate, to: toDate });
+    setDisabledDates(copy);
+  };
 
   const resetInputFields = () => {
     setLand("");
@@ -112,7 +123,7 @@ const DateChooser = ({
     const target = event.target;
     setFormål(target.value);
   };
-  console.log(fromDate, toDate);
+
   return (
     <div className="card">
       <Heading level="1" size="xlarge">
