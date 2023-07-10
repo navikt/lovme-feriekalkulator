@@ -10,6 +10,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import "./DateChooser.css";
 import { Reise } from "../models/Reise";
 import LandVelger from "./LandVelger";
+import EØSLand from "../resources/eøs.json";
 
 const DateChooser = ({
   data,
@@ -78,12 +79,16 @@ const DateChooser = ({
 
   function handleSubmit(event: any) {
     event.preventDefault();
+
     let nyReise: Reise = {
       land: land,
       fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       varighet: differenceInDays,
-      EØS: EØS ?? false,
+      EØS:
+        Object.keys(EØSLand)
+          .map((l) => l.toLowerCase())
+          .includes(land.toLowerCase()) ?? false,
       formål: formål,
     };
     const copy = [...data];
@@ -122,7 +127,7 @@ const DateChooser = ({
       </Heading>
       <form onSubmit={handleSubmit}>
         <div>
-          <LandVelger valgtLand={land} setLand={setLand}/>
+          <LandVelger valgtLand={land} setLand={setLand} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">

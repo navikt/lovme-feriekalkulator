@@ -75,7 +75,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
               Varighet
             </Table.ColumnHeader>
 
-            <Table.ColumnHeader sortKey="EØSLand" sortable>
+            <Table.ColumnHeader sortKey="EØS" sortable>
               EØS
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="formål" sortable>
@@ -84,28 +84,24 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {sortData.map(({ land, fraDato, tilDato, varighet, formål }, i) => {
-            return (
-              <Table.Row key={i}>
-                <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
-                <Table.DataCell>
-                  {format(new Date(fraDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {format(new Date(tilDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>{varighet} dager</Table.DataCell>
-                <Table.DataCell>
-                  {Object.keys(EØSLand)
-                    .map((l) => l.toLowerCase())
-                    .includes(land.toLowerCase())
-                    ? "Ja"
-                    : "Nei"}
-                </Table.DataCell>
-                <Table.DataCell>{formål}</Table.DataCell>
-              </Table.Row>
-            );
-          })}
+          {sortData.map(
+            ({ land, fraDato, tilDato, varighet, EØS, formål }, i) => {
+              return (
+                <Table.Row key={i}>
+                  <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
+                  <Table.DataCell>
+                    {format(new Date(fraDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    {format(new Date(tilDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>{varighet} dager</Table.DataCell>
+                  <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
+                  <Table.DataCell>{formål}</Table.DataCell>
+                </Table.Row>
+              );
+            }
+          )}
         </Table.Body>
       </Table>
     </>
