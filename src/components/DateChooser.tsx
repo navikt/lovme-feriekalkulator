@@ -74,6 +74,10 @@ const DateChooser = ({
   useEffect(() => {
     setInitialStartDate(fiveYearsAgo);
     setInitialEndDate(twoYearsForward);
+    const dataString = sessionStorage.getItem("tableData");
+    console.log(dataString);
+    const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
+    setTableData(listeAvData);
   }, []);
 
   function handleSubmit(event: any) {
@@ -90,6 +94,7 @@ const DateChooser = ({
     const copy = [...data];
     copy.push(nyReise);
     setTableData(copy);
+    sessionStorage.setItem("tableData", JSON.stringify(copy));
 
     addDisabledDates(fromDate ?? new Date(0), toDate ?? new Date(0));
 

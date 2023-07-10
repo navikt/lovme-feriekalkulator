@@ -1,7 +1,13 @@
-import { Table } from "@navikt/ds-react";
+import { Dropdown, Table } from "@navikt/ds-react";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Reise } from "../models/Reise";
+import {
+  MenuElipsisHorizontalCircleIcon,
+  PencilIcon,
+  TrashIcon,
+} from "@navikt/aksel-icons";
+import { RedigerSlettDropdowm } from "./RedigerSletteDropdown";
 
 type SortState = {
   orderBy: keyof Reise;
@@ -80,6 +86,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
             <Table.ColumnHeader sortKey="formål" sortable>
               Formål
             </Table.ColumnHeader>
+            <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -97,6 +104,9 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
                   <Table.DataCell>{varighet} dager</Table.DataCell>
                   <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
+                  <Table.DataCell>
+                    <RedigerSlettDropdowm />
+                  </Table.DataCell>
                 </Table.Row>
               );
             }
