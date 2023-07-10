@@ -2,7 +2,7 @@ import { MenuElipsisHorizontalCircleIcon, PencilFillIcon, TrashFillIcon } from "
 import { Button, Dropdown } from "@navikt/ds-react";
 import "@navikt/ds-tokens";
 
-export const RedigerSlettDropdowm = () => {
+export const RedigerSlettDropdown = () => {
   return (
     <Dropdown>
       <Button as={Dropdown.Toggle} fontSize="1.8rem" variant="tertiary" size="xsmall" ><MenuElipsisHorizontalCircleIcon fontSize="1.5rem" /></Button>

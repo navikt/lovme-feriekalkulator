@@ -1,8 +1,8 @@
-import { Dropdown, Table } from "@navikt/ds-react";
+import { Table } from "@navikt/ds-react";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Reise } from "../models/Reise";
-import { RedigerSlettDropdowm } from "./RedigerSletteDropdown";
+import { RedigerSlettDropdown } from "./RedigerSletteDropdown";
 
 type SortState = {
   orderBy: keyof Reise;
@@ -100,7 +100,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
                   <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
                   <Table.DataCell>
-                    <RedigerSlettDropdowm />
+                    <RedigerSlettDropdown />
                   </Table.DataCell>
                 </Table.Row>
               );
