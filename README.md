@@ -1,5 +1,14 @@
 # LovMe-Feriekalkulator
 
+## Innholdsfortegnelse
+- [Bruk](#bruk)
+- [Installere avhengigheter](#installere-avhengigheter)
+- [Start opp applikasjonen](#start-opp-applikasjonen)
+- [Struktur](#struktur)
+- [Kildekode](#kildekode)
+- [Oversikt](#oversikt)
+- [Henvendelser](#henvendelser)
+- [Languages and Tools](#languages-and-tools)
 
 ## Bruk
 
