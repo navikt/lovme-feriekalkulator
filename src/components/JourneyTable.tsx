@@ -2,7 +2,6 @@ import { Table } from "@navikt/ds-react";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Reise } from "../models/Reise";
-import EØSLand from "../resources/eøs.json";
 
 type SortState = {
   orderBy: keyof Reise;
