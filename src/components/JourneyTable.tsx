@@ -2,11 +2,6 @@ import { Dropdown, Table } from "@navikt/ds-react";
 import { format } from "date-fns";
 import { useState } from "react";
 import { Reise } from "../models/Reise";
-import {
-  MenuElipsisHorizontalCircleIcon,
-  PencilIcon,
-  TrashIcon,
-} from "@navikt/aksel-icons";
 import { RedigerSlettDropdowm } from "./RedigerSletteDropdown";
 
 type SortState = {
