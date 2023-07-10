@@ -80,15 +80,18 @@ const DateChooser = ({
   function handleSubmit(event: any) {
     event.preventDefault();
 
+    setEØS(
+      Object.keys(EØSLand)
+        .map((l) => l.toLowerCase())
+        .includes(land.toLowerCase())
+    );
+
     let nyReise: Reise = {
       land: land,
       fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       varighet: differenceInDays,
-      EØS:
-        Object.keys(EØSLand)
-          .map((l) => l.toLowerCase())
-          .includes(land.toLowerCase()) ?? false,
+      EØS: EØS ?? false,
       formål: formål,
     };
     const copy = [...data];
