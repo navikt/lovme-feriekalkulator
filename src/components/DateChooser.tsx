@@ -78,7 +78,7 @@ const DateChooser = ({
     console.log(dataString);
     const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
     setTableData(listeAvData);
-  }, []);
+  }, [setTableData]);
 
   function handleSubmit(event: any) {
     event.preventDefault();
