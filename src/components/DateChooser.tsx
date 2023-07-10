@@ -75,7 +75,6 @@ const DateChooser = ({
     setInitialStartDate(fiveYearsAgo);
     setInitialEndDate(twoYearsForward);
     const dataString = sessionStorage.getItem("tableData");
-    console.log(dataString);
     const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
     setTableData(listeAvData);
   }, [setTableData]);
