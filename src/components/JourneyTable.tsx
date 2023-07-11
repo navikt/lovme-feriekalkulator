@@ -1,6 +1,6 @@
 import { Table } from "@navikt/ds-react";
 import { format } from "date-fns";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { Reise } from "../models/Reise";
 import { RedigerSlettDropdown } from "./RedigerSletteDropdown";
 
@@ -9,7 +9,13 @@ type SortState = {
   direction: "ascending" | "descending";
 };
 
-const JourneyTable = ({ data }: { data: Reise[] }) => {
+const JourneyTable = ({
+  data,
+  setTableData,
+}: {
+  data: Reise[];
+  setTableData: Dispatch<SetStateAction<Array<Reise>>>;
+}) => {
   const [sort, setSort] = useState<SortState>();
 
   const handleSort = (sortKey: keyof Reise) => {
@@ -54,6 +60,12 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
     return 1;
   });
 
+  const handleDeleteReise = (id: number) => {
+    const updatedData = data.filter((reise) => reise.id !== id); // Filter out the row with the specified ID
+    setTableData(updatedData);
+    sessionStorage.setItem("tableData", JSON.stringify(updatedData)) // Update the state
+  };
+
   return (
     <>
       <Table
@@ -86,7 +98,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
         </Table.Header>
         <Table.Body>
           {sortData.map(
-            ({ land, fraDato, tilDato, varighet, EØS, formål }, i) => {
+            ({ id, land, fraDato, tilDato, varighet, EØS, formål }, i) => {
               return (
                 <Table.Row key={i}>
                   <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
@@ -100,7 +112,7 @@ const JourneyTable = ({ data }: { data: Reise[] }) => {
                   <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
                   <Table.DataCell>
-                    <RedigerSlettDropdown />
+                    <RedigerSlettDropdown id={id} deleteFunction={handleDeleteReise}/>
                   </Table.DataCell>
                 </Table.Row>
               );

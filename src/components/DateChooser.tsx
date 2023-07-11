@@ -83,6 +83,7 @@ const DateChooser = ({
     event.preventDefault();
 
     let nyReise: Reise = {
+      id: Date.now(),
       land: land,
       fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
