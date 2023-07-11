@@ -7,3 +7,12 @@
     gap: 20px;
     align-self: stretch;
 }
+.dropdown {
+    /* justify-content: left; Trenger vi denne?*/
+}
+.datepicker {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+
+}
