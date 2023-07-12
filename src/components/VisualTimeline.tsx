@@ -15,8 +15,6 @@ export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
     )
   ).sort((a, b) => a - b);
 
-  console.log(years);
-
   return data.length === 0 || years.length === 0 ? (
     <p>"Tom array"</p>
   ) : (
@@ -40,7 +38,6 @@ export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
                     travel.tilDato.getFullYear() > year)
               )
               .map((travel: Reise, i) => {
-                console.log(years);
                 return (
                   <Timeline.Period
                     key={i}

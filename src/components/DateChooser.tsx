@@ -32,9 +32,6 @@ const DateChooser = ({
   const [toDate, setToDate] = useState<Date | undefined>();
   const [EØS, setEØS] = useState<boolean>(false);
   const [formål, setFormål] = useState("Ferie");
-  const [disabledDates, setDisabledDates] = useState<
-    Array<{ from: Date; to: Date }>
-  >([]);
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -56,7 +53,10 @@ const DateChooser = ({
     useRangeDatepicker({
       fromDate: initialStartDate,
       toDate: initialEndDate,
-      disabled: disabledDates,
+      disabled: data.map((travel) => ({
+        from: travel.fraDato,
+        to: travel.tilDato,
+      })),
       onRangeChange: (selectedRange) => {
         if (
           selectedRange?.from !== undefined &&
@@ -98,16 +98,8 @@ const DateChooser = ({
     setTableData(copy);
     sessionStorage.setItem("tableData", JSON.stringify(copy));
 
-    addDisabledDates(fromDate ?? new Date(0), toDate ?? new Date(0));
-
     resetInputFields();
   }
-
-  const addDisabledDates = (fromDate: Date, toDate: Date) => {
-    const copy = [...disabledDates];
-    copy.push({ from: fromDate, to: toDate });
-    setDisabledDates(copy);
-  };
 
   const resetInputFields = () => {
     setLand("");
