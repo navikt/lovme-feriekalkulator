@@ -1,9 +1,8 @@
 export interface Reise {
-  id: number
+  id: number;
   land: string;
   fraDato: Date;
   tilDato: Date;
-  varighet: number;
   EØS: boolean;
   formål: string;
 }

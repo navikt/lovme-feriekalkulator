@@ -1,3 +1,4 @@
+import "./DateChooser.css";
 import {
   DatePicker,
   useRangeDatepicker,
@@ -5,9 +6,15 @@ import {
   Button,
   Heading,
 } from "@navikt/ds-react";
-import { subYears, startOfYear, addYears, endOfYear } from "date-fns";
+import {
+  subYears,
+  startOfYear,
+  addYears,
+  endOfYear,
+  differenceInCalendarDays,
+  formatDuration,
+} from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import "./DateChooser.css";
 import { Reise } from "../models/Reise";
 import LandVelger from "./LandVelger";
 
@@ -20,7 +27,6 @@ const DateChooser = ({
 }) => {
   const [initialStartDate, setInitialStartDate] = useState(new Date());
   const [initialEndDate, setInitialEndDate] = useState(new Date());
-  const [differenceInDays, setDifferenceInDays] = useState<number>(0);
   const [land, setLand] = useState("");
   const [fromDate, setFromDate] = useState<Date | undefined>();
   const [toDate, setToDate] = useState<Date | undefined>();
@@ -46,14 +52,6 @@ const DateChooser = ({
     return lastOfDecember;
   };
 
-  const daysBetweenDates = (from: Date, to: Date): Number => {
-    var diff = Math.abs(from.getTime() - to.getTime());
-    var diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-    setDifferenceInDays(diffDays);
-
-    return diffDays;
-  };
-
   const { datepickerProps, toInputProps, fromInputProps, reset } =
     useRangeDatepicker({
       fromDate: initialStartDate,
@@ -64,7 +62,6 @@ const DateChooser = ({
           selectedRange?.from !== undefined &&
           selectedRange?.to !== undefined
         ) {
-          daysBetweenDates(selectedRange.from, selectedRange.to);
           setToDate(selectedRange.to);
           setFromDate(selectedRange.from);
         }
@@ -72,8 +69,8 @@ const DateChooser = ({
     });
 
   useEffect(() => {
-    setInitialStartDate(fiveYearsAgo);
-    setInitialEndDate(twoYearsForward);
+    setInitialStartDate(fiveYearsAgo());
+    setInitialEndDate(twoYearsForward());
     const dataString = sessionStorage.getItem("tableData");
     const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
     setTableData(
@@ -93,7 +90,6 @@ const DateChooser = ({
       land: land,
       fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      varighet: differenceInDays,
       EØS: EØS ?? false,
       formål: formål,
     };
@@ -118,7 +114,6 @@ const DateChooser = ({
     reset();
     setFromDate(undefined);
     setToDate(undefined);
-    setDifferenceInDays(0);
     setEØS(false);
     setFormål("Ferie");
   };
@@ -132,7 +127,7 @@ const DateChooser = ({
       <Heading level="1" size="xlarge">
         Feriekalkulator
       </Heading>
-      <form onSubmit={handleSubmit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div>
           <LandVelger valgtLand={land} setLand={setLand} setEØS={setEØS} />
         </div>
@@ -142,9 +137,13 @@ const DateChooser = ({
             <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
           </div>
         </DatePicker>
-        {differenceInDays >= 1 && (
+        {fromDate && toDate && (
           <div id="diffrenceDays">
-            Du har vært {differenceInDays.toString()} dager i utlandet
+            Du har vært{" "}
+            {formatDuration({
+              days: differenceInCalendarDays(toDate, fromDate),
+            })}{" "}
+            i utlandet
           </div>
         )}
 

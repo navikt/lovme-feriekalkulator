@@ -18,6 +18,10 @@
 
 }
 
-.leggtil {
-    margin-top: 20px !important;
-  }
+
+.form {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    align-items: start;
+}

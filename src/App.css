@@ -9,8 +9,8 @@ html {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  gap: 16px;
-  margin-top: 30px;
+  gap: var(--a-spacing-4);
+  margin-top: var(--a-spacing-7); 
 }
 
 .timeline {
