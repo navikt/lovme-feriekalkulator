@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Reise } from "../models/Reise";
 import { RedigerSlettDropdown } from "./RedigerSletteDropdown";
+import "./JourneyTable.css";
 
 type SortState = {
   orderBy: keyof Reise;
@@ -63,7 +64,7 @@ const JourneyTable = ({
   const handleDeleteReise = (id: number) => {
     const updatedData = data.filter((reise) => reise.id !== id); // Filter out the row with the specified ID
     setTableData(updatedData);
-    sessionStorage.setItem("tableData", JSON.stringify(updatedData)) // Update the state
+    sessionStorage.setItem("tableData", JSON.stringify(updatedData)); // Update the state
   };
 
   return (
@@ -72,7 +73,7 @@ const JourneyTable = ({
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Reise)}
       >
-        <Table.Header>
+        <Table.Header className="tableheader">
           <Table.Row>
             <Table.ColumnHeader sortKey="land" sortable>
               Land
@@ -112,7 +113,10 @@ const JourneyTable = ({
                   <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
                   <Table.DataCell>
-                    <RedigerSlettDropdown id={id} deleteFunction={handleDeleteReise}/>
+                    <RedigerSlettDropdown
+                      id={id}
+                      deleteFunction={handleDeleteReise}
+                    />
                   </Table.DataCell>
                 </Table.Row>
               );
