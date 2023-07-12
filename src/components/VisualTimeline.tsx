@@ -2,7 +2,6 @@ import { ParasolBeachIcon, PencilIcon } from "@navikt/aksel-icons";
 import { Timeline } from "@navikt/ds-react";
 import { setYear, subDays } from "date-fns";
 import { Reise } from "../models/Reise";
-import { useState, useEffect } from "react";
 
 export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
   const range = (from: number, to: number) =>
