@@ -1,6 +1,6 @@
 .table {
     max-height: calc(6 * 82px); 
-    overflow: auto;
+    overflow: scroll;
   }
   
   .tableheader {
@@ -9,3 +9,4 @@
   background-color: #f5f5f5;
   z-index: 1;
   }
+

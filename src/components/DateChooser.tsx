@@ -76,11 +76,13 @@ const DateChooser = ({
     setInitialEndDate(twoYearsForward);
     const dataString = sessionStorage.getItem("tableData");
     const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
-    setTableData(listeAvData.map(data => ({
-      ...data,
-      tilDato: new Date(data.tilDato),
-      fraDato: new Date(data.fraDato)
-    })));
+    setTableData(
+      listeAvData.map((data) => ({
+        ...data,
+        tilDato: new Date(data.tilDato),
+        fraDato: new Date(data.fraDato),
+      }))
+    );
   }, [setTableData]);
 
   function handleSubmit(event: any) {
@@ -158,7 +160,7 @@ const DateChooser = ({
           <option value="Annet">Annet</option>
         </Select>
 
-        <Button variant="primary" type="submit">
+        <Button className="leggtil" variant="primary" type="submit">
           Legg til
         </Button>
       </form>
