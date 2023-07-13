@@ -1,6 +1,6 @@
 .table {
-    max-height: calc(6 * 82px); 
-    overflow: scroll;
+    max-height: calc(6 * 82px);  /*fiks*/ 
+    overflow: auto;
   }
   
   .tableheader {
