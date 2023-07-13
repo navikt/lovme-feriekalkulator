@@ -15,9 +15,7 @@ export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
     )
   ).sort((a, b) => a - b);
 
-  return data.length === 0 || years.length === 0 ? (
-    <p>"Tom array"</p>
-  ) : (
+  return data.length === 0 || years.length === 0 ? null : (
     <Timeline
       startDate={new Date(0)}
       endDate={subDays(setYear(new Date(0), 1971), 1)}
