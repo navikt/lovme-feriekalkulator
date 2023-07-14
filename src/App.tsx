@@ -18,7 +18,7 @@ function App() {
       </div>
 
       <div className="table">
-        <JourneyTable data={savedTravels} setSavedTravels={setSavedTravels} />
+        <JourneyTable savedTravels={savedTravels} setSavedTravels={setSavedTravels} />
       </div>
 
       <div className="timeline">

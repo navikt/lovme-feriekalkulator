@@ -11,10 +11,10 @@ type SortState = {
 };
 
 const JourneyTable = ({
-  data,
+  savedTravels,
   setSavedTravels,
 }: {
-  data: Travel[];
+  savedTravels: Travel[];
   setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [sort, setSort] = useState<SortState>();
@@ -38,7 +38,7 @@ const JourneyTable = ({
     });
   };
 
-  let sortData: Travel[] = data;
+  let sortData: Travel[] = savedTravels;
 
   sortData = sortData.slice().sort((a, b) => {
     if (sort === undefined) {
@@ -62,7 +62,7 @@ const JourneyTable = ({
   });
 
   const handleDeleteTravel = (id: number) => {
-    const updatedData = data.filter((travel) => travel.id !== id); // Filter out the row with the specified ID
+    const updatedData = savedTravels.filter((travel) => travel.id !== id); // Filter out the row with the specified ID
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
   };
@@ -75,23 +75,23 @@ const JourneyTable = ({
       >
         <Table.Header className="tableheader">
           <Table.Row>
-            <Table.ColumnHeader sortKey="land" sortable>
+            <Table.ColumnHeader sortKey="country" sortable>
               Land
             </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="fraDato" sortable>
+            <Table.ColumnHeader sortKey="startDate" sortable>
               Fra (Dato)
             </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="tilDato" sortable>
+            <Table.ColumnHeader sortKey="endDate" sortable>
               Til (Dato)
             </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="varighet" sortable>
+            <Table.ColumnHeader sortKey="duration" sortable>
               Varighet
             </Table.ColumnHeader>
 
-            <Table.ColumnHeader sortKey="EØS" sortable>
+            <Table.ColumnHeader sortKey="EEA" sortable>
               EØS
             </Table.ColumnHeader>
-            <Table.ColumnHeader sortKey="formål" sortable>
+            <Table.ColumnHeader sortKey="purpose" sortable>
               Formål
             </Table.ColumnHeader>
             <Table.ColumnHeader>Action</Table.ColumnHeader>

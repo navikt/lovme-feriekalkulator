@@ -6,24 +6,24 @@ import EEAcountries from "../resources/eøs.json";
 
 const CountryChooser = ({
   chosenCountry,
-  setLand,
-  setEØS,
+  setCountry,
+  setEEA,
 }: {
   chosenCountry: string;
-  setLand: Dispatch<SetStateAction<string>>;
-  setEØS: Dispatch<SetStateAction<boolean>>;
+  setCountry: Dispatch<SetStateAction<string>>;
+  setEEA: Dispatch<SetStateAction<boolean>>;
 }) => {
   const handleChange = (event: any) => {
     event.preventDefault();
-    const land = event.target.value;
-    setLand(land);
-    if (land === "Innenfor EØS") {
-      setEØS(true);
+    const country = event.target.value;
+    setCountry(country);
+    if (country === "Innenfor EØS") {
+      setEEA(true);
     } else {
-      setEØS(
+      setEEA(
         Object.keys(EEAcountries)
           .map((l) => l.toLowerCase())
-          .includes(land.toLowerCase())
+          .includes(country.toLowerCase())
       );
     }
   };
@@ -35,7 +35,7 @@ const CountryChooser = ({
           onChange={handleChange}
           className="dropdown"
           value={chosenCountry}
-          id="land"
+          id="country"
           label="Hvilket land har du oppholdt deg i?"
         >
           <option value="">Velg land</option>

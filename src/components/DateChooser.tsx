@@ -125,7 +125,7 @@ const DateChooser = ({
       </Heading>
       <form className="form" onSubmit={handleSubmit}>
         <div>
-          <CountryChooser chosenCountry={country} setLand={setCountry} setEØS={setEEA} />
+          <CountryChooser chosenCountry={country} setCountry={setCountry} setEEA={setEEA} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
@@ -134,7 +134,7 @@ const DateChooser = ({
           </div>
         </DatePicker>
         {startDate && endDate && (
-          <div id="diffrenceDays">
+          <div id="differenceInDays">
             Du har vært{" "}
             {formatDuration({
               days: differenceInCalendarDays(endDate, startDate),
@@ -145,7 +145,7 @@ const DateChooser = ({
 
         <Select
           className="dropdown"
-          id="formål"
+          id="purpose"
           value={purpose}
           label="Formål med reisen?"
           onChange={handlePurposeChange}
