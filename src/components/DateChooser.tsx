@@ -19,11 +19,11 @@ import { Travel } from "../models/Travel";
 import CountryChooser from "./CountryChooser";
 
 const DateChooser = ({
-  data,
-  setTableData,
+  savedTravels,
+  setSavedTravels,
 }: {
-  data: Array<Travel>;
-  setTableData: Dispatch<SetStateAction<Array<Travel>>>;
+  savedTravels: Array<Travel>;
+  setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [initialStartDate, setInitialStartDate] = useState(new Date());
   const [initialEndDate, setInitialEndDate] = useState(new Date());
@@ -34,26 +34,26 @@ const DateChooser = ({
   const [purpose, setPurpose] = useState("Ferie");
 
   const fiveYearsAgo = () => {
-    const today = new Date();
-    const fiveYearsAgo = subYears(today, 5);
-    const firstOfJanuary = startOfYear(fiveYearsAgo);
+    const todaysDate = new Date();
+    const dateFiveYearsAgo = subYears(todaysDate, 5);
+    const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
 
-    return firstOfJanuary;
+    return firstOfJanuarysDate;
   };
 
   const twoYearsForward = () => {
-    const today = new Date();
-    const twoForward = addYears(today, 2);
-    const lastOfDecember = endOfYear(twoForward);
+    const todaysDate = new Date();
+    const twoYearsForwardDate = addYears(todaysDate, 2);
+    const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
 
-    return lastOfDecember;
+    return lastOfDecembersDate;
   };
 
   const { datepickerProps, toInputProps, fromInputProps, reset } =
     useRangeDatepicker({
       fromDate: initialStartDate,
       toDate: initialEndDate,
-      disabled: data.map((travel) => ({
+      disabled: savedTravels.map((travel) => ({
         from: travel.startDate,
         to: travel.endDate,
       })),
@@ -71,21 +71,21 @@ const DateChooser = ({
   useEffect(() => {
     setInitialStartDate(fiveYearsAgo());
     setInitialEndDate(twoYearsForward());
-    const dataString = sessionStorage.getItem("tableData");
-    const listeAvData: Array<Travel> = dataString ? JSON.parse(dataString) : [];
-    setTableData(
-      listeAvData.map((data) => ({
-        ...data,
-        tilDato: new Date(data.endDate),
-        fraDato: new Date(data.startDate),
+    const dataString = sessionStorage.getItem("savedTravels");
+    const savedTravels: Array<Travel> = dataString ? JSON.parse(dataString) : [];
+    setSavedTravels(
+      savedTravels.map((travel) => ({
+        ...travel,
+        endDate: new Date(travel.endDate),
+        startDate: new Date(travel.startDate),
       }))
     );
-  }, [setTableData]);
+  }, [setSavedTravels]);
 
   function handleSubmit(event: any) {
     event.preventDefault();
 
-    let nyReise: Travel = {
+    let newTravel: Travel = {
       id: Date.now(),
       country: country,
       startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk
@@ -97,10 +97,10 @@ const DateChooser = ({
         startDate ?? new Date(0)
       ),
     };
-    const copy = [...data];
-    copy.push(nyReise);
-    setTableData(copy);
-    sessionStorage.setItem("tableData", JSON.stringify(copy));
+    const copy = [...savedTravels];
+    copy.push(newTravel);
+    setSavedTravels(copy);
+    sessionStorage.setItem("savedTravels", JSON.stringify(copy));
 
     resetInputFields();
   }
@@ -114,7 +114,7 @@ const DateChooser = ({
     setPurpose("Ferie");
   };
 
-  const handleFormålChange = (event: any) => {
+  const handlePurposeChange = (event: any) => {
     setPurpose(event.target.value);
   };
 
@@ -129,8 +129,8 @@ const DateChooser = ({
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
-            <DatePicker.Input id="fraDato" {...fromInputProps} label="Fra" />
-            <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
+            <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
+            <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
           </div>
         </DatePicker>
         {startDate && endDate && (
@@ -148,7 +148,7 @@ const DateChooser = ({
           id="formål"
           value={purpose}
           label="Formål med reisen?"
-          onChange={handleFormålChange}
+          onChange={handlePurposeChange}
         >
           <option value="Ferie">Ferie</option>
           <option value="Jobb">Jobb</option>

@@ -12,10 +12,10 @@ type SortState = {
 
 const JourneyTable = ({
   data,
-  setTableData,
+  setSavedTravels,
 }: {
   data: Travel[];
-  setTableData: Dispatch<SetStateAction<Array<Travel>>>;
+  setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [sort, setSort] = useState<SortState>();
 
@@ -61,10 +61,10 @@ const JourneyTable = ({
     return 1;
   });
 
-  const handleDeleteReise = (id: number) => {
-    const updatedData = data.filter((reise) => reise.id !== id); // Filter out the row with the specified ID
-    setTableData(updatedData);
-    sessionStorage.setItem("tableData", JSON.stringify(updatedData)); // Update the state
+  const handleDeleteTravel = (id: number) => {
+    const updatedData = data.filter((travel) => travel.id !== id); // Filter out the row with the specified ID
+    setSavedTravels(updatedData);
+    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
   };
 
   return (
@@ -99,25 +99,25 @@ const JourneyTable = ({
         </Table.Header>
         <Table.Body>
           {sortData.map(
-            ({ id, country: land, startDate: fraDato, endDate: tilDato, EEA: EØS, purpose: formål, duration: varighet }, i) => {
+            ({ id, country, startDate, endDate, EEA, purpose, duration }, i) => {
               return (
                 <Table.Row key={i}>
-                  <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
+                  <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
                   <Table.DataCell>
-                    {format(new Date(fraDato), "dd.MM.yyyy")}
+                    {format(new Date(startDate), "dd.MM.yyyy")}
                   </Table.DataCell>
                   <Table.DataCell>
-                    {format(new Date(tilDato), "dd.MM.yyyy")}
+                    {format(new Date(endDate), "dd.MM.yyyy")}
                   </Table.DataCell>
                   <Table.DataCell>
-                    {formatDuration({ days: varighet })}
+                    {formatDuration({ days: duration })}
                   </Table.DataCell>
-                  <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
-                  <Table.DataCell>{formål}</Table.DataCell>
+                  <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
+                  <Table.DataCell>{purpose}</Table.DataCell>
                   <Table.DataCell>
                     <EditAndDelete
                       id={id}
-                      deleteFunction={handleDeleteReise}
+                      deleteFunction={handleDeleteTravel}
                     />
                   </Table.DataCell>
                 </Table.Row>

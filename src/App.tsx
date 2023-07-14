@@ -7,22 +7,22 @@ import { Travel } from "./models/Travel";
 import { VisualTimeline } from "./components/VisualTimeline";
 
 function App() {
-  const [tableData, setTableData] = useState<Array<Travel>>([]);
+  const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
 
   return (
     <div className="App">
       <header className="App-header" />
 
       <div className="dateChooser">
-        <DateChooser data={tableData} setTableData={setTableData} />
+        <DateChooser savedTravels={savedTravels} setSavedTravels={setSavedTravels} />
       </div>
 
       <div className="table">
-        <JourneyTable data={tableData} setTableData={setTableData} />
+        <JourneyTable data={savedTravels} setSavedTravels={setSavedTravels} />
       </div>
 
       <div className="timeline">
-        <VisualTimeline data={tableData}></VisualTimeline>
+        <VisualTimeline data={savedTravels}></VisualTimeline>
       </div>
     </div>
   );
