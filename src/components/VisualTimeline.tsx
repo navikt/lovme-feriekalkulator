@@ -1,16 +1,16 @@
 import { ParasolBeachIcon, PencilIcon } from "@navikt/aksel-icons";
 import { Timeline } from "@navikt/ds-react";
 import { setYear, subDays } from "date-fns";
-import { Reise } from "../models/Reise";
+import { Travel } from "../models/Travel";
 
-export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
+export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
   const range = (from: number, to: number) =>
     new Array(to - from + 1).fill(from).map((n, i) => n + i);
 
   const years: number[] = Array.from(
     new Set(
       data.flatMap((travel) =>
-        range(travel.fraDato.getFullYear(), travel.tilDato.getFullYear())
+        range(travel.startDate.getFullYear(), travel.endDate.getFullYear())
       )
     )
   ).sort((a, b) => a - b);
@@ -30,29 +30,29 @@ export const VisualTimeline = ({ data }: { data: Array<Reise> }) => {
             {data
               .filter(
                 (travel) =>
-                  travel.fraDato.getFullYear() === year ||
-                  travel.tilDato.getFullYear() === year ||
-                  (travel.fraDato.getFullYear() < year &&
-                    travel.tilDato.getFullYear() > year)
+                  travel.startDate.getFullYear() === year ||
+                  travel.endDate.getFullYear() === year ||
+                  (travel.startDate.getFullYear() < year &&
+                    travel.endDate.getFullYear() > year)
               )
-              .map((travel: Reise, i) => {
+              .map((travel: Travel, i) => {
                 return (
                   <Timeline.Period
                     key={i}
                     start={
-                      travel.fraDato.getFullYear() === year
-                        ? setYear(travel.fraDato, 1970)
-                        : setYear(travel.fraDato, 1969)
+                      travel.startDate.getFullYear() === year
+                        ? setYear(travel.startDate, 1970)
+                        : setYear(travel.startDate, 1969)
                     }
                     end={
-                      travel.tilDato.getFullYear() === year
-                        ? setYear(travel.tilDato, 1970)
-                        : setYear(travel.tilDato, 1971)
+                      travel.endDate.getFullYear() === year
+                        ? setYear(travel.endDate, 1970)
+                        : setYear(travel.endDate, 1971)
                     }
                     status={"success"}
                     icon={<PencilIcon aria-hidden />}
                   >
-                    {travel.land ?? null}
+                    {travel.country ?? null}
                   </Timeline.Period>
                 );
               })}

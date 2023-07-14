@@ -5,9 +5,9 @@ import {
 } from "@navikt/aksel-icons";
 import { Dropdown } from "@navikt/ds-react";
 import "@navikt/ds-tokens";
-import "./RedigerSletteDropdown.css";
+import "./EditAndDelete.css";
 
-export const RedigerSlettDropdown = ({
+export const EditAndDelete = ({
   id,
   deleteFunction,
   }: {

@@ -1,12 +1,12 @@
 import { Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
-import { Reise } from "../models/Reise";
-import { RedigerSlettDropdown } from "./RedigerSletteDropdown";
+import { Travel } from "../models/Travel";
+import { EditAndDelete } from "./EditAndDelete";
 import "./JourneyTable.css";
 
 type SortState = {
-  orderBy: keyof Reise;
+  orderBy: keyof Travel;
   direction: "ascending" | "descending";
 };
 
@@ -14,12 +14,12 @@ const JourneyTable = ({
   data,
   setTableData,
 }: {
-  data: Reise[];
-  setTableData: Dispatch<SetStateAction<Array<Reise>>>;
+  data: Travel[];
+  setTableData: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [sort, setSort] = useState<SortState>();
 
-  const handleSort = (sortKey: keyof Reise) => {
+  const handleSort = (sortKey: keyof Travel) => {
     setSort((sort) => {
       if (!sort) {
         return {
@@ -38,13 +38,13 @@ const JourneyTable = ({
     });
   };
 
-  let sortData: Reise[] = data;
+  let sortData: Travel[] = data;
 
   sortData = sortData.slice().sort((a, b) => {
     if (sort === undefined) {
       return 1;
     } else if (sort) {
-      const comparator = (a: Reise, b: Reise, orderBy: keyof Reise) => {
+      const comparator = (a: Travel, b: Travel, orderBy: keyof Travel) => {
         if (b[orderBy] < a[orderBy] || b[orderBy] === undefined) {
           return -1;
         }
@@ -71,7 +71,7 @@ const JourneyTable = ({
     <>
       <Table
         sort={sort}
-        onSortChange={(sortKey) => handleSort(sortKey as keyof Reise)}
+        onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
         <Table.Header className="tableheader">
           <Table.Row>
@@ -99,7 +99,7 @@ const JourneyTable = ({
         </Table.Header>
         <Table.Body>
           {sortData.map(
-            ({ id, land, fraDato, tilDato, EØS, formål, varighet }, i) => {
+            ({ id, country: land, startDate: fraDato, endDate: tilDato, EEA: EØS, purpose: formål, duration: varighet }, i) => {
               return (
                 <Table.Row key={i}>
                   <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
@@ -115,7 +115,7 @@ const JourneyTable = ({
                   <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
                   <Table.DataCell>{formål}</Table.DataCell>
                   <Table.DataCell>
-                    <RedigerSlettDropdown
+                    <EditAndDelete
                       id={id}
                       deleteFunction={handleDeleteReise}
                     />

@@ -15,23 +15,23 @@ import {
   formatDuration,
 } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Reise } from "../models/Reise";
-import LandVelger from "./LandVelger";
+import { Travel } from "../models/Travel";
+import CountryChooser from "./CountryChooser";
 
 const DateChooser = ({
   data,
   setTableData,
 }: {
-  data: Array<Reise>;
-  setTableData: Dispatch<SetStateAction<Array<Reise>>>;
+  data: Array<Travel>;
+  setTableData: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [initialStartDate, setInitialStartDate] = useState(new Date());
   const [initialEndDate, setInitialEndDate] = useState(new Date());
-  const [land, setLand] = useState("");
-  const [fromDate, setFromDate] = useState<Date | undefined>();
-  const [toDate, setToDate] = useState<Date | undefined>();
-  const [EØS, setEØS] = useState<boolean>(false);
-  const [formål, setFormål] = useState("Ferie");
+  const [country, setCountry] = useState("");
+  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [endDate, setEndDate] = useState<Date | undefined>();
+  const [EEA, setEEA] = useState<boolean>(false);
+  const [purpose, setPurpose] = useState("Ferie");
 
   const fiveYearsAgo = () => {
     const today = new Date();
@@ -54,16 +54,16 @@ const DateChooser = ({
       fromDate: initialStartDate,
       toDate: initialEndDate,
       disabled: data.map((travel) => ({
-        from: travel.fraDato,
-        to: travel.tilDato,
+        from: travel.startDate,
+        to: travel.endDate,
       })),
       onRangeChange: (selectedRange) => {
         if (
           selectedRange?.from !== undefined &&
           selectedRange?.to !== undefined
         ) {
-          setToDate(selectedRange.to);
-          setFromDate(selectedRange.from);
+          setEndDate(selectedRange.to);
+          setStartDate(selectedRange.from);
         }
       },
     });
@@ -72,12 +72,12 @@ const DateChooser = ({
     setInitialStartDate(fiveYearsAgo());
     setInitialEndDate(twoYearsForward());
     const dataString = sessionStorage.getItem("tableData");
-    const listeAvData: Array<Reise> = dataString ? JSON.parse(dataString) : [];
+    const listeAvData: Array<Travel> = dataString ? JSON.parse(dataString) : [];
     setTableData(
       listeAvData.map((data) => ({
         ...data,
-        tilDato: new Date(data.tilDato),
-        fraDato: new Date(data.fraDato),
+        tilDato: new Date(data.endDate),
+        fraDato: new Date(data.startDate),
       }))
     );
   }, [setTableData]);
@@ -85,16 +85,16 @@ const DateChooser = ({
   function handleSubmit(event: any) {
     event.preventDefault();
 
-    let nyReise: Reise = {
+    let nyReise: Travel = {
       id: Date.now(),
-      land: land,
-      fraDato: fromDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      EØS: EØS ?? false,
-      formål: formål,
-      varighet: differenceInCalendarDays(
-        toDate ?? new Date(0),
-        fromDate ?? new Date(0)
+      country: country,
+      startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk
+      endDate: endDate ?? new Date(0), //TODO: Fjerne ved input sjekk
+      EEA: EEA ?? false,
+      purpose: purpose,
+      duration: differenceInCalendarDays(
+        endDate ?? new Date(0),
+        startDate ?? new Date(0)
       ),
     };
     const copy = [...data];
@@ -106,16 +106,16 @@ const DateChooser = ({
   }
 
   const resetInputFields = () => {
-    setLand("");
+    setCountry("");
     reset();
-    setFromDate(undefined);
-    setToDate(undefined);
-    setEØS(false);
-    setFormål("Ferie");
+    setStartDate(undefined);
+    setEndDate(undefined);
+    setEEA(false);
+    setPurpose("Ferie");
   };
 
   const handleFormålChange = (event: any) => {
-    setFormål(event.target.value);
+    setPurpose(event.target.value);
   };
 
   return (
@@ -125,7 +125,7 @@ const DateChooser = ({
       </Heading>
       <form className="form" onSubmit={handleSubmit}>
         <div>
-          <LandVelger valgtLand={land} setLand={setLand} setEØS={setEØS} />
+          <CountryChooser chosenCountry={country} setLand={setCountry} setEØS={setEEA} />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
@@ -133,11 +133,11 @@ const DateChooser = ({
             <DatePicker.Input id="tilDato" {...toInputProps} label="Til" />
           </div>
         </DatePicker>
-        {fromDate && toDate && (
+        {startDate && endDate && (
           <div id="diffrenceDays">
             Du har vært{" "}
             {formatDuration({
-              days: differenceInCalendarDays(toDate, fromDate),
+              days: differenceInCalendarDays(endDate, startDate),
             })}{" "}
             i utlandet
           </div>
@@ -146,7 +146,7 @@ const DateChooser = ({
         <Select
           className="dropdown"
           id="formål"
-          value={formål}
+          value={purpose}
           label="Formål med reisen?"
           onChange={handleFormålChange}
         >

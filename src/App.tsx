@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import "./App.css";
 import DateChooser from "./components/DateChooser";
 import JourneyTable from "./components/JourneyTable";
-import { Reise } from "./models/Reise";
+import { Travel } from "./models/Travel";
 import { VisualTimeline } from "./components/VisualTimeline";
 
 function App() {
-  const [tableData, setTableData] = useState<Array<Reise>>([]);
+  const [tableData, setTableData] = useState<Array<Travel>>([]);
 
   return (
     <div className="App">
