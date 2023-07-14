@@ -5,4 +5,5 @@ export interface Reise {
   tilDato: Date;
   EØS: boolean;
   formål: string;
+  varighet: number;
 }

@@ -1,5 +1,5 @@
 import { Table } from "@navikt/ds-react";
-import { differenceInCalendarDays, format, formatDuration } from "date-fns";
+import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Reise } from "../models/Reise";
 import { RedigerSlettDropdown } from "./RedigerSletteDropdown";
@@ -98,32 +98,32 @@ const JourneyTable = ({
           </Table.Row>
         </Table.Header>
         <Table.Body>
-          {sortData.map(({ id, land, fraDato, tilDato, EØS, formål }, i) => {
-            return (
-              <Table.Row key={i}>
-                <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
-                <Table.DataCell>
-                  {format(new Date(fraDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {format(new Date(tilDato), "dd.MM.yyyy")}
-                </Table.DataCell>
-                <Table.DataCell>
-                  {formatDuration({
-                    days: differenceInCalendarDays(tilDato, fraDato),
-                  })}
-                </Table.DataCell>
-                <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
-                <Table.DataCell>{formål}</Table.DataCell>
-                <Table.DataCell>
-                  <RedigerSlettDropdown
-                    id={id}
-                    deleteFunction={handleDeleteReise}
-                  />
-                </Table.DataCell>
-              </Table.Row>
-            );
-          })}
+          {sortData.map(
+            ({ id, land, fraDato, tilDato, EØS, formål, varighet }, i) => {
+              return (
+                <Table.Row key={i}>
+                  <Table.HeaderCell scope="row">{land}</Table.HeaderCell>
+                  <Table.DataCell>
+                    {format(new Date(fraDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    {format(new Date(tilDato), "dd.MM.yyyy")}
+                  </Table.DataCell>
+                  <Table.DataCell>
+                    {formatDuration({ days: varighet })}
+                  </Table.DataCell>
+                  <Table.DataCell>{EØS ? "Ja" : "Nei"}</Table.DataCell>
+                  <Table.DataCell>{formål}</Table.DataCell>
+                  <Table.DataCell>
+                    <RedigerSlettDropdown
+                      id={id}
+                      deleteFunction={handleDeleteReise}
+                    />
+                  </Table.DataCell>
+                </Table.Row>
+              );
+            }
+          )}
         </Table.Body>
       </Table>
     </>

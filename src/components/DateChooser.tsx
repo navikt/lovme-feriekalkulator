@@ -92,6 +92,10 @@ const DateChooser = ({
       tilDato: toDate ?? new Date(0), //TODO: Fjerne ved input sjekk
       EØS: EØS ?? false,
       formål: formål,
+      varighet: differenceInCalendarDays(
+        toDate ?? new Date(0),
+        fromDate ?? new Date(0)
+      ),
     };
     const copy = [...data];
     copy.push(nyReise);
