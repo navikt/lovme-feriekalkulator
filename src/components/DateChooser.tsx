@@ -18,6 +18,11 @@ const DateChooser = ({
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
+  const [resetDatePicker, setResetDatePicker] = useState(false);
+
+  const handleResetDatePicker = () => {
+    setResetDatePicker(!resetDatePicker);
+  };
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -62,6 +67,7 @@ const DateChooser = ({
     setEndDate(undefined);
     setEEA(false);
     setPurpose("Ferie");
+    handleResetDatePicker();
   };
 
   const handlePurposeChange = (event: any) => {
@@ -91,6 +97,8 @@ const DateChooser = ({
           endDate={endDate}
           setStartDate={setStartDate}
           setEndDate={setEndDate}
+          resetDatePicker={resetDatePicker}
+          setResetDatePicker={setResetDatePicker}
         />
 
         <Select

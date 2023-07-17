@@ -15,22 +15,19 @@ export const CustomDatePicker = ({
   endDate,
   setStartDate,
   setEndDate,
+  resetDatePicker,
+  setResetDatePicker,
 }: {
   startDate: Date | undefined;
   endDate: Date | undefined;
   setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
+  resetDatePicker: boolean;
+  setResetDatePicker: Dispatch<SetStateAction<boolean>>;
 }) => {
   const [initialStartDate, setInitialStartDate] = useState(new Date());
   const [initialEndDate, setInitialEndDate] = useState(new Date());
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
-
-  useEffect(() => {
-    calculateInitialStartDate();
-    calculateInitialEndDate();
-    const dataString = sessionStorage.getItem("savedTravels");
-    setSavedTravels(dataString ? JSON.parse(dataString) : []);
-  }, []);
 
   const calculateInitialStartDate = () => {
     const todaysDate = new Date();
@@ -66,6 +63,18 @@ export const CustomDatePicker = ({
         }
       },
     });
+
+  useEffect(() => {
+    calculateInitialStartDate();
+    calculateInitialEndDate();
+    const dataString = sessionStorage.getItem("savedTravels");
+    setSavedTravels(dataString ? JSON.parse(dataString) : []);
+
+    if (resetDatePicker) {
+      reset();
+      setResetDatePicker(false);
+    }
+  }, [resetDatePicker, setResetDatePicker, reset]);
 
   return (
     <div>
