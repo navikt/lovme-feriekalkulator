@@ -10,11 +10,12 @@ import "./EditAndDelete.css";
 export const EditAndDelete = ({
   id,
   deleteFunction,
-  }: {
-    id: number
-    deleteFunction: any
-  }
-) => {
+  editFunction,
+}: {
+  id: number;
+  deleteFunction: any;
+  editFunction: any;
+}) => {
   return (
     <Dropdown>
       <Dropdown.Toggle className="btn">
@@ -22,7 +23,11 @@ export const EditAndDelete = ({
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Dropdown.Menu.GroupedList>
-          <Dropdown.Menu.GroupedList.Item onClick={() => {}}>
+          <Dropdown.Menu.GroupedList.Item
+            onClick={() => {
+              editFunction();
+            }}
+          >
             Rediger <PencilFillIcon></PencilFillIcon>
           </Dropdown.Menu.GroupedList.Item>
           <Dropdown.Menu.GroupedList.Item

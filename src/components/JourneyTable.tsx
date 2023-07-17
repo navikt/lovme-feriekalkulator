@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
 import { EditAndDelete } from "./EditAndDelete";
 import "./JourneyTable.css";
+import { EditModal } from "./EditModal";
 
 type SortState = {
   orderBy: keyof Travel;
@@ -18,6 +19,8 @@ const JourneyTable = ({
   setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [sort, setSort] = useState<SortState>();
+
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const handleSort = (sortKey: keyof Travel) => {
     setSort((sort) => {
@@ -65,6 +68,10 @@ const JourneyTable = ({
     const updatedData = savedTravels.filter((travel) => travel.id !== id); // Filter out the row with the specified ID
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
+  };
+
+  const handleEditTravel = (id: number) => {
+    setOpenEditModal(true);
   };
 
   return (
@@ -121,6 +128,7 @@ const JourneyTable = ({
                     <EditAndDelete
                       id={id}
                       deleteFunction={handleDeleteTravel}
+                      editFunction={handleEditTravel}
                     />
                   </Table.DataCell>
                 </Table.Row>
@@ -129,6 +137,7 @@ const JourneyTable = ({
           )}
         </Table.Body>
       </Table>
+      <EditModal open={openEditModal} setOpen={setOpenEditModal}></EditModal>
     </>
   );
 };
