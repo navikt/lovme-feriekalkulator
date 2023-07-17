@@ -1,22 +1,10 @@
 import "./DateChooser.css";
-import {
-  DatePicker,
-  useRangeDatepicker,
-  Select,
-  Button,
-  Heading,
-} from "@navikt/ds-react";
-import {
-  subYears,
-  startOfYear,
-  addYears,
-  endOfYear,
-  differenceInCalendarDays,
-  formatDuration,
-} from "date-fns";
+import { Select, Button, Heading } from "@navikt/ds-react";
+import { differenceInCalendarDays } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Travel } from "../models/Travel";
 import CountryChooser from "./CountryChooser";
+import { CustomDatePicker } from "./CustomDatePicker";
 
 const DateChooser = ({
   savedTravels,
@@ -25,52 +13,13 @@ const DateChooser = ({
   savedTravels: Array<Travel>;
   setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
-  const [initialStartDate, setInitialStartDate] = useState(new Date());
-  const [initialEndDate, setInitialEndDate] = useState(new Date());
   const [country, setCountry] = useState("");
   const [startDate, setStartDate] = useState<Date | undefined>();
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
 
-  const fiveYearsAgo = () => {
-    const todaysDate = new Date();
-    const dateFiveYearsAgo = subYears(todaysDate, 5);
-    const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
-
-    return firstOfJanuarysDate;
-  };
-
-  const twoYearsForward = () => {
-    const todaysDate = new Date();
-    const twoYearsForwardDate = addYears(todaysDate, 2);
-    const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
-
-    return lastOfDecembersDate;
-  };
-
-  const { datepickerProps, toInputProps, fromInputProps, reset } =
-    useRangeDatepicker({
-      fromDate: initialStartDate,
-      toDate: initialEndDate,
-      disabled: savedTravels.map((travel) => ({
-        from: travel.startDate,
-        to: travel.endDate,
-      })),
-      onRangeChange: (selectedRange) => {
-        if (
-          selectedRange?.from !== undefined &&
-          selectedRange?.to !== undefined
-        ) {
-          setEndDate(selectedRange.to);
-          setStartDate(selectedRange.from);
-        }
-      },
-    });
-
   useEffect(() => {
-    setInitialStartDate(fiveYearsAgo());
-    setInitialEndDate(twoYearsForward());
     const dataString = sessionStorage.getItem("savedTravels");
     const savedTravels: Array<Travel> = dataString
       ? JSON.parse(dataString)
@@ -109,7 +58,6 @@ const DateChooser = ({
 
   const resetInputFields = () => {
     setCountry("");
-    reset();
     setStartDate(undefined);
     setEndDate(undefined);
     setEEA(false);
@@ -138,21 +86,12 @@ const DateChooser = ({
             setEEA={setEEA}
           />
         </div>
-        <DatePicker {...datepickerProps} dropdownCaption>
-          <div className="datepicker">
-            <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
-            <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
-          </div>
-        </DatePicker>
-        {startDate && endDate && (
-          <div id="differenceInDays">
-            Du har vært{" "}
-            {formatDuration({
-              days: differenceInCalendarDays(endDate, startDate),
-            })}{" "}
-            i utlandet
-          </div>
-        )}
+        <CustomDatePicker
+          startDate={startDate}
+          endDate={endDate}
+          setStartDate={setStartDate}
+          setEndDate={setEndDate}
+        />
 
         <Select
           className="dropdown"
