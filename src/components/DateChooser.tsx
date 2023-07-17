@@ -72,7 +72,9 @@ const DateChooser = ({
     setInitialStartDate(fiveYearsAgo());
     setInitialEndDate(twoYearsForward());
     const dataString = sessionStorage.getItem("savedTravels");
-    const savedTravels: Array<Travel> = dataString ? JSON.parse(dataString) : [];
+    const savedTravels: Array<Travel> = dataString
+      ? JSON.parse(dataString)
+      : [];
     setSavedTravels(
       savedTravels.map((travel) => ({
         ...travel,
@@ -118,6 +120,11 @@ const DateChooser = ({
     setPurpose(event.target.value);
   };
 
+  const handleDeleteAll = () => {
+    setSavedTravels([]);
+    sessionStorage.clear();
+  };
+
   return (
     <div className="card">
       <Heading level="1" size="xlarge">
@@ -125,7 +132,11 @@ const DateChooser = ({
       </Heading>
       <form className="form" onSubmit={handleSubmit}>
         <div>
-          <CountryChooser chosenCountry={country} setCountry={setCountry} setEEA={setEEA} />
+          <CountryChooser
+            chosenCountry={country}
+            setCountry={setCountry}
+            setEEA={setEEA}
+          />
         </div>
         <DatePicker {...datepickerProps} dropdownCaption>
           <div className="datepicker">
@@ -159,6 +170,10 @@ const DateChooser = ({
           Legg til
         </Button>
       </form>
+
+      <Button className="clearall" variant="danger" onClick={handleDeleteAll}>
+        Slett tabell
+      </Button>
     </div>
   );
 };

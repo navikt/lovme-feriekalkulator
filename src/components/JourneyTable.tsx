@@ -99,7 +99,10 @@ const JourneyTable = ({
         </Table.Header>
         <Table.Body>
           {sortData.map(
-            ({ id, country, startDate, endDate, EEA, purpose, duration }, i) => {
+            (
+              { id, country, startDate, endDate, EEA, purpose, duration },
+              i
+            ) => {
               return (
                 <Table.Row key={i}>
                   <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
