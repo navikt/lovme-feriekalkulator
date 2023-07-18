@@ -137,7 +137,7 @@ const JourneyTable = ({
           )}
         </Table.Body>
       </Table>
-      <EditModal open={openEditModal} setOpen={setOpenEditModal}></EditModal>
+      <EditModal open={openEditModal} setOpen={setOpenEditModal} savedTravels={savedTravels}></EditModal>
     </>
   );
 };
