@@ -1,7 +1,7 @@
 import "./DateChooser.css";
 import { Select, Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import CountryChooser from "./CountryChooser";
 import { CustomDatePicker } from "./CustomDatePicker";
@@ -18,11 +18,7 @@ const DateChooser = ({
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
-  const [resetDatePicker, setResetDatePicker] = useState(false);
-
-  const handleResetDatePicker = () => {
-    setResetDatePicker(!resetDatePicker);
-  };
+  const datePickerRef = useRef<any>(null);
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -67,7 +63,10 @@ const DateChooser = ({
     setEndDate(undefined);
     setEEA(false);
     setPurpose("Ferie");
-    handleResetDatePicker();
+    if(datePickerRef.current && datePickerRef.current.reset) {
+      datePickerRef.current.reset();
+      console.log("DateChooser kjørte reset")
+    }
   };
 
   const handlePurposeChange = (event: any) => {
@@ -78,6 +77,7 @@ const DateChooser = ({
     setSavedTravels([]);
     sessionStorage.clear();
   };
+
 
   return (
     <div className="card">
@@ -97,8 +97,7 @@ const DateChooser = ({
           endDate={endDate}
           setStartDate={setStartDate}
           setEndDate={setEndDate}
-          resetDatePicker={resetDatePicker}
-          setResetDatePicker={setResetDatePicker}
+          ref={datePickerRef}
         />
 
         <Select

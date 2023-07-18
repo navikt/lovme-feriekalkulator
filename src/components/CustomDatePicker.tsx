@@ -7,92 +7,105 @@ import {
   startOfYear,
   subYears,
 } from "date-fns";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from "react";
 import { Travel } from "../models/Travel";
 
-export const CustomDatePicker = ({
-  startDate,
-  endDate,
-  setStartDate,
-  setEndDate,
-  resetDatePicker,
-  setResetDatePicker,
-}: {
+interface CustomDatePickerProps {
   startDate: Date | undefined;
   endDate: Date | undefined;
   setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
-  resetDatePicker: boolean;
-  setResetDatePicker: Dispatch<SetStateAction<boolean>>;
-}) => {
-  const [initialStartDate, setInitialStartDate] = useState(new Date());
-  const [initialEndDate, setInitialEndDate] = useState(new Date());
-  const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
+}
 
-  const calculateInitialStartDate = () => {
-    const todaysDate = new Date();
-    const dateFiveYearsAgo = subYears(todaysDate, 5);
-    const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
+export const CustomDatePicker = forwardRef(
+  (
+    { startDate, endDate, setStartDate, setEndDate }: CustomDatePickerProps,
+    ref
+  ) => {
+    const [initialStartDate, setInitialStartDate] = useState(new Date());
+    const [initialEndDate, setInitialEndDate] = useState(new Date());
+    const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
 
-    setInitialStartDate(firstOfJanuarysDate);
-  };
+    const calculateInitialStartDate = () => {
+      const todaysDate = new Date();
+      const dateFiveYearsAgo = subYears(todaysDate, 5);
+      const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
 
-  const calculateInitialEndDate = () => {
-    const todaysDate = new Date();
-    const twoYearsForwardDate = addYears(todaysDate, 2);
-    const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
+      setInitialStartDate(firstOfJanuarysDate);
+    };
 
-    setInitialEndDate(lastOfDecembersDate);
-  };
+    const calculateInitialEndDate = () => {
+      const todaysDate = new Date();
+      const twoYearsForwardDate = addYears(todaysDate, 2);
+      const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
 
-  const { datepickerProps, toInputProps, fromInputProps, reset } =
-    useRangeDatepicker({
-      fromDate: initialStartDate,
-      toDate: initialEndDate,
-      disabled: savedTravels.map((travel) => ({
+      setInitialEndDate(lastOfDecembersDate);
+    };
+
+    const CalculateDisabledDays = () => {
+      const svar = savedTravels.map((travel) => ({
         from: travel.startDate,
         to: travel.endDate,
-      })),
-      onRangeChange: (selectedRange) => {
-        if (
-          selectedRange?.from !== undefined &&
-          selectedRange?.to !== undefined
-        ) {
-          setEndDate(selectedRange.to);
-          setStartDate(selectedRange.from);
-        }
-      },
-    });
-
-  useEffect(() => {
-    calculateInitialStartDate();
-    calculateInitialEndDate();
-    const dataString = sessionStorage.getItem("savedTravels");
-    setSavedTravels(dataString ? JSON.parse(dataString) : []);
-
-    if (resetDatePicker) {
-      reset();
-      setResetDatePicker(false);
+      }))
+      console.log(svar);
+      return svar;
     }
-  }, [resetDatePicker, setResetDatePicker, reset]);
 
-  return (
-    <div>
-      <DatePicker {...datepickerProps} dropdownCaption>
-        <div className="datepicker">
-          <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
-          <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
-        </div>
-      </DatePicker>
-      {startDate && endDate && (
-        <div id="differenceInDays">
-          Du har vært{" "}
-          {formatDuration({
-            days: differenceInCalendarDays(endDate, startDate),
-          })}{" "}
-          i utlandet
-        </div>
-      )}
-    </div>
-  );
-};
+    const { datepickerProps, toInputProps, fromInputProps, reset } =
+      useRangeDatepicker({
+        fromDate: initialStartDate,
+        toDate: initialEndDate,
+        disabled: CalculateDisabledDays(),
+        onRangeChange: (selectedRange) => {
+          if (
+            selectedRange?.from !== undefined &&
+            selectedRange?.to !== undefined
+          ) {
+            setEndDate(selectedRange.to);
+            setStartDate(selectedRange.from);
+          }
+        },
+      });
+
+    useImperativeHandle(ref, () => ({
+      reset: () => {
+        reset();
+        console.log("CoustomDatePicker har kjørt reset()")
+      },
+    }));
+
+    useEffect(() => {
+      calculateInitialStartDate();
+      calculateInitialEndDate();
+      const dataString = sessionStorage.getItem("savedTravels");
+      setSavedTravels(dataString ? JSON.parse(dataString) : []);
+    }, []);
+
+    return (
+      <div>
+        <DatePicker {...datepickerProps} dropdownCaption>
+          <div className="datepicker">
+            <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
+            <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
+          </div>
+        </DatePicker>
+        {startDate && endDate && (
+          <div id="differenceInDays">
+            Du har vært{" "}
+            {formatDuration({
+              days: differenceInCalendarDays(endDate, startDate),
+            })}{" "}
+            i utlandet
+          </div>
+        )}
+      </div>
+    );
+  }
+);
