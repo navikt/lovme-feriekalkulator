@@ -49,20 +49,14 @@ export const CustomDatePicker = forwardRef(
       setInitialEndDate(lastOfDecembersDate);
     };
 
-    const CalculateDisabledDays = () => {
-      const svar = savedTravels.map((travel) => ({
-        from: travel.startDate,
-        to: travel.endDate,
-      }))
-      console.log(svar);
-      return svar;
-    }
-
     const { datepickerProps, toInputProps, fromInputProps, reset } =
       useRangeDatepicker({
         fromDate: initialStartDate,
         toDate: initialEndDate,
-        disabled: CalculateDisabledDays(),
+        disabled: savedTravels.map((travel) => ({
+          from: travel.startDate,
+          to: travel.endDate,
+        })),
         onRangeChange: (selectedRange) => {
           if (
             selectedRange?.from !== undefined &&
@@ -77,15 +71,28 @@ export const CustomDatePicker = forwardRef(
     useImperativeHandle(ref, () => ({
       reset: () => {
         reset();
-        console.log("CoustomDatePicker har kjørt reset()")
+        getTravels();
       },
     }));
+
+    const getTravels = () => {
+      const dataString = sessionStorage.getItem("savedTravels");
+      const savedTravels: Array<Travel> = dataString
+        ? JSON.parse(dataString)
+        : [];
+      setSavedTravels(
+        savedTravels.map((travel) => ({
+          ...travel,
+          endDate: new Date(travel.endDate),
+          startDate: new Date(travel.startDate),
+        }))
+      );
+    };
 
     useEffect(() => {
       calculateInitialStartDate();
       calculateInitialEndDate();
-      const dataString = sessionStorage.getItem("savedTravels");
-      setSavedTravels(dataString ? JSON.parse(dataString) : []);
+      getTravels();
     }, []);
 
     return (
