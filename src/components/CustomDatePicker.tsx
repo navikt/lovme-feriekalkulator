@@ -22,16 +22,22 @@ interface CustomDatePickerProps {
   endDate: Date | undefined;
   setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
+  savedTravels: Array<Travel>;
 }
 
 export const CustomDatePicker = forwardRef(
   (
-    { startDate, endDate, setStartDate, setEndDate }: CustomDatePickerProps,
+    {
+      startDate,
+      endDate,
+      setStartDate,
+      setEndDate,
+      savedTravels,
+    }: CustomDatePickerProps,
     ref
   ) => {
     const [initialStartDate, setInitialStartDate] = useState(new Date());
     const [initialEndDate, setInitialEndDate] = useState(new Date());
-    const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
 
     const calculateInitialStartDate = () => {
       const todaysDate = new Date();
@@ -71,28 +77,12 @@ export const CustomDatePicker = forwardRef(
     useImperativeHandle(ref, () => ({
       reset: () => {
         reset();
-        getTravels();
       },
     }));
-
-    const getTravels = () => {
-      const dataString = sessionStorage.getItem("savedTravels");
-      const savedTravels: Array<Travel> = dataString
-        ? JSON.parse(dataString)
-        : [];
-      setSavedTravels(
-        savedTravels.map((travel) => ({
-          ...travel,
-          endDate: new Date(travel.endDate),
-          startDate: new Date(travel.startDate),
-        }))
-      );
-    };
 
     useEffect(() => {
       calculateInitialStartDate();
       calculateInitialEndDate();
-      getTravels();
     }, []);
 
     return (

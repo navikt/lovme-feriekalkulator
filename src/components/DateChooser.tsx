@@ -63,9 +63,9 @@ const DateChooser = ({
     setEndDate(undefined);
     setEEA(false);
     setPurpose("Ferie");
-    if(datePickerRef.current && datePickerRef.current.reset) {
+    if (datePickerRef.current && datePickerRef.current.reset) {
       datePickerRef.current.reset();
-      console.log("DateChooser kjørte reset")
+      console.log("DateChooser kjørte reset");
     }
   };
 
@@ -77,7 +77,6 @@ const DateChooser = ({
     setSavedTravels([]);
     sessionStorage.clear();
   };
-
 
   return (
     <div className="card">
@@ -98,6 +97,7 @@ const DateChooser = ({
           setStartDate={setStartDate}
           setEndDate={setEndDate}
           ref={datePickerRef}
+          savedTravels={savedTravels}
         />
 
         <Select
