@@ -14,11 +14,17 @@ function App() {
       <header className="App-header" />
 
       <div className="dateChooser">
-        <DateChooser savedTravels={savedTravels} setSavedTravels={setSavedTravels} />
+        <DateChooser
+          savedTravels={savedTravels}
+          setSavedTravels={setSavedTravels}
+        />
       </div>
 
       <div className="table">
-        <JourneyTable savedTravels={savedTravels} setSavedTravels={setSavedTravels} />
+        <JourneyTable
+          savedTravels={savedTravels}
+          setSavedTravels={setSavedTravels}
+        />
       </div>
 
       <div className="timeline">
