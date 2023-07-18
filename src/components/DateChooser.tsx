@@ -1,10 +1,11 @@
 import "./DateChooser.css";
-import { Select, Button, Heading } from "@navikt/ds-react";
+import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import CountryChooser from "./CountryChooser";
 import { CustomDatePicker } from "./CustomDatePicker";
+import { Purpose } from "./Purpose";
 
 const DateChooser = ({
   savedTravels,
@@ -100,17 +101,9 @@ const DateChooser = ({
           savedTravels={savedTravels}
         />
 
-        <Select
-          className="dropdown"
-          id="purpose"
-          value={purpose}
-          label="Formål med reisen?"
-          onChange={handlePurposeChange}
-        >
-          <option value="Ferie">Ferie</option>
-          <option value="Jobb">Jobb</option>
-          <option value="Annet">Annet</option>
-        </Select>
+        <Purpose purpose={purpose}
+                 handlePurposeChange={handlePurposeChange} 
+                 />
 
         <Button className="leggtil" variant="primary" type="submit">
           Legg til
