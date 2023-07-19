@@ -25,84 +25,82 @@ interface CustomDatePickerProps {
   savedTravels: Array<Travel>;
 }
 
-export const CustomDatePicker = forwardRef(
-  (
-    {
-      startDate,
-      endDate,
-      setStartDate,
-      setEndDate,
-      savedTravels,
-    }: CustomDatePickerProps,
-    ref
-  ) => {
-    const [initialStartDate, setInitialStartDate] = useState(new Date());
-    const [initialEndDate, setInitialEndDate] = useState(new Date());
+export const CustomDatePicker = forwardRef(function Test(
+  {
+    startDate,
+    endDate,
+    setStartDate,
+    setEndDate,
+    savedTravels,
+  }: CustomDatePickerProps,
+  ref
+) {
+  const [initialStartDate, setInitialStartDate] = useState(new Date());
+  const [initialEndDate, setInitialEndDate] = useState(new Date());
 
-    const calculateInitialStartDate = () => {
-      const todaysDate = new Date();
-      const dateFiveYearsAgo = subYears(todaysDate, 5);
-      const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
+  const calculateInitialStartDate = () => {
+    const todaysDate = new Date();
+    const dateFiveYearsAgo = subYears(todaysDate, 5);
+    const firstOfJanuarysDate = startOfYear(dateFiveYearsAgo);
 
-      setInitialStartDate(firstOfJanuarysDate);
-    };
+    setInitialStartDate(firstOfJanuarysDate);
+  };
 
-    const calculateInitialEndDate = () => {
-      const todaysDate = new Date();
-      const twoYearsForwardDate = addYears(todaysDate, 2);
-      const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
+  const calculateInitialEndDate = () => {
+    const todaysDate = new Date();
+    const twoYearsForwardDate = addYears(todaysDate, 2);
+    const lastOfDecembersDate = endOfYear(twoYearsForwardDate);
 
-      setInitialEndDate(lastOfDecembersDate);
-    };
+    setInitialEndDate(lastOfDecembersDate);
+  };
 
-    const { datepickerProps, toInputProps, fromInputProps, reset } =
-      useRangeDatepicker({
-        fromDate: initialStartDate,
-        toDate: initialEndDate,
-        disabled: savedTravels.map((travel) => ({
-          from: travel.startDate,
-          to: travel.endDate,
-        })),
-        onRangeChange: (selectedRange) => {
-          if (
-            selectedRange?.from !== undefined &&
-            selectedRange?.to !== undefined
-          ) {
-            setEndDate(selectedRange.to);
-            setStartDate(selectedRange.from);
-          }
-        },
-      });
-
-    useImperativeHandle(ref, () => ({
-      reset: () => {
-        reset();
+  const { datepickerProps, toInputProps, fromInputProps, reset } =
+    useRangeDatepicker({
+      fromDate: initialStartDate,
+      toDate: initialEndDate,
+      disabled: savedTravels.map((travel) => ({
+        from: travel.startDate,
+        to: travel.endDate,
+      })),
+      onRangeChange: (selectedRange) => {
+        if (
+          selectedRange?.from !== undefined &&
+          selectedRange?.to !== undefined
+        ) {
+          setEndDate(selectedRange.to);
+          setStartDate(selectedRange.from);
+        }
       },
-    }));
+    });
 
-    useEffect(() => {
-      calculateInitialStartDate();
-      calculateInitialEndDate();
-    }, []);
+  useImperativeHandle(ref, () => ({
+    reset: () => {
+      reset();
+    },
+  }));
 
-    return (
-      <div>
-        <DatePicker {...datepickerProps} dropdownCaption>
-          <div className="datepicker">
-            <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
-            <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
-          </div>
-        </DatePicker>
-        {startDate && endDate && (
-          <div id="differenceInDays">
-            Du har vært{" "}
-            {formatDuration({
-              days: differenceInCalendarDays(endDate, startDate),
-            })}{" "}
-            i utlandet
-          </div>
-        )}
-      </div>
-    );
-  }
-);
+  useEffect(() => {
+    calculateInitialStartDate();
+    calculateInitialEndDate();
+  }, []);
+
+  return (
+    <div>
+      <DatePicker {...datepickerProps} dropdownCaption>
+        <div className="flex items-start gap-10">
+          <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
+          <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
+        </div>
+      </DatePicker>
+      {startDate && endDate && (
+        <div id="differenceInDays">
+          Du har vært{" "}
+          {formatDuration({
+            days: differenceInCalendarDays(endDate, startDate),
+          })}{" "}
+          i utlandet
+        </div>
+      )}
+    </div>
+  );
+});

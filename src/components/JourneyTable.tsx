@@ -3,7 +3,6 @@ import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
 import { EditAndDelete } from "./EditAndDelete";
-import "./JourneyTable.css";
 import { EditModal } from "./EditModal";
 
 type SortState = {
@@ -77,10 +76,11 @@ const JourneyTable = ({
   return (
     <>
       <Table
+        className=""
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
-        <Table.Header className="tableheader">
+        <Table.Header className="sticky top-0 z-10 bg-gray-100">
           <Table.Row>
             <Table.ColumnHeader sortKey="country" sortable>
               Land

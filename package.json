@@ -1,52 +1,31 @@
 {
   "name": "lovme-feriekalkulator",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
-  "dependencies": {
-    "@navikt/aksel-icons": "^4.4.1",
-    "@navikt/ds-css": "^4.4.0",
-    "@navikt/ds-react": "^4.4.0",
-    "@navikt/ds-tailwind": "^4.4.2",
-    "@navikt/ds-tokens": "^4.4.1",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.18.36",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
-    "date-fns": "^2.30.0",
-    "express": "^4.18.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4",
-    "yarn": "^1.22.19"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "@navikt/ds-css": "^4.7.0",
+    "@navikt/ds-react": "^4.7.0",
+    "@navikt/ds-tailwind": "^4.7.0",
+    "@navikt/ds-tokens": "^4.7.0",
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
+    "autoprefixer": "10.4.14",
+    "date-fns": "^2.30.0",
+    "eslint": "8.45.0",
+    "eslint-config-next": "13.4.10",
+    "next": "13.4.10",
+    "postcss": "8.4.26",
+    "postcss-import": "^15.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.3",
+    "typescript": "5.1.6"
   }
 }

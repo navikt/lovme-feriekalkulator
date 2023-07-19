@@ -1,4 +1,3 @@
-import "./DateChooser.css";
 import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
@@ -80,11 +79,11 @@ const DateChooser = ({
   };
 
   return (
-    <div className="card">
+    <div className="bg-[var(--a-white)] flex p-20 items-start flex-col gap-5 self-stretch">
       <Heading level="1" size="xlarge">
         Feriekalkulator
       </Heading>
-      <form className="form" onSubmit={handleSubmit}>
+      <form className="flex flex-col items-start gap-5" onSubmit={handleSubmit}>
         <div>
           <CountryChooser
             chosenCountry={country}
@@ -110,7 +109,7 @@ const DateChooser = ({
         </Button>
       </form>
 
-      <Button className="clearall" variant="danger" onClick={handleDeleteAll}>
+      <Button className="" variant="danger" onClick={handleDeleteAll}>
         Slett tabell
       </Button>
     </div>

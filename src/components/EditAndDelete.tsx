@@ -5,7 +5,6 @@ import {
 } from "@navikt/aksel-icons";
 import { Dropdown } from "@navikt/ds-react";
 import "@navikt/ds-tokens";
-import "./EditAndDelete.css";
 
 export const EditAndDelete = ({
   id,
