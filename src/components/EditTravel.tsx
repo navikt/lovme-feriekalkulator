@@ -9,6 +9,7 @@ export const EditTravel = ({savedTravels}: {savedTravels: Array<Travel>} ) => {
   const [country, setCountry] = useState("");
   const [EEA, setEEA] = useState<boolean>(false);
 
+  console.log(EEA);
   return (
     <div>
       <CountryChooser

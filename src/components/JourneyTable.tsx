@@ -69,7 +69,7 @@ const JourneyTable = ({
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
   };
 
-  const handleEditTravel = (id: number) => {
+  const handleEditTravel = () => {
     setOpenEditModal(true);
   };
 

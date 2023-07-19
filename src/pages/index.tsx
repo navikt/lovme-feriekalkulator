@@ -1,11 +1,9 @@
-import { Inter } from "next/font/google";
 import DateChooser from "@/components/DateChooser";
 import { VisualTimeline } from "@/components/VisualTimeline";
 import { useState } from "react";
 import JourneyTable from "@/components/JourneyTable";
 import { Travel } from "@/models/Travel";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
