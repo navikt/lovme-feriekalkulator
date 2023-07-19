@@ -4,4 +4,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD node server.js
+CMD ["./node_modules/next/dist/bin/next", "start"
