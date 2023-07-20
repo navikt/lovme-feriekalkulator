@@ -35,7 +35,7 @@ export const DeleteModal = ({
             Slett
           </Button>
 
-          <Button variant="tertiary" onClick={() => setOpen(false)}>Avbryt</Button>
+          <Button variant="secondary-neutral" onClick={() => setOpen(false)}>Avbryt</Button>
         </div>
       </div>
     </Modal>
