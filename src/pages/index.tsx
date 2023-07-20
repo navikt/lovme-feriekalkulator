@@ -7,7 +7,7 @@ import { Travel } from "@/models/Travel";
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
   return (
-    <div className="bg-gray-100 flex flex-wrap items-start gap-[var(--a-spacing-4)] mt-[var(--a-spacing-7)] ">
+    <div className=" flex flex-wrap items-start gap-[var(--a-spacing-4)] mt-[var(--a-spacing-7)] ">
       <title>Feriekalkulator</title>
 
       <DateChooser
@@ -15,12 +15,11 @@ export default function Home() {
         setSavedTravels={setSavedTravels}
       />
 
-      <div className="overflow-auto max-h-[648px]">
+   
         <JourneyTable
           savedTravels={savedTravels}
           setSavedTravels={setSavedTravels}
         />
-      </div>
 
       <div className="w-full">
         <VisualTimeline data={savedTravels}></VisualTimeline>

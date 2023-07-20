@@ -74,7 +74,7 @@ const JourneyTable = ({
   };
 
   return (
-    <>
+    <div className="max-h-[648px] overflow-auto">
       <Table
         className=""
         sort={sort}
@@ -137,8 +137,12 @@ const JourneyTable = ({
           )}
         </Table.Body>
       </Table>
-      <EditModal open={openEditModal} setOpen={setOpenEditModal} savedTravels={savedTravels}></EditModal>
-    </>
+      <EditModal
+        open={openEditModal}
+        setOpen={setOpenEditModal}
+        savedTravels={savedTravels}
+      ></EditModal>
+    </div>
   );
 };
 
