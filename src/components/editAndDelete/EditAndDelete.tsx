@@ -7,17 +7,22 @@ import { Dropdown } from "@navikt/ds-react";
 import "@navikt/ds-tokens";
 import { DeleteModal } from "./DeleteModal";
 import { useState } from "react";
+import { Travel } from "@/models/Travel";
+import { EditModal } from "./EditModal";
 
 export const EditAndDelete = ({
   id,
   deleteFunction,
   editFunction,
+  savedTravels,
 }: {
   id: number;
   deleteFunction: any;
   editFunction: any;
+  savedTravels: Array<Travel>;
 }) => {
 
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   return (
@@ -30,7 +35,7 @@ export const EditAndDelete = ({
           <Dropdown.Menu.GroupedList>
             <Dropdown.Menu.GroupedList.Item
               onClick={() => {
-                editFunction();
+                setOpenEditModal(true);
               }}
             >
               Rediger <PencilFillIcon></PencilFillIcon>
@@ -45,6 +50,12 @@ export const EditAndDelete = ({
           </Dropdown.Menu.GroupedList>
         </Dropdown.Menu>
       </Dropdown>
+
+      <EditModal
+        open={openEditModal}
+        setOpen={setOpenEditModal}
+        savedTravels={savedTravels}
+      />
 
       <DeleteModal
         open={openDeleteModal}

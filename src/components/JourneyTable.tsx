@@ -3,7 +3,6 @@ import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
 import { EditAndDelete } from "./editAndDelete/EditAndDelete";
-import { EditModal } from "./editAndDelete/EditModal";
 
 type SortState = {
   orderBy: keyof Travel;
@@ -18,10 +17,6 @@ const JourneyTable = ({
   setSavedTravels: Dispatch<SetStateAction<Array<Travel>>>;
 }) => {
   const [sort, setSort] = useState<SortState>();
-
-  const [openEditModal, setOpenEditModal] = useState(false);
-  
-  
 
   const handleSort = (sortKey: keyof Travel) => {
     setSort((sort) => {
@@ -72,7 +67,7 @@ const JourneyTable = ({
   };
 
   const handleEditTravel = () => {
-    setOpenEditModal(true);
+    console.log("Dette funker ikke enda");
   };
 
   return (
@@ -131,6 +126,7 @@ const JourneyTable = ({
                       id={id}
                       deleteFunction={handleDeleteTravel}
                       editFunction={handleEditTravel}
+                      savedTravels={savedTravels}
                     />
                   </Table.DataCell>
                 </Table.Row>
@@ -139,11 +135,6 @@ const JourneyTable = ({
           )}
         </Table.Body>
       </Table>
-      <EditModal
-        open={openEditModal}
-        setOpen={setOpenEditModal}
-        savedTravels={savedTravels}
-      />
     </div>
   );
 };
