@@ -15,11 +15,10 @@ export default function Home() {
         setSavedTravels={setSavedTravels}
       />
 
-   
-        <JourneyTable
-          savedTravels={savedTravels}
-          setSavedTravels={setSavedTravels}
-        />
+      <JourneyTable
+        savedTravels={savedTravels}
+        setSavedTravels={setSavedTravels}
+      />
 
       <div className="w-full">
         <VisualTimeline data={savedTravels}></VisualTimeline>

@@ -5,6 +5,7 @@ import { Travel } from "../models/Travel";
 import CountryChooser from "./CountryChooser";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
+import { ComboBox } from "./ComboBox";
 
 const DateChooser = ({
   savedTravels,
@@ -86,6 +87,11 @@ const DateChooser = ({
             setCountry={setCountry}
             setEEA={setEEA}
           />
+          <ComboBox
+            chosenCountry={country}
+            setCountry={setCountry}
+            setEEA={setEEA}
+          ></ComboBox>
         </div>
         <CustomDatePicker
           startDate={startDate}
