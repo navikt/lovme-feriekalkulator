@@ -25,7 +25,8 @@ export const DeleteModal = ({
         </Heading>
 
         <div className="flex flex-row items-start gap-5">
-          <Button
+          <Button 
+            variant="danger"
             onClick={() => {
               deleteFunction();
               setOpen(false);
@@ -34,7 +35,7 @@ export const DeleteModal = ({
             Slett
           </Button>
 
-          <Button onClick={() => setOpen(false)}>Avbryt</Button>
+          <Button variant="tertiary" onClick={() => setOpen(false)}>Avbryt</Button>
         </div>
       </div>
     </Modal>
