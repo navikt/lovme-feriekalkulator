@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CountryChooser from "./CountryChooser";
-import { CustomDatePicker } from "./CustomDatePicker";
-import { Travel } from "../models/Travel";
-import { Purpose } from "./Purpose";
+import CountryChooser from "../CountryChooser";
+import { CustomDatePicker } from "../CustomDatePicker";
+import { Travel } from "../../models/Travel";
+import { Purpose } from "../Purpose";
 import { Button, Heading } from "@navikt/ds-react";
 
 export const EditTravel = ({
