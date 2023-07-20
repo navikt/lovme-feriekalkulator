@@ -3,6 +3,7 @@ import CountryChooser from "./CountryChooser";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Travel } from "../models/Travel";
 import { Purpose } from "./Purpose";
+import { Button, Heading } from "@navikt/ds-react";
 
 export const EditTravel = ({
   savedTravels,
@@ -17,7 +18,11 @@ export const EditTravel = ({
 
   console.log(EEA);
   return (
-    <div>
+    <div className=" flex flex-col items-start gap-5">
+      <Heading level="1" size="xlarge">
+        Endre reise
+      </Heading>
+
       <CountryChooser
         chosenCountry={country}
         setCountry={setCountry}
@@ -33,6 +38,8 @@ export const EditTravel = ({
       />
 
       <Purpose purpose={purpose} setPurpose={setPurpose} />
+      <Button>Lagre endringer</Button>
+      <Button variant="danger">Avbryt</Button>
     </div>
   );
 };

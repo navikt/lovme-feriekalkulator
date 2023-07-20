@@ -14,9 +14,11 @@ export const EditModal = ({
 }) => {
   return (
     <Modal
+      className="vw-1/3 vh-2/3 flex px-20 py-12 gap-5 overflow-visible"
       open={open}
       aria-label="Rediger"
       onClose={() => setOpen((x) => !x)}
+      closeButton={false}
       aria-labelledby="modal-heading"
     >
       <EditTravel savedTravels={savedTravels}></EditTravel>
