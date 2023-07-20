@@ -69,10 +69,6 @@ const DateChooser = ({
     }
   };
 
-  const handlePurposeChange = (event: any) => {
-    setPurpose(event.target.value);
-  };
-
   const handleDeleteAll = () => {
     setSavedTravels([]);
     sessionStorage.clear();
@@ -100,9 +96,7 @@ const DateChooser = ({
           savedTravels={savedTravels}
         />
 
-        <Purpose purpose={purpose}
-                 handlePurposeChange={handlePurposeChange} 
-                 />
+        <Purpose purpose={purpose} setPurpose={setPurpose} />
 
         <Button className="leggtil" variant="primary" type="submit">
           Legg til

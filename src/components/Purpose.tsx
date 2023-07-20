@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 import { Select } from "@navikt/ds-react";
 
-export const Purpose = ({purpose, handlePurposeChange} : {purpose: string, handlePurposeChange: any})=> {
+export const Purpose = ({purpose, setPurpose} : {purpose: string, setPurpose: Dispatch<SetStateAction<string>>})=> {
+  
+  const handlePurposeChange = (event: any) => {
+    setPurpose(event.target.value);
+  };
+
   return (
     <Select
           className="dropdown"
