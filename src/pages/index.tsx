@@ -3,6 +3,7 @@ import { VisualTimeline } from "@/components/VisualTimeline";
 import { useState } from "react";
 import JourneyTable from "@/components/JourneyTable";
 import { Travel } from "@/models/Travel";
+import SummaryCard from "@/components/SummaryCard";
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
@@ -20,9 +21,12 @@ export default function Home() {
         setSavedTravels={setSavedTravels}
       />
 
+      <SummaryCard savedTravels={savedTravels} />
       <div className="w-full">
         <VisualTimeline data={savedTravels}></VisualTimeline>
       </div>
+
+      
     </div>
   );
 }
