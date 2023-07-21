@@ -65,7 +65,6 @@ const DateChooser = ({
     setPurpose("Ferie");
     if (datePickerRef.current && datePickerRef.current.reset) {
       datePickerRef.current.reset();
-      console.log("DateChooser kjørte reset");
     }
   };
 

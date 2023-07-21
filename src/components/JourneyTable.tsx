@@ -66,9 +66,19 @@ const JourneyTable = ({
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
   };
 
-  const handleEditTravel = () => {
-    console.log("Dette funker ikke enda");
-  };
+  function handleEditTravel(
+    updatedTravel: Travel,
+    listToUpdate: Array<Travel>,
+    indexToPutTravel: number
+  ) {
+    const updatedData = [
+      ...listToUpdate.slice(0, indexToPutTravel),
+      updatedTravel,
+      ...listToUpdate.slice(indexToPutTravel),
+    ];
+    setSavedTravels(updatedData);
+    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
+  }
 
   return (
     <div className="max-h-[648px] overflow-auto">

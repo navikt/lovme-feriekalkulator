@@ -18,12 +18,51 @@ export const EditAndDelete = ({
 }: {
   id: number;
   deleteFunction: any;
-  editFunction: any;
+  editFunction: Function;
   savedTravels: Array<Travel>;
 }) => {
-
   const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [travelToEdit, setTravelToEdit] = useState<Travel>({
+    id: 0,
+    country: "None",
+    startDate: new Date(),
+    endDate: new Date(),
+    EEA: false,
+    purpose: "Ferie",
+    duration: 0,
+  });
+  const [index, setIndex] = useState<number>(-1);
+
+  function findIndex(){
+    var travel = savedTravels.find((travel) => travel.id === id);
+    if(travel !== undefined){
+    setIndex(savedTravels.indexOf(travel));
+    }
+    setIndex(-1);
+  }
+
+  function findAndRemoveTravel() {
+    var travel = savedTravels.find((travel) => travel.id === id);
+
+    if (travel !== undefined) {
+      const index = savedTravels.indexOf(travel);
+      savedTravels.splice(index, 1);
+      setTravelToEdit(travel);
+    } else {
+      travel = {
+        id: 0,
+        country: "None",
+        startDate: new Date(),
+        endDate: new Date(),
+        EEA: false,
+        purpose: "Ferie",
+        duration: 0,
+      };
+
+      setTravelToEdit(travel);
+    }
+  }
 
   return (
     <div>
@@ -35,6 +74,8 @@ export const EditAndDelete = ({
           <Dropdown.Menu.GroupedList>
             <Dropdown.Menu.GroupedList.Item
               onClick={() => {
+                findIndex();
+                findAndRemoveTravel();
                 setOpenEditModal(true);
               }}
             >
@@ -55,6 +96,9 @@ export const EditAndDelete = ({
         open={openEditModal}
         setOpen={setOpenEditModal}
         savedTravels={savedTravels}
+        travelToEdit={travelToEdit}
+        indexToPutTravel={index}
+        editFunction={editFunction}
       />
 
       <DeleteModal
