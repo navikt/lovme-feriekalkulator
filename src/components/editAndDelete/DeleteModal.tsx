@@ -1,5 +1,5 @@
 import { Button, Heading, Modal } from "@navikt/ds-react";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 
 export const DeleteModal = ({
   open,
@@ -10,6 +10,11 @@ export const DeleteModal = ({
   setOpen: Dispatch<SetStateAction<boolean>>;
   deleteFunction: any;
 }) => {
+  
+  useEffect(() => {
+    Modal.setAppElement("#__next");
+  },[])
+
   return (
     <Modal
       className="vw-1/3 vh-1/3 flex px-10 py-10 gap-5 overflow-visible"

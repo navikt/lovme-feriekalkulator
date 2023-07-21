@@ -7,18 +7,62 @@ import { Dropdown } from "@navikt/ds-react";
 import "@navikt/ds-tokens";
 import { DeleteModal } from "./DeleteModal";
 import { useState } from "react";
+import { Travel } from "@/models/Travel";
+import { EditModal } from "./EditModal";
 
 export const EditAndDelete = ({
   id,
   deleteFunction,
   editFunction,
+  savedTravels,
 }: {
   id: number;
   deleteFunction: any;
-  editFunction: any;
+  editFunction: Function;
+  savedTravels: Array<Travel>;
 }) => {
-
+  const [openEditModal, setOpenEditModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [travelToEdit, setTravelToEdit] = useState<Travel>({
+    id: 0,
+    country: "None",
+    startDate: new Date(),
+    endDate: new Date(),
+    EEA: false,
+    purpose: "Ferie",
+    duration: 0,
+  });
+  const [index, setIndex] = useState<number>(-1);
+
+  function findIndex(){
+    var travel = savedTravels.find((travel) => travel.id === id);
+    if(travel !== undefined){
+    setIndex(savedTravels.indexOf(travel));
+    }
+    setIndex(-1);
+  }
+
+  function findAndRemoveTravel() {
+    var travel = savedTravels.find((travel) => travel.id === id);
+
+    if (travel !== undefined) {
+      const index = savedTravels.indexOf(travel);
+      savedTravels.splice(index, 1);
+      setTravelToEdit(travel);
+    } else {
+      travel = {
+        id: 0,
+        country: "None",
+        startDate: new Date(),
+        endDate: new Date(),
+        EEA: false,
+        purpose: "Ferie",
+        duration: 0,
+      };
+
+      setTravelToEdit(travel);
+    }
+  }
 
   return (
     <div>
@@ -30,7 +74,9 @@ export const EditAndDelete = ({
           <Dropdown.Menu.GroupedList>
             <Dropdown.Menu.GroupedList.Item
               onClick={() => {
-                editFunction();
+                findIndex();
+                findAndRemoveTravel();
+                setOpenEditModal(true);
               }}
             >
               Rediger <PencilFillIcon></PencilFillIcon>
@@ -45,6 +91,15 @@ export const EditAndDelete = ({
           </Dropdown.Menu.GroupedList>
         </Dropdown.Menu>
       </Dropdown>
+
+      <EditModal
+        open={openEditModal}
+        setOpen={setOpenEditModal}
+        savedTravels={savedTravels}
+        travelToEdit={travelToEdit}
+        indexToPutTravel={index}
+        editFunction={editFunction}
+      />
 
       <DeleteModal
         open={openDeleteModal}
