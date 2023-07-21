@@ -73,6 +73,7 @@ const DateChooser = ({
   const handleDeleteAll = () => {
     setSavedTravels([]);
     sessionStorage.clear();
+    console.log("Session storage slettet");
   };
 
   return (
