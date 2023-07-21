@@ -2,8 +2,8 @@ import { Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
-import { EditAndDelete } from "./EditAndDelete";
-import { EditModal } from "./EditModal";
+import { EditAndDelete } from "./editAndDelete/EditAndDelete";
+import { EditModal } from "./editAndDelete/EditModal";
 
 type SortState = {
   orderBy: keyof Travel;
@@ -20,6 +20,8 @@ const JourneyTable = ({
   const [sort, setSort] = useState<SortState>();
 
   const [openEditModal, setOpenEditModal] = useState(false);
+  
+  
 
   const handleSort = (sortKey: keyof Travel) => {
     setSort((sort) => {
@@ -141,7 +143,7 @@ const JourneyTable = ({
         open={openEditModal}
         setOpen={setOpenEditModal}
         savedTravels={savedTravels}
-      ></EditModal>
+      />
     </div>
   );
 };
