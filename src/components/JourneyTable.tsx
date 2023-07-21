@@ -71,6 +71,8 @@ const JourneyTable = ({
     listToUpdate: Array<Travel>,
     indexToPutTravel: number
   ) {
+
+    
     const updatedData = [
       ...listToUpdate.slice(0, indexToPutTravel),
       updatedTravel,

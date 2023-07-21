@@ -97,6 +97,7 @@ const DateChooser = ({
               setEEA={setEEA}
             ></ComboBox>
           </div>
+
           <CustomDatePicker
             startDate={startDate}
             endDate={endDate}
@@ -104,6 +105,7 @@ const DateChooser = ({
             setEndDate={setEndDate}
             ref={datePickerRef}
             savedTravels={savedTravels}
+            selectedDates={undefined}
           />
 
           <Purpose purpose={purpose} setPurpose={setPurpose} />
