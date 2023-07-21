@@ -140,6 +140,11 @@
   resolved "https://registry.yarnpkg.com/@navikt/aksel-icons/-/aksel-icons-4.7.0.tgz#a82f601c5bf91f3e2e1c4636e305d3f5bc361363"
   integrity sha512-HPyH9XafehwYIX4NFfHzr2ebMWi7WHM9gpJwk5R16xS9ZfODzV9fG8eVSRVR13GPSTiorfihPEZBxvUGygDDVA==
 
+"@navikt/aksel-icons@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@navikt/aksel-icons/-/aksel-icons-4.7.1.tgz#ba59886d476ed4de8000b55d66ea8d5a4ffb0496"
+  integrity sha512-olk6u+YZW8DzJOHiNFR2gDbARVPz2RsmTfNMNCPzcfSogdpKOnEiXgyeob44O7EH8hotqxJpEtDQUxajkIZtrg==
+
 "@navikt/ds-css@^4.7.0":
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/@navikt/ds-css/-/ds-css-4.7.0.tgz#a8d22c1aea2d9de544434200b265c296175e2bff"
