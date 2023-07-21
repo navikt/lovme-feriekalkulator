@@ -51,7 +51,7 @@ export const ComboBox = ({
       }}
     >
       <UNSAFE_Combobox
-        label="Hvilke land har du besøkt de siste 6 ukene? Velg opptil flere."
+        label="Hvilket land har du oppholdt deg i?"
         filteredOptions={filteredOptions}
         onToggleSelected={(option) => {
           if (countryOptions.includes(option)) {

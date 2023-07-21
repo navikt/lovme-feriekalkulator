@@ -2,10 +2,10 @@ import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
-import CountryChooser from "./CountryChooser";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
 import { ComboBox } from "./ComboBox";
+import { ParasolBeachIcon } from "@navikt/aksel-icons";
 
 const DateChooser = ({
   savedTravels,
@@ -76,42 +76,54 @@ const DateChooser = ({
   };
 
   return (
-    <div className="bg-[var(--a-white)] flex p-20 items-start flex-col gap-5 self-stretch">
-      <Heading level="1" size="xlarge">
-        Feriekalkulator
-      </Heading>
-      <form className="flex flex-col items-start gap-5" onSubmit={handleSubmit}>
-        <div>
-          <CountryChooser
-            chosenCountry={country}
-            setCountry={setCountry}
-            setEEA={setEEA}
-          />
-          <ComboBox
-            chosenCountry={country}
-            setCountry={setCountry}
-            setEEA={setEEA}
-          ></ComboBox>
-        </div>
-        <CustomDatePicker
-          startDate={startDate}
-          endDate={endDate}
-          setStartDate={setStartDate}
-          setEndDate={setEndDate}
-          ref={datePickerRef}
-          savedTravels={savedTravels}
+    <div id="datechooser-container" className="">
+      <div id="icon-container" className="top-8 justify-center relative flex">
+        <ParasolBeachIcon
+          title="a11y-title"
+          className="bg-orange-200 rounded-full w-16 h-16 p-1 top-0 "
         />
+      </div>
+      <div
+        id="form-container"
+        className="bg-[var(--a-white)] flex p-16 items-center flex-col gap-5 self-stretch"
+      >
+        <Heading level="1" size="xlarge">
+          Feriekalkulator
+        </Heading>
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          <div>
+            <ComboBox
+              chosenCountry={country}
+              setCountry={setCountry}
+              setEEA={setEEA}
+            ></ComboBox>
+          </div>
+          <CustomDatePicker
+            startDate={startDate}
+            endDate={endDate}
+            setStartDate={setStartDate}
+            setEndDate={setEndDate}
+            ref={datePickerRef}
+            savedTravels={savedTravels}
+          />
 
-        <Purpose purpose={purpose} setPurpose={setPurpose} />
+          <Purpose purpose={purpose} setPurpose={setPurpose} />
 
-        <Button className="leggtil" variant="primary" type="submit">
-          Legg til
-        </Button>
-      </form>
-
-      <Button className="" variant="danger" onClick={handleDeleteAll}>
-        Slett tabell
-      </Button>
+          <div className="gap-5 flex flex-row justify-between">
+            <Button className="basis-1/3" variant="primary" type="submit">
+              Legg til
+            </Button>
+            <Button
+              className="basis-1/3"
+              variant="danger"
+              onClick={handleDeleteAll}
+              type="button"
+            >
+              Slett tabell
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
