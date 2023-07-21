@@ -1,5 +1,4 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
-import CountryChooser from "../CountryChooser";
 import { CustomDatePicker } from "../CustomDatePicker";
 import { Travel } from "../../models/Travel";
 import { Purpose } from "../Purpose";
