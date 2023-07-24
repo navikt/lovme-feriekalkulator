@@ -6,27 +6,39 @@ import { Travel } from "@/models/Travel";
 import SummaryCard from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
+import { GuidePanel, Panel } from "@navikt/ds-react";
 setDefaultOptions({ locale: nb });
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
   return (
-    <div className=" flex flex-wrap items-start gap-4 p-7 ">
-      <title>Feriekalkulator</title>
+    <div>
+      <div className="flex flex-wrap  gap-4 p-7 py-12">
+        <div className="flex space-x-4 max-h-[30rem] items-stretch">
+          <DateChooser
+            savedTravels={savedTravels}
+            setSavedTravels={setSavedTravels}
+          />
 
-      <DateChooser
-        savedTravels={savedTravels}
-        setSavedTravels={setSavedTravels}
-      />
+          <div className="bg-transparent rounded-lg overflow-auto w-[50rem]">
+            {savedTravels.length > 0 ? (
+              <JourneyTable
+                savedTravels={savedTravels}
+                setSavedTravels={setSavedTravels}
+              />
+            ) : (
+              <div className="bg-white"></div>
+            )}
+          </div>
+        </div>
 
-      <JourneyTable
-        savedTravels={savedTravels}
-        setSavedTravels={setSavedTravels}
-      />
+        <div className="w-full">
+          <VisualTimeline data={savedTravels}></VisualTimeline>
+        </div>
+      </div>
 
-      <SummaryCard savedTravels={savedTravels} />
-      <div className="w-full">
-        <VisualTimeline data={savedTravels}></VisualTimeline>
+      <div className="flex flex-col w-1/4">
+        <SummaryCard savedTravels={savedTravels} />
       </div>
     </div>
   );
