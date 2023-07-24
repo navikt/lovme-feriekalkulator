@@ -17,12 +17,18 @@ import React, {
 } from "react";
 import { Travel } from "../models/Travel";
 
+interface DateRange {
+  from: Date;
+  to: Date;
+}
+
 interface CustomDatePickerProps {
   startDate: Date | undefined;
   endDate: Date | undefined;
   setStartDate: Dispatch<SetStateAction<Date | undefined>>;
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
   savedTravels: Array<Travel>;
+  selectedDates: DateRange | undefined;
 }
 
 export const CustomDatePicker = forwardRef(function Test(
@@ -32,6 +38,7 @@ export const CustomDatePicker = forwardRef(function Test(
     setStartDate,
     setEndDate,
     savedTravels,
+    selectedDates,
   }: CustomDatePickerProps,
   ref
 ) {
@@ -58,6 +65,7 @@ export const CustomDatePicker = forwardRef(function Test(
     useRangeDatepicker({
       fromDate: initialStartDate,
       toDate: initialEndDate,
+      defaultSelected: selectedDates,
       disabled: savedTravels.map((travel) => ({
         from: travel.startDate,
         to: travel.endDate,
