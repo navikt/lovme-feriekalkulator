@@ -2,6 +2,7 @@ import { ParasolBeachIcon, PencilIcon } from "@navikt/aksel-icons";
 import { Timeline } from "@navikt/ds-react";
 import { setYear, subDays } from "date-fns";
 import { Travel } from "../models/Travel";
+import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
 
 export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
   const range = (from: number, to: number) =>
@@ -14,6 +15,8 @@ export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
       )
     )
   ).sort((a, b) => a - b);
+
+  const {travelsOverLimit} = summaryAndCheckLimits(data);
 
   return data.length === 0 || years.length === 0 ? null : (
     <Timeline
@@ -36,6 +39,7 @@ export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
                     travel.endDate.getFullYear() > year)
               )
               .map((travel: Travel, i) => {
+                const isOverLimit = travelsOverLimit.includes(travel);
                 return (
                   <Timeline.Period
                     key={i}
@@ -49,7 +53,7 @@ export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
                         ? setYear(travel.endDate, 1970)
                         : setYear(travel.endDate, 1971)
                     }
-                    status={"success"}
+                    status={isOverLimit ? "danger" : "success"}
                     icon={<PencilIcon aria-hidden />}
                   >
                     {travel.country ?? null}
