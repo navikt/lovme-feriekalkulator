@@ -1,4 +1,4 @@
-import { Button, Heading } from "@navikt/ds-react";
+import { Button, Heading, Panel } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
@@ -66,7 +66,6 @@ const DateChooser = ({
     setPurpose("Ferie");
     if (datePickerRef.current && datePickerRef.current.reset) {
       datePickerRef.current.reset();
-      console.log("DateChooser kjørte reset");
     }
   };
 
@@ -76,17 +75,21 @@ const DateChooser = ({
   };
 
   return (
-    <div id="datechooser-container" className="">
-      <div id="icon-container" className="top-8 justify-center relative flex">
+    //<div
+    //   id="datechooser-container"
+    //   className="bg-[var(--a-white)] flex p-16 items-center flex-col gap-5 self-stretch"
+    // >
+    <Panel className="relative my-4">
+      <div
+        id="icon-container"
+        className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
+      >
         <ParasolBeachIcon
-          title="a11y-title"
-          className="bg-orange-200 rounded-full w-16 h-16 p-1 top-0 "
+          className="align-middle text-[3rem] absolute -top-[1.5rem]"
+          aria-hidden
         />
       </div>
-      <div
-        id="form-container"
-        className="bg-[var(--a-white)] flex p-16 items-center flex-col gap-5 self-stretch"
-      >
+      <div id="form-container" className="mt-4">
         <Heading level="1" size="xlarge">
           Feriekalkulator
         </Heading>
@@ -98,6 +101,7 @@ const DateChooser = ({
               setEEA={setEEA}
             ></ComboBox>
           </div>
+
           <CustomDatePicker
             startDate={startDate}
             endDate={endDate}
@@ -105,6 +109,7 @@ const DateChooser = ({
             setEndDate={setEndDate}
             ref={datePickerRef}
             savedTravels={savedTravels}
+            selectedDates={undefined}
           />
 
           <Purpose purpose={purpose} setPurpose={setPurpose} />
@@ -124,7 +129,8 @@ const DateChooser = ({
           </div>
         </form>
       </div>
-    </div>
+    </Panel>
+    //</div>
   );
 };
 

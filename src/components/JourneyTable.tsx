@@ -20,8 +20,6 @@ const JourneyTable = ({
   const [sort, setSort] = useState<SortState>();
 
   const [openEditModal, setOpenEditModal] = useState(false);
-  
-  
 
   const handleSort = (sortKey: keyof Travel) => {
     setSort((sort) => {
