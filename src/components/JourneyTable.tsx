@@ -1,4 +1,4 @@
-import { Table } from "@navikt/ds-react";
+import { Heading, Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
@@ -71,8 +71,6 @@ const JourneyTable = ({
     listToUpdate: Array<Travel>,
     indexToPutTravel: number
   ) {
-
-    
     const updatedData = [
       ...listToUpdate.slice(0, indexToPutTravel),
       updatedTravel,
@@ -83,8 +81,9 @@ const JourneyTable = ({
   }
 
   return (
-    <div className="max-h-[648px] overflow-auto">
+    <div className="relative">
       <Table
+        zebraStripes
         className=""
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
@@ -113,39 +112,45 @@ const JourneyTable = ({
             <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
-        <Table.Body>
-          {sortData.map(
-            (
-              { id, country, startDate, endDate, EEA, purpose, duration },
-              i
-            ) => {
-              return (
-                <Table.Row key={i}>
-                  <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
-                  <Table.DataCell>
-                    {format(new Date(startDate), "dd.MM.yyyy")}
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    {format(new Date(endDate), "dd.MM.yyyy")}
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    {formatDuration({ days: duration })}
-                  </Table.DataCell>
-                  <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
-                  <Table.DataCell>{purpose}</Table.DataCell>
-                  <Table.DataCell>
-                    <EditAndDelete
-                      id={id}
-                      deleteFunction={handleDeleteTravel}
-                      editFunction={handleEditTravel}
-                      savedTravels={savedTravels}
-                    />
-                  </Table.DataCell>
-                </Table.Row>
-              );
-            }
-          )}
-        </Table.Body>
+        {sortData.length > 0 ? (
+          <>
+            <Table.Body>
+              {sortData.map(
+                (
+                  { id, country, startDate, endDate, EEA, purpose, duration },
+                  i
+                ) => {
+                  return (
+                    <Table.Row key={i}>
+                      <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
+                      <Table.DataCell>
+                        {format(new Date(startDate), "dd.MM.yyyy")}
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        {format(new Date(endDate), "dd.MM.yyyy")}
+                      </Table.DataCell>
+                      <Table.DataCell>
+                        {formatDuration({ days: duration })}
+                      </Table.DataCell>
+                      <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
+                      <Table.DataCell>{purpose}</Table.DataCell>
+                      <Table.DataCell>
+                        <EditAndDelete
+                          id={id}
+                          deleteFunction={handleDeleteTravel}
+                          editFunction={handleEditTravel}
+                          savedTravels={savedTravels}
+                        />
+                      </Table.DataCell>
+                    </Table.Row>
+                  );
+                }
+              )}
+            </Table.Body>
+          </>
+        ) : (
+          <Heading size="large"></Heading>
+        )}
       </Table>
     </div>
   );

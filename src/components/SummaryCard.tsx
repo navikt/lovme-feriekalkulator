@@ -3,12 +3,8 @@ import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
 import { ExpansionCard, Label, Link } from "@navikt/ds-react";
 import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
 
-
 const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
-
-  const {summary, totalDaysOverLimit} = summaryAndCheckLimits(savedTravels);
-
-  
+  const { summary, totalDaysOverLimit } = summaryAndCheckLimits(savedTravels);
 
   // Conditionally apply the background color class for the SunIcon
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
@@ -28,13 +24,11 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
               <ExpansionCard.Title>
                 Oppsummering av feriedager
               </ExpansionCard.Title>
-              <ExpansionCard.Description>
-                Perioder som har eventuelt gått over grensen er markert med rødt
-              </ExpansionCard.Description>
+              <ExpansionCard.Description>Forklaring</ExpansionCard.Description>
             </div>
           </div>
         </ExpansionCard.Header>
-        <ExpansionCard.Content>
+        <ExpansionCard.Content className="overflow-auto max-h-[24rem]">
           Dette er en oppsummering av feriedagene dine
           {Object.entries(summary).map(([year, data]) => (
             <div key={year}>
