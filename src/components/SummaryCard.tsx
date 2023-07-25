@@ -24,7 +24,9 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
               <ExpansionCard.Title>
                 Oppsummering av feriedager
               </ExpansionCard.Title>
-              <ExpansionCard.Description>Forklaring</ExpansionCard.Description>
+              <ExpansionCard.Description>
+                Trykk for å se oppsummering
+              </ExpansionCard.Description>
             </div>
           </div>
         </ExpansionCard.Header>
