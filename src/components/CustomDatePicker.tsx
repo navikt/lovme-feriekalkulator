@@ -100,15 +100,7 @@ export const CustomDatePicker = forwardRef(function Test(
           <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
         </div>
       </DatePicker>
-      {startDate && endDate && (
-        <div id="differenceInDays">
-          Du har vært{" "}
-          {formatDuration({
-            days: differenceInCalendarDays(endDate, startDate),
-          })}{" "}
-          i utlandet
-        </div>
-      )}
+      {startDate && endDate && <div id="differenceInDays"></div>}
     </div>
   );
 });
