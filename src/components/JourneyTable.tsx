@@ -79,7 +79,7 @@ const JourneyTable = ({
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
-
+  console.log("hei");
   return (
     <div className="relative">
       <Table
