@@ -1,4 +1,4 @@
-import { Heading, Panel, Table } from "@navikt/ds-react";
+import { Heading, Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";

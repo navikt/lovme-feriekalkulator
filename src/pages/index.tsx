@@ -6,7 +6,7 @@ import { Travel } from "@/models/Travel";
 import SummaryCard from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
-import { GuidePanel, Panel } from "@navikt/ds-react";
+import { Panel } from "@navikt/ds-react";
 setDefaultOptions({ locale: nb });
 
 export default function Home() {
