@@ -20,13 +20,13 @@ export default function Home() {
             setSavedTravels={setSavedTravels}
           />
 
-          <div className="  rounded-lg overflow-auto w-[80rem]">
+          <div className="rounded-lg overflow-auto  w-[80rem]">
             <JourneyTable
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
-          <div className="flex">
+          <div className="flex space-x-4 max-h-[2rem] items-stretch ">
             <SummaryCard savedTravels={savedTravels} />
           </div>
         </div>
