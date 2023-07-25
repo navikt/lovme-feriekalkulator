@@ -1,12 +1,5 @@
 import { DatePicker, useRangeDatepicker } from "@navikt/ds-react";
-import {
-  addYears,
-  differenceInCalendarDays,
-  endOfYear,
-  formatDuration,
-  startOfYear,
-  subYears,
-} from "date-fns";
+import { addYears, endOfYear, startOfYear, subYears } from "date-fns";
 import React, {
   Dispatch,
   SetStateAction,
