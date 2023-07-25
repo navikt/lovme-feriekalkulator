@@ -1,4 +1,4 @@
-import { Table } from "@navikt/ds-react";
+import { Heading, Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
@@ -112,7 +112,6 @@ const JourneyTable = ({
             <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
-
         <>
           <Table.Body>
             {sortData.map(
