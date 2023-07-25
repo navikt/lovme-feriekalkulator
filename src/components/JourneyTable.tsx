@@ -81,13 +81,14 @@ const JourneyTable = ({
   }
 
   return (
-    <div className="relative my-4">
+    <div className="relative">
       <Table
+        zebraStripes
         className=""
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
-        <Table.Header className="sticky top-0 z-10 bg-white">
+        <Table.Header className="sticky top-0 z-10 bg-gray-100">
           <Table.Row>
             <Table.ColumnHeader sortKey="country" sortable>
               Land

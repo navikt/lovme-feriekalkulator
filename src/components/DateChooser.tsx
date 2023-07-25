@@ -78,58 +78,57 @@ const DateChooser = ({
     //<div
     //   id="datechooser-container"
     //   className="bg-[var(--a-white)] flex p-16 items-center flex-col gap-5 self-stretch"
-    // >
-    <Panel className="relative rounded-lg h-full">
-      <div
-        id="icon-container"
-        className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
-      >
-        <ParasolBeachIcon
-          className="align-middle text-[3rem] absolute -top-[1.5rem]"
-          aria-hidden
-        />
-      </div>
-      <div id="form-container" className="mt-4">
-        <Heading level="1" size="xlarge">
-          Feriekalkulator
-        </Heading>
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-          <div>
-            <ComboBox
-              chosenCountry={country}
-              setCountry={setCountry}
-              setEEA={setEEA}
-            ></ComboBox>
-          </div>
 
-          <CustomDatePicker
-            startDate={startDate}
-            endDate={endDate}
-            setStartDate={setStartDate}
-            setEndDate={setEndDate}
-            ref={datePickerRef}
-            savedTravels={savedTravels}
-            selectedDates={undefined}
+    <div>
+      <Panel className="relative rounded-lg h-full border-gray-900">
+        <div
+          id="icon-container"
+          className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
+        >
+          <ParasolBeachIcon
+            className="align-middle text-[3rem] absolute -top-[1.5rem]"
+            aria-hidden
           />
-
-          <Purpose purpose={purpose} setPurpose={setPurpose} />
-
-          <div className="gap-5 flex flex-row justify-between">
-            <Button className="basis-1/3" variant="primary" type="submit">
-              Legg til
-            </Button>
-            <Button
-              className="basis-1/3"
-              variant="danger"
-              onClick={handleDeleteAll}
-              type="button"
-            >
-              Slett tabell
-            </Button>
-          </div>
-        </form>
-      </div>
-    </Panel>
+        </div>
+        <div id="form-container" className="mt-4">
+          <Heading className="mb-8" level="1" size="xlarge">
+            Feriekalkulator
+          </Heading>
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            <div>
+              <ComboBox
+                chosenCountry={country}
+                setCountry={setCountry}
+                setEEA={setEEA}
+              ></ComboBox>
+            </div>
+            <CustomDatePicker
+              startDate={startDate}
+              endDate={endDate}
+              setStartDate={setStartDate}
+              setEndDate={setEndDate}
+              ref={datePickerRef}
+              savedTravels={savedTravels}
+              selectedDates={undefined}
+            />
+            <Purpose purpose={purpose} setPurpose={setPurpose} />
+            <div className="gap-5 flex flex-row justify-between">
+              <Button className="basis-1/3" variant="primary" type="submit">
+                Legg til
+              </Button>
+              <Button
+                className="basis-1/3"
+                variant="danger"
+                onClick={handleDeleteAll}
+                type="button"
+              >
+                Slett tabell
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Panel>
+    </div>
     //</div>
   );
 };
