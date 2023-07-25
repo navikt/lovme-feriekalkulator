@@ -1,12 +1,12 @@
 import { Travel } from "@/models/Travel";
 import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
 import { ExpansionCard, Label, Link } from "@navikt/ds-react";
-import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
+import { checkForLimitsV3, checkTravelPeriods, summaryAndCheckLimits } from "@/utilities/dataCalculations";
 
 
 const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
 
-  const {summary, totalDaysOverLimit} = summaryAndCheckLimits(savedTravels);
+  const {summary, totalDaysOverLimit, travelsOverLimit} = summaryAndCheckLimits(savedTravels);
 
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
     totalDaysOverLimit > 0 ? "bg-red-300" : "bg-green-200"
