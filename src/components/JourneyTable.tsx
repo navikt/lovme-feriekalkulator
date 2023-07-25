@@ -79,7 +79,7 @@ const JourneyTable = ({
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
-
+  console.log("hei");
   return (
     <div className="relative">
       <Table
@@ -112,45 +112,41 @@ const JourneyTable = ({
             <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
-        {sortData.length > 0 ? (
-          <>
-            <Table.Body>
-              {sortData.map(
-                (
-                  { id, country, startDate, endDate, EEA, purpose, duration },
-                  i
-                ) => {
-                  return (
-                    <Table.Row key={i}>
-                      <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
-                      <Table.DataCell>
-                        {format(new Date(startDate), "dd.MM.yyyy")}
-                      </Table.DataCell>
-                      <Table.DataCell>
-                        {format(new Date(endDate), "dd.MM.yyyy")}
-                      </Table.DataCell>
-                      <Table.DataCell>
-                        {formatDuration({ days: duration })}
-                      </Table.DataCell>
-                      <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
-                      <Table.DataCell>{purpose}</Table.DataCell>
-                      <Table.DataCell>
-                        <EditAndDelete
-                          id={id}
-                          deleteFunction={handleDeleteTravel}
-                          editFunction={handleEditTravel}
-                          savedTravels={savedTravels}
-                        />
-                      </Table.DataCell>
-                    </Table.Row>
-                  );
-                }
-              )}
-            </Table.Body>
-          </>
-        ) : (
-          <Heading size="large"></Heading>
-        )}
+        <>
+          <Table.Body>
+            {sortData.map(
+              (
+                { id, country, startDate, endDate, EEA, purpose, duration },
+                i
+              ) => {
+                return (
+                  <Table.Row key={i}>
+                    <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
+                    <Table.DataCell>
+                      {format(new Date(startDate), "dd.MM.yyyy")}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {format(new Date(endDate), "dd.MM.yyyy")}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {formatDuration({ days: duration })}
+                    </Table.DataCell>
+                    <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
+                    <Table.DataCell>{purpose}</Table.DataCell>
+                    <Table.DataCell>
+                      <EditAndDelete
+                        id={id}
+                        deleteFunction={handleDeleteTravel}
+                        editFunction={handleEditTravel}
+                        savedTravels={savedTravels}
+                      />
+                    </Table.DataCell>
+                  </Table.Row>
+                );
+              }
+            )}
+          </Table.Body>
+        </>
       </Table>
     </div>
   );
