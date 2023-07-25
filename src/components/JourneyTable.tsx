@@ -1,4 +1,4 @@
-import { Heading, Table } from "@navikt/ds-react";
+import { Table } from "@navikt/ds-react";
 import { format, formatDuration } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
@@ -79,7 +79,6 @@ const JourneyTable = ({
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
-  console.log("hei");
   return (
     <div className="relative">
       <Table
