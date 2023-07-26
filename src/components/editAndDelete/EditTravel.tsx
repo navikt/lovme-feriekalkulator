@@ -82,6 +82,7 @@ export const EditTravel = ({
               className="basis-1/3"
               variant="danger"
               onClick={() => {
+                editFunction(travelToEdit, savedTravels, indexToPutTravel);
                 setOpen(false);
               }}
             >
