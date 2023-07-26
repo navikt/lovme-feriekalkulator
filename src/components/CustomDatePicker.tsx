@@ -88,7 +88,7 @@ export const CustomDatePicker = forwardRef(function Test(
   return (
     <div>
       <DatePicker {...datepickerProps} dropdownCaption>
-        <div className="flex items-start gap-10">
+        <div className="flex items-start gap-5 flex-col">
           <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
           <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
         </div>

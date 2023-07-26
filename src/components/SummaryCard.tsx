@@ -30,7 +30,7 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
             </div>
           </div>
         </ExpansionCard.Header>
-        <ExpansionCard.Content className="overflow-auto max-h-[24rem]">
+        <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
           Dette er en oppsummering av feriedagene dine
           {Object.entries(summary).map(([year, data]) => (
             <div key={year}>

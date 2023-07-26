@@ -89,7 +89,7 @@ const JourneyTable = ({
       >
         <Table.Header className="sticky top-0 z-10 bg-gray-100">
           <Table.Row>
-            <Table.ColumnHeader sortKey="country" sortable>
+            <Table.ColumnHeader className="w-48" sortKey="country" sortable>
               Land
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="startDate" sortable>

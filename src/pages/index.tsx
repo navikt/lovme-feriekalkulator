@@ -14,22 +14,22 @@ export default function Home() {
   return (
     <div>
       <div className="p-7 py-12 bg-white rounded-xl ">
-        <div className="flex w-fit m-auto flex-wrap gap-4">
-          <div>
+        <div className="w-full max-w-[1900px] grid grid-cols-12 m-auto gap-4">
+          <div className="lg:mx-auto w-full col-span-12 lg:col-span-3">
             <DateChooser
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
 
-          <div className="justify-self-stretch rounded-lg max-h-[30rem] overflow-auto">
+          <div className="justify-self-stretch rounded-lg max-h-[36rem] col-span-12 lg:col-span-6 max-w-[60rem] overflow-auto">
             <JourneyTable
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
 
-          <div className="justify-self-start">
+          <div className="justify-self-start w-full col-span-12 lg:col-span-3 md:max-w-[500px]">
             <SummaryCard savedTravels={savedTravels} />
           </div>
         </div>
