@@ -1,7 +1,7 @@
 import { Travel } from "@/models/Travel";
 import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
 import { ExpansionCard, Label, Link } from "@navikt/ds-react";
-import { checkForLimitsV3, checkTravelPeriods, summaryAndCheckLimits } from "@/utilities/dataCalculations";
+import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
 
 
 const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
