@@ -6,33 +6,36 @@ import { Travel } from "@/models/Travel";
 import SummaryCard from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
-import { Panel } from "@navikt/ds-react";
 setDefaultOptions({ locale: nb });
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
-  return (
-    <div className="">
-      <Panel className="flex flex-wrap justify-center gap-4 p-7 py-12 bg-white rounded-xl">
-        <div className="flex space-x-4 max-h-[30rem] items-stretch">
-          <DateChooser
-            savedTravels={savedTravels}
-            setSavedTravels={setSavedTravels}
-          />
 
-          <div className="rounded-lg overflow-auto  w-[80rem]">
+  return (
+    <div>
+      <div className="p-7 py-12 bg-white rounded-xl ">
+        <div className="flex w-fit m-auto flex-wrap gap-4">
+          <div>
+            <DateChooser
+              savedTravels={savedTravels}
+              setSavedTravels={setSavedTravels}
+            />
+          </div>
+
+          <div className="justify-self-stretch rounded-lg max-h-[30rem] overflow-auto">
             <JourneyTable
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
-          <div className="flex space-x-4 max-h-[2rem] items-stretch ">
+
+          <div className="justify-self-start">
             <SummaryCard savedTravels={savedTravels} />
           </div>
         </div>
-      </Panel>
+      </div>
 
-      <div className="w-full p-5">
+      <div className="w-3/4 mx-auto p-5">
         <VisualTimeline data={savedTravels}></VisualTimeline>
       </div>
     </div>

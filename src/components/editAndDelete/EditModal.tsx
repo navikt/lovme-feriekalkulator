@@ -2,7 +2,7 @@ import { Modal } from "@navikt/ds-react";
 import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { EditTravel } from "./EditTravel";
 import { Travel } from "../../models/Travel";
-import { DocPencilIcon} from "@navikt/aksel-icons";
+import { DocPencilIcon } from "@navikt/aksel-icons";
 
 export const EditModal = ({
   open,
@@ -19,10 +19,9 @@ export const EditModal = ({
   indexToPutTravel: number;
   editFunction: Function;
 }) => {
-  
   useEffect(() => {
     Modal.setAppElement("#__next");
-  },[])
+  }, []);
 
   return (
     <Modal
