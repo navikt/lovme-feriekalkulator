@@ -21,7 +21,6 @@ export function dataCalculationsv2(savedTravels: Travel[]) {
   let firstDateOfStayInNorway = new Date();
 
   for (const year of startYears) {
-    console.log("Start: " + year + " " + isMember);
     if (isMember) {
       let totalDaysAbroadResult = totalDaysAbroad(savedTravels, year);
 
@@ -47,12 +46,12 @@ export function dataCalculationsv2(savedTravels: Travel[]) {
         }
       }
     } else {
-
-      const travelsToCheck = savedTravels.filter((t) => 
-        t.startDate < addYears(firstDateOfStayInNorway, 1) &&
+      const travelsToCheck = savedTravels.filter(
+        (t) =>
+          t.startDate < addYears(firstDateOfStayInNorway, 1) &&
           t.startDate > firstDateOfStayInNorway
       );
-      
+
       if (travelsToCheck.length === 0) {
         isMember = true;
         firstDateOfStayInNorway = new Date();
@@ -65,7 +64,6 @@ export function dataCalculationsv2(savedTravels: Travel[]) {
         }
       }
     }
-    console.log("Slutt: " + year + " " + isMember);
   }
 }
 

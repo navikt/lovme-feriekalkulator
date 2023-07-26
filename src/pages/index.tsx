@@ -11,6 +11,7 @@ setDefaultOptions({ locale: nb });
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
+  const [summary, setSummary] = useState<Array<Summary>>();
 
   useEffect(() => {
     dataCalculationsv2(savedTravels);
