@@ -105,6 +105,9 @@ export const EditAndDelete = ({
         open={openDeleteModal}
         setOpen={setOpenDeleteModal}
         deleteFunction={() => deleteFunction(id)}
+        modalText="Sikker på at du vil slette reisen?"
+        yesButton="Slett"
+        noButton="Avbryt"
       />
     </div>
   );

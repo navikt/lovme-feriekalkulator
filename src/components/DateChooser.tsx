@@ -6,6 +6,7 @@ import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
 import { ComboBox } from "./ComboBox";
 import { ParasolBeachIcon } from "@navikt/aksel-icons";
+import { DeleteModal } from "./editAndDelete/DeleteModal";
 
 const DateChooser = ({
   savedTravels,
@@ -19,6 +20,7 @@ const DateChooser = ({
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const datePickerRef = useRef<any>(null);
 
   useEffect(() => {
@@ -113,21 +115,30 @@ const DateChooser = ({
             />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="gap-5 flex flex-row justify-between">
-              <Button className="basis-1/3" variant="primary" type="submit">
+              <Button className="basis-2/5" variant="primary" type="submit">
                 Legg til
               </Button>
               <Button
-                className="basis-1/3"
+                className="basis-2/5"
                 variant="danger"
-                onClick={handleDeleteAll}
+                onClick={() => setOpenDeleteModal(true)}
                 type="button"
               >
-                Slett tabell
+                Slett tabelldata
               </Button>
             </div>
           </form>
         </div>
       </Panel>
+      <DeleteModal
+        open={openDeleteModal}
+        setOpen={setOpenDeleteModal}
+        deleteFunction={() => handleDeleteAll()}
+        modalText="Er du sikker på at du vil starte på nytt?"
+        description="(Du mister all data i tabellen)"
+        yesButton="Slett tabelldata"
+        noButton="Avbryt"
+      />
     </div>
     //</div>
   );
