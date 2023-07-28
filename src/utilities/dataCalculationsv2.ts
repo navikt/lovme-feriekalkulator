@@ -1,22 +1,35 @@
+import { TotalDaysAbroadAndTravel } from "@/models/TotalDaysAbroadAndTravel";
 import { Travel } from "@/models/Travel";
 import { addDays, addYears, differenceInCalendarDays } from "date-fns";
-import { da, is } from "date-fns/locale";
-
-interface SummaryData {
-  totalDays: number;
-  totalDaysOverLimit: number;
-}
-
-interface TotalDaysAbroadAndTravel {
-  totalDaysAbroad: number;
-  travel: Travel | undefined;
-}
 
 const MAX_TRAVEL_LENGTH = 365;
 const MAX_TRAVEL_LENGTH_CONSECUTIVE = 183;
 
+const DURATION_DAY = 1000*24;
+const DURATION_WEEK = DURATION_DAY * 7;
+const DURATION_YEAR = DURATION_DAY * 365.25;
+
+export function membershipRemainsValid(travels: Travel[]) {
+  let tooLongDurations = travels.filter(travel => travel.duration >= 365)
+  let output: Array<Travel> = /* liste av perioder som skal markeres rødt, men i bolker, så en liste av lister */ [] ;
+if (tooLongDurations.length > 0) {
+    output.push(...tooLongDurations)
+  }
+  const sortedTravels = travels.sort(travel => travel.startDate.getFullYear())
+  let previousYear = sortedTravels[0].startDate.getFullYear()
+  for (const year of sortedTravels.slice(1)) {
+    // Send alle perioder innenfor "PreviousYEar" og inneværende år til en boolsk funksjon per "regel"
+    // Lagre så output av disse funksjone som må ha samme input og output / funksjonstype i output variabelen til denne funksjon
+  }
+}
+
+function beenOutsideOfNorwayWithTooManyDistinctTravels() {
+  
+}
+
 export function dataCalculationsv2(savedTravels: Travel[]) {
   const startYears = savedTravels.map((t) => t.startDate.getFullYear()).sort();
+  //var RedIndexes: number = [];
   let isMember = true;
   let firstDateOfStayInNorway = new Date();
 
@@ -75,6 +88,7 @@ function totalDaysAbroad(
   for (const travel of savedTravels) {
     if (travel.duration > 365) {
       totalDaysAbroad = travel.duration;
+      //redInde
       return { totalDaysAbroad, travel };
     } else if (
       travel.startDate.getFullYear() == year &&

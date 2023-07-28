@@ -2,8 +2,7 @@ import { ParasolBeachIcon, PencilIcon } from "@navikt/aksel-icons";
 import { Timeline } from "@navikt/ds-react";
 import { setYear, subDays } from "date-fns";
 import { Travel } from "../models/Travel";
-import { checkForLimitsV3, summaryAndCheckLimits } from "@/utilities/dataCalculations";
-import { checkTravelPeriods } from "@/utilities/dataCalculations";
+import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
 
 export const VisualTimeline = ({ data }: { data: Array<Travel> }) => {
   const range = (from: number, to: number) =>
