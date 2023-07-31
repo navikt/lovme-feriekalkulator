@@ -1,14 +1,14 @@
 import { Travel } from "@/models/Travel";
 import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
-import { ExpansionCard, Label, Link } from "@navikt/ds-react";
-import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
+import { ExpansionCard, Link } from "@navikt/ds-react";
+import { getYearlySummaries } from "@/utilities/summaryEngine";
 
-const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
-  const { summary, totalDaysOverLimit } = summaryAndCheckLimits(savedTravels);
+const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>, redTravels: Array<Travel> }) => {
 
-  // Conditionally apply the background color class for the SunIcon
+ const yearlySummary = getYearlySummaries(savedTravels);
+
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
-    totalDaysOverLimit > 0 ? "bg-red-300" : "bg-green-200"
+    redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
   }`;
 
   return (
@@ -17,7 +17,6 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
         <ExpansionCard.Header>
           <div className="with-icon">
             <div className="icon">
-              {/* Use the calculated class for SunIcon */}
               <SunIcon aria-hidden className={sunIconClass} />
             </div>
             <div>
@@ -30,22 +29,27 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
             </div>
           </div>
         </ExpansionCard.Header>
-        <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
-          Dette er en oppsummering av feriedagene dine
-          {Object.entries(summary).map(([year, data]) => (
-            <div key={year}>
+
+        <ExpansionCard.Content>
+          <p className="overflow-auto max-h-[27.8rem]">Dette er en oppsummering av feriedagene dine:</p>
+          {yearlySummary.map((summary) => (
+            <div key={summary.year}>
               <div className="flex justify-between font-bold">
-                <h3>{year}</h3>
+                <h3>{summary.year}</h3>
+
                 <p>
-                  {data.totalDaysOverLimit > 0 && <Label>Over grensen</Label>}
+                  {/* {redTravels.some(t => b && <Label>Over grensen</Label>} */}
                 </p>
               </div>
 
-              <p>Totalt antall dager: {data.totalDays}</p>
-              <p>Totalt antall dager over grensen: {data.totalDaysOverLimit}</p>
+              <p>Totalt antall dager utenfor Norge: {summary.totalDaysAbroad}</p>
+              <p>Totalt antall dager innenfor EØS: {summary.totalDaysInEEA}</p>
+              <p>Totalt antall dager utenfor EØS: {summary.totalDaysOutsideEEA}</p>
+              <p>Totalt antall godkjente dager i Norge: {summary.totalDaysInNorway}</p>
+              {/* <p className="flex content-end text-border-danger">Totalt antall dager over grensen: {data.totalDaysOverLimit}</p> */}
             </div>
           ))}
-          <div className="top-8">
+          <div className="">
             <Link href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden">
               Mer informasjon om medlemskap i folketrygden
               <ExternalLinkIcon />
