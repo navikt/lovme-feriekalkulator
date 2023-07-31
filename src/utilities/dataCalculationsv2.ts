@@ -5,10 +5,6 @@ import { addDays, addYears, differenceInCalendarDays } from "date-fns";
 const MAX_TRAVEL_LENGTH = 365;
 const MAX_TRAVEL_LENGTH_CONSECUTIVE = 183;
 
-const DURATION_DAY = 1000*24;
-const DURATION_WEEK = DURATION_DAY * 7;
-const DURATION_YEAR = DURATION_DAY * 365.25;
-
 export function membershipRemainsValid(travels: Travel[]) {
   let tooLongDurations = travels.filter(travel => travel.duration >= 365)
   let output: Array<Travel> = /* liste av perioder som skal markeres rødt, men i bolker, så en liste av lister */ [] ;

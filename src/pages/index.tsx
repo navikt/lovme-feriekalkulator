@@ -7,14 +7,17 @@ import SummaryCard from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
 import { dataCalculationsv2 } from "@/utilities/dataCalculationsv2";
+import { getAllRedTravels } from "@/utilities/ruleEngine";
 setDefaultOptions({ locale: nb });
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
+  const [redTravels, setRedTravels] = useState<Array<Travel>>([]);
   const [summary, setSummary] = useState<Array<Summary>>();
 
   useEffect(() => {
     dataCalculationsv2(savedTravels);
+    getAllRedTravels(savedTravels, setRedTravels);
   }, [savedTravels]);
 
   return (
@@ -33,7 +36,7 @@ export default function Home() {
 
       <SummaryCard savedTravels={savedTravels} />
       <div className="w-full">
-        <VisualTimeline data={savedTravels}></VisualTimeline>
+        <VisualTimeline data={savedTravels} redTravels={redTravels}></VisualTimeline>
       </div>
     </div>
   );
