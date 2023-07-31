@@ -1,12 +1,5 @@
 import { DatePicker, useRangeDatepicker } from "@navikt/ds-react";
-import {
-  addYears,
-  differenceInCalendarDays,
-  endOfYear,
-  formatDuration,
-  startOfYear,
-  subYears,
-} from "date-fns";
+import { addYears, endOfYear, startOfYear, subYears } from "date-fns";
 import React, {
   Dispatch,
   SetStateAction,
@@ -95,20 +88,12 @@ export const CustomDatePicker = forwardRef(function Test(
   return (
     <div>
       <DatePicker {...datepickerProps} dropdownCaption>
-        <div className="flex items-start gap-10">
+        <div className="flex items-start gap-5 flex-col">
           <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
           <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
         </div>
       </DatePicker>
-      {startDate && endDate && (
-        <div id="differenceInDays">
-          Du har vært{" "}
-          {formatDuration({
-            days: differenceInCalendarDays(endDate, startDate),
-          })}{" "}
-          i utlandet
-        </div>
-      )}
+      {startDate && endDate && <div id="differenceInDays"></div>}
     </div>
   );
 });

@@ -13,15 +13,15 @@
 ## Bruk
 
 #### Installere avhengigheter
-```
+```bash
 yarn install #or
 npm install
 ```
 
 #### Start opp applikasjonen
-```
-yarn start #or
-npm start
+```bash
+yarn run dev #or 
+npm run dev
 ```
 
 
@@ -31,31 +31,59 @@ npm start
 .
 ├── Dockerfile
 ├── README.md
+├── docs
+│   └── Regler.md
 ├── nais.yaml
-├── package-lock.json
+├── next-env.d.ts
+├── next.config.js
 ├── package.json
+├── postcss.config.js
 ├── public
 │   ├── favicon.ico
-│   ├── index.html
-│   ├── logo192.png
-│   ├── logo512.png
-│   ├── manifest.json
-│   └── robots.txt
-├── server.js
+│   ├── next.svg
+│   └── vercel.svg
 ├── src
-│   ├── App.css
-│   ├── App.test.tsx
-│   ├── App.tsx
-│   ├── Dockerfile
 │   ├── components
-│   │   ├── Dato.tsx
-│   │   └── TestComponent.tsx
-│   ├── index.tsx
-│   ├── react-app-env.d.ts
-│   ├── reportWebVitals.ts
-│   └── setupTests.ts
+│   │   ├── ComboBox.tsx
+│   │   ├── CountryChooser.tsx
+│   │   ├── CustomDatePicker.tsx
+│   │   ├── DateChooser.tsx
+│   │   ├── JourneyTable.tsx
+│   │   ├── Navbar.tsx
+│   │   ├── Purpose.tsx
+│   │   ├── SummaryCard.tsx
+│   │   ├── VisualTimeline.tsx
+│   │   └── editAndDelete
+│   │       ├── DeleteModal.tsx
+│   │       ├── EditAndDelete.tsx
+│   │       ├── EditModal.tsx
+│   │       └── EditTravel.tsx
+│   ├── models
+│   │   ├── Country.tsx
+│   │   └── Travel.tsx
+│   ├── pages
+│   │   ├── _app.tsx
+│   │   ├── _document.tsx
+│   │   ├── api
+│   │   │   ├── isAlive.ts
+│   │   │   └── isReady.ts
+│   │   └── index.tsx
+│   ├── resources
+│   │   ├── en
+│   │   │   └── world.json
+│   │   ├── eøs.json
+│   │   ├── no
+│   │   │   └── world.json
+│   │   └── utenfor.tsx
+│   ├── styles
+│   │   └── globals.css
+│   └── utilities
+│       ├── dataCalculations.ts
+│       └── dataCalculationsv2.ts
+├── tailwind.config.js
 ├── tsconfig.json
 └── yarn.lock
+
 ```
 
 
@@ -77,7 +105,10 @@ Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på Git
 Interne henvendelser kan sendes via Slack i kanalen #team-ferie-værsågod.
 
 ## Languages and Tools
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 
 
 

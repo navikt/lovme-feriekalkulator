@@ -3,7 +3,6 @@ import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
 import { ExpansionCard, Link } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
 
-
 const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>, redTravels: Array<Travel> }) => {
 
  const yearlySummary = getYearlySummaries(savedTravels);
@@ -25,17 +24,19 @@ const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>
                 Oppsummering av feriedager
               </ExpansionCard.Title>
               <ExpansionCard.Description>
-                Perioder som har eventuelt gått over grensen er markert med rødt
+                Trykk for å se oppsummering
               </ExpansionCard.Description>
             </div>
           </div>
         </ExpansionCard.Header>
+
         <ExpansionCard.Content>
-          <p className="">Dette er en oppsummering av feriedagene dine:</p>
+          <p className="overflow-auto max-h-[27.8rem]">Dette er en oppsummering av feriedagene dine:</p>
           {yearlySummary.map((summary) => (
             <div key={summary.year}>
-              <div className="flex justify-between font-bold underline">
+              <div className="flex justify-between font-bold">
                 <h3>{summary.year}</h3>
+
                 <p>
                   {/* {redTravels.some(t => b && <Label>Over grensen</Label>} */}
                 </p>

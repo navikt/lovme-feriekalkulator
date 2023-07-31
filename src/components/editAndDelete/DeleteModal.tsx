@@ -5,15 +5,22 @@ export const DeleteModal = ({
   open,
   setOpen,
   deleteFunction,
+  modalText,
+  description,
+  yesButton,
+  noButton,
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   deleteFunction: any;
+  modalText?: string;
+  description?: string;
+  yesButton?: string;
+  noButton?: string;
 }) => {
-  
   useEffect(() => {
     Modal.setAppElement("#__next");
-  },[])
+  }, []);
 
   return (
     <Modal
@@ -24,25 +31,32 @@ export const DeleteModal = ({
       closeButton={false}
       aria-labelledby="modal-heading"
     >
-      <div className="flex flex-col items-start gap-5">
+      <div>
+      <div className="flex flex-col items-start">
         <Heading level="1" size="medium">
-          Sikker på at du vill slette reisen?
+          {modalText ?? "Er du sikker?"}
         </Heading>
-
-        <div className="flex flex-row items-start gap-5">
-          <Button 
+      </div>
+      <div className=" pb-4">
+        {description?.length != 0 ? <p>{description}</p> : null}
+      </div>
+        <div className="flex flex-row items-start gap-5 place-content-center">
+          <Button
             variant="danger"
             onClick={() => {
               deleteFunction();
               setOpen(false);
             }}
           >
-            Slett
+            {yesButton ?? "Ja"}
           </Button>
 
-          <Button variant="secondary-neutral" onClick={() => setOpen(false)}>Avbryt</Button>
+          <Button variant="secondary-neutral" onClick={() => setOpen(false)}>
+            {noButton ?? "Nei"}
+          </Button>
         </div>
       </div>
+
     </Modal>
   );
 };

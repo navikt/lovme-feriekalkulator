@@ -71,8 +71,6 @@ const JourneyTable = ({
     listToUpdate: Array<Travel>,
     indexToPutTravel: number
   ) {
-
-    
     const updatedData = [
       ...listToUpdate.slice(0, indexToPutTravel),
       updatedTravel,
@@ -81,17 +79,17 @@ const JourneyTable = ({
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
-
   return (
-    <div className="max-h-[648px] overflow-auto">
+    <div className="relative">
       <Table
+        zebraStripes
         className=""
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
         <Table.Header className="sticky top-0 z-10 bg-gray-100">
           <Table.Row>
-            <Table.ColumnHeader sortKey="country" sortable>
+            <Table.ColumnHeader className="w-48" sortKey="country" sortable>
               Land
             </Table.ColumnHeader>
             <Table.ColumnHeader sortKey="startDate" sortable>
@@ -113,39 +111,41 @@ const JourneyTable = ({
             <Table.ColumnHeader>Action</Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
-        <Table.Body>
-          {sortData.map(
-            (
-              { id, country, startDate, endDate, EEA, purpose, duration },
-              i
-            ) => {
-              return (
-                <Table.Row key={i}>
-                  <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
-                  <Table.DataCell>
-                    {format(new Date(startDate), "dd.MM.yyyy")}
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    {format(new Date(endDate), "dd.MM.yyyy")}
-                  </Table.DataCell>
-                  <Table.DataCell>
-                    {formatDuration({ days: duration })}
-                  </Table.DataCell>
-                  <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
-                  <Table.DataCell>{purpose}</Table.DataCell>
-                  <Table.DataCell>
-                    <EditAndDelete
-                      id={id}
-                      deleteFunction={handleDeleteTravel}
-                      editFunction={handleEditTravel}
-                      savedTravels={savedTravels}
-                    />
-                  </Table.DataCell>
-                </Table.Row>
-              );
-            }
-          )}
-        </Table.Body>
+        <>
+          <Table.Body>
+            {sortData.map(
+              (
+                { id, country, startDate, endDate, EEA, purpose, duration },
+                i
+              ) => {
+                return (
+                  <Table.Row key={i}>
+                    <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
+                    <Table.DataCell>
+                      {format(new Date(startDate), "dd.MM.yyyy")}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {format(new Date(endDate), "dd.MM.yyyy")}
+                    </Table.DataCell>
+                    <Table.DataCell>
+                      {formatDuration({ days: duration })}
+                    </Table.DataCell>
+                    <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
+                    <Table.DataCell>{purpose}</Table.DataCell>
+                    <Table.DataCell>
+                      <EditAndDelete
+                        id={id}
+                        deleteFunction={handleDeleteTravel}
+                        editFunction={handleEditTravel}
+                        savedTravels={savedTravels}
+                      />
+                    </Table.DataCell>
+                  </Table.Row>
+                );
+              }
+            )}
+          </Table.Body>
+        </>
       </Table>
     </div>
   );

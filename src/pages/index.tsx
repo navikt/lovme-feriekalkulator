@@ -17,26 +17,38 @@ export default function Home() {
     getAllRedTravels(savedTravels, setRedTravels);
   }, [savedTravels]);
 
+
   return (
-    <div className=" flex flex-wrap items-start gap-4 p-7 ">
-      <title>Feriekalkulator</title>
+    <div>
+      <div className="p-7 py-12 bg-white rounded-xl ">
+        <div className="w-full max-w-[1900px] grid grid-cols-12 m-auto gap-4">
+          <div className="lg:mx-auto w-full col-span-12 lg:col-span-3">
+            <DateChooser
+              savedTravels={savedTravels}
+              setSavedTravels={setSavedTravels}
+            />
+          </div>
 
-      <DateChooser
-        savedTravels={savedTravels}
-        setSavedTravels={setSavedTravels}
-      />
+          <div className="justify-self-stretch rounded-lg max-h-[36rem] col-span-12 lg:col-span-6 max-w-[60rem] overflow-auto">
+            <JourneyTable
+              savedTravels={savedTravels}
+              setSavedTravels={setSavedTravels}
+            />
+          </div>
 
-      <JourneyTable
-        savedTravels={savedTravels}
-        setSavedTravels={setSavedTravels}
-      />
+          <div className="justify-self-start w-full col-span-12 lg:col-span-3 md:max-w-[500px]">
+            <SummaryCard savedTravels={savedTravels} />
+          </div>
+        </div>
+      </div>
 
       <SummaryCard savedTravels={savedTravels} redTravels={redTravels} />
-      <div className="w-full">
+      <div className="w-3/4 mx-auto p-5">
         <VisualTimeline
           data={savedTravels}
           redTravels={redTravels}
         ></VisualTimeline>
+
       </div>
     </div>
   );
