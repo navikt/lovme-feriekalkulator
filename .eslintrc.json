@@ -10,7 +10,5 @@
   ],
   "rules": {
      "react/no-set-state": "off"
-     
-  },
-  "tslint.alwaysShowRuleFailuresAsWarnings": true
+  }
 }

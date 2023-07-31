@@ -1,15 +1,15 @@
 import { Travel } from "@/models/Travel";
 import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
-import { ExpansionCard, Label, Link } from "@navikt/ds-react";
-import { summaryAndCheckLimits } from "@/utilities/dataCalculations";
+import { ExpansionCard, Link } from "@navikt/ds-react";
+import { getYearlySummaries } from "@/utilities/summaryEngine";
 
 
-const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
+const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>, redTravels: Array<Travel> }) => {
 
-  const {summary, totalDaysOverLimit, travelsOverLimit} = summaryAndCheckLimits(savedTravels);
+ const yearlySummary = getYearlySummaries(savedTravels);
 
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
-    totalDaysOverLimit > 0 ? "bg-red-300" : "bg-green-200"
+    redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
   }`;
 
   return (
@@ -32,17 +32,20 @@ const SummaryCard = ({ savedTravels }: { savedTravels: Travel[] }) => {
         </ExpansionCard.Header>
         <ExpansionCard.Content>
           <p className="">Dette er en oppsummering av feriedagene dine:</p>
-          {Object.entries(summary).map(([year, data]) => (
-            <div key={year}>
+          {yearlySummary.map((summary) => (
+            <div key={summary.year}>
               <div className="flex justify-between font-bold underline">
-                <h3>{year}</h3>
+                <h3>{summary.year}</h3>
                 <p>
-                  {data.totalDaysOverLimit > 0 && <Label>Over grensen</Label>}
+                  {/* {redTravels.some(t => b && <Label>Over grensen</Label>} */}
                 </p>
               </div>
 
-              <p>Totalt antall dager utenfor Norge: {data.totalDays}</p>
-              <p className="flex content-end text-border-danger">Totalt antall dager over grensen: {data.totalDaysOverLimit}</p>
+              <p>Totalt antall dager utenfor Norge: {summary.totalDaysAbroad}</p>
+              <p>Totalt antall dager innenfor EØS: {summary.totalDaysInEEA}</p>
+              <p>Totalt antall dager utenfor EØS: {summary.totalDaysOutsideEEA}</p>
+              <p>Totalt antall godkjente dager i Norge: {summary.totalDaysInNorway}</p>
+              {/* <p className="flex content-end text-border-danger">Totalt antall dager over grensen: {data.totalDaysOverLimit}</p> */}
             </div>
           ))}
           <div className="">

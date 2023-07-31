@@ -1,5 +1,5 @@
 import { Travel } from "@/models/Travel";
-import { addYears, differenceInDays } from "date-fns";
+import { addYears, differenceInDays, eachYearOfInterval } from "date-fns";
 import { Dispatch, SetStateAction } from "react";
 
 const MAX_TRAVEL_LENGTH = 365;
@@ -11,7 +11,7 @@ export function getAllRedTravels(
   setRedTravels: Dispatch<SetStateAction<Array<Travel>>>
 ) {
   let redTravels: Array<Travel> = [];
-  console.log(redTravels);
+
   travels.sort((a, b) => a.startDate.valueOf() - b.startDate.valueOf());
   maxLengthRule(travels, redTravels);
   consecutiveYearRule(travels, redTravels);
@@ -33,8 +33,6 @@ function consecutiveYearRule(
   for (const year of new Set(
     travels.map((t) => t.startDate.getFullYear()).sort()
   )) {
-    // console.log("year " + year + " " + totalDaysInNorway(travels, year))
-    // console.log(totalDaysInNorway(travels, year) < MAX_TRAVEL_LENGTH_CONSECUTIVE)
     if (totalDaysInNorway(travels, year) < MAX_TRAVEL_LENGTH_CONSECUTIVE) {
       if (
         totalDaysInNorway(travels, year + 1) < MAX_TRAVEL_LENGTH_CONSECUTIVE
@@ -52,33 +50,47 @@ function consecutiveYearRule(
         );
       }
     }
-    // console.log("year: " + year + " " + redTravels.map(t => t.country))
   }
 }
 
-function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
+export function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
   let totalDaysAbroad = 0;
+
   for (const travel of travels.filter(
-    (t) => t.startDate.getFullYear() == year || t.endDate.getFullYear() == year
+    (t) =>
+      eachYearOfInterval({ start: t.startDate, end: t.endDate }).some(
+        (t) => t.getFullYear() == year
+      )
   )) {
-    if (travel.startDate.getFullYear() != year) {
-      totalDaysAbroad += differenceInDays(new Date(year, 0, 1), travel.endDate);
-    } else if (travel.endDate.getFullYear() != year) {
-      totalDaysAbroad += differenceInDays(
-        travel.startDate,
-        new Date(year, 11, 31)
-      );
-    } else {
+    if (
+      travel.startDate.getFullYear() == year &&
+      travel.endDate.getFullYear() == year
+    ) {
       totalDaysAbroad += travel.duration;
+    } else if (
+      travel.endDate.getFullYear() != year &&
+      travel.startDate.getFullYear() == year
+    ) {
+      totalDaysAbroad += differenceInDays(
+        new Date(year, 11, 31),
+        travel.startDate
+      );
+    } else if (
+      travel.endDate.getFullYear() == year &&
+      travel.startDate.getFullYear() != year
+    ) {
+      totalDaysAbroad += differenceInDays(travel.endDate, new Date(year-1, 11, 31));
+    } else {
+      totalDaysAbroad = 365;
     }
   }
   return totalDaysAbroad;
 }
 
-function totalDaysInNorway(travels: Array<Travel>, year: number) {
+export function totalDaysInNorway(travels: Array<Travel>, year: number) {
   let totalDaysInNorway = 0;
   const travelsThisYear = travels.filter(
-    (t) => t.startDate.getFullYear() == year
+    (t) => t.startDate.getFullYear() == year || t.endDate.getFullYear() == year
   );
   let lastTravelEndDate =
     travels.findLast((t) => t.startDate.getFullYear() == year - 1)?.endDate ??
@@ -89,7 +101,6 @@ function totalDaysInNorway(travels: Array<Travel>, year: number) {
       travelsThisYear[i].startDate,
       lastTravelEndDate
     );
-    // console.log(period + " number:"+ i)
     if (period > MIN_TIME_IN_NORWAY) {
       if (lastTravelEndDate.getFullYear() == year) {
         totalDaysInNorway += period;
@@ -120,9 +131,7 @@ function totalDaysInNorway(travels: Array<Travel>, year: number) {
         new Date(year, 11, 31),
         lastTravelEndDate
       );
-    // console.log("travelsThisYear tom: " + differenceInDays(new Date(year, 11, 31), lastTravelEndDate))
   }
-  // console.log(totalDaysInNorway + " year: " + year);
   return totalDaysInNorway;
 }
 
@@ -130,12 +139,16 @@ function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
   let notRedTravels = travels
     .filter((t) => !redTravels.includes(t))
     .sort((a, b) => a.startDate.valueOf() - b.startDate.valueOf());
-  console.log("Before: " + notRedTravels.map(t => t.country));
+  
   for (const redTravel of redTravels.sort(
     (a, b) => a.endDate.valueOf() - b.endDate.valueOf()
   )) {
     let greenDate = addYears(redTravel.endDate, 1);
-    while (notRedTravels.some((t) => t.startDate < greenDate && redTravel.endDate < t.startDate)) {
+    while (
+      notRedTravels.some(
+        (t) => t.startDate < greenDate && redTravel.endDate < t.startDate
+      )
+    ) {
       const newRedTravel = notRedTravels.find((t) => t.startDate < greenDate);
       newRedTravel
         ? ((greenDate = addYears(newRedTravel.endDate, 1)),
@@ -144,5 +157,5 @@ function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
       notRedTravels = notRedTravels.filter((t) => t !== newRedTravel);
     }
   }
-  console.log("after: " + notRedTravels.map(t => t.country));
+
 }
