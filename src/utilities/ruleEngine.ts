@@ -55,11 +55,10 @@ function consecutiveYearRule(
 export function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
   let totalDaysAbroad = 0;
 
-  for (const travel of travels.filter(
-    (t) =>
-      eachYearOfInterval({ start: t.startDate, end: t.endDate }).some(
-        (t) => t.getFullYear() == year
-      )
+  for (const travel of travels.filter((t) =>
+    eachYearOfInterval({ start: t.startDate, end: t.endDate }).some(
+      (t) => t.getFullYear() == year
+    )
   )) {
     if (
       travel.startDate.getFullYear() == year &&
@@ -78,7 +77,10 @@ export function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
       travel.endDate.getFullYear() == year &&
       travel.startDate.getFullYear() != year
     ) {
-      totalDaysAbroad += differenceInDays(travel.endDate, new Date(year-1, 11, 31));
+      totalDaysAbroad += differenceInDays(
+        travel.endDate,
+        new Date(year - 1, 11, 31)
+      );
     } else {
       totalDaysAbroad = 365;
     }
@@ -111,11 +113,15 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
       }
     }
     lastTravelEndDate = travelsThisYear[i].endDate;
-    if (travelsThisYear.length < 2) {
-      totalDaysInNorway += differenceInDays(
-        new Date(year, 11, 31),
-        lastTravelEndDate
-      );
+    if (travelsThisYear.length < 2 && lastTravelEndDate.getFullYear() == year) {
+      if (
+        differenceInDays(new Date(year, 11, 31), lastTravelEndDate) >
+        MIN_TIME_IN_NORWAY
+      )
+        totalDaysInNorway += differenceInDays(
+          new Date(year, 11, 31),
+          lastTravelEndDate
+        );
     }
   }
   if (travelsThisYear.length == 0) {
@@ -138,7 +144,7 @@ function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
   let notRedTravels = travels
     .filter((t) => !redTravels.includes(t))
     .sort((a, b) => a.startDate.valueOf() - b.startDate.valueOf());
-  
+
   for (const redTravel of redTravels.sort(
     (a, b) => a.endDate.valueOf() - b.endDate.valueOf()
   )) {
@@ -156,5 +162,4 @@ function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
       notRedTravels = notRedTravels.filter((t) => t !== newRedTravel);
     }
   }
-
 }
