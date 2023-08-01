@@ -108,7 +108,6 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
         );
       }
     }
-    lastTravelEndDate = travelsThisYear[i].endDate;
     if (travelsThisYear.length < 2 && lastTravelEndDate.getFullYear() == year) {
       if (
         differenceInDays(new Date(year, 11, 31), lastTravelEndDate) >
@@ -119,7 +118,9 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
           lastTravelEndDate
         );
     }
+    lastTravelEndDate = travelsThisYear[i].endDate;
   }
+
   if (travelsThisYear.length == 0) {
     if (lastTravelEndDate.getFullYear() < year) {
       lastTravelEndDate = new Date(year - 1, 11, 31);
@@ -132,6 +133,17 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
         new Date(year, 11, 31),
         lastTravelEndDate
       );
+  }
+  if (lastTravelEndDate < new Date(year, 11, 31)) {
+    if (
+      differenceInDays(new Date(year, 11, 31), lastTravelEndDate) >
+      MIN_TIME_IN_NORWAY
+    ) {
+      totalDaysInNorway += differenceInDays(
+        new Date(year, 11, 31),
+        lastTravelEndDate
+      );
+    }
   }
   return totalDaysInNorway;
 }

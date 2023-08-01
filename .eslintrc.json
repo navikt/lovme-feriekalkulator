@@ -1,14 +1,14 @@
 {
-  "plugins": [
-      "react"
-  ],
+  "plugins": ["react"],
   "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended",
-      "next/core-web-vitals"
-
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "next/core-web-vitals"
   ],
+  "env": {
+    "jest": true
+  },
   "rules": {
-     "react/no-set-state": "off"
+    "react/no-set-state": "off"
   }
 }
