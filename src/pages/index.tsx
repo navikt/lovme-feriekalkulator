@@ -14,7 +14,7 @@ export default function Home() {
   const [redTravels, setRedTravels] = useState<Array<Travel>>([]);
 
   useEffect(() => {
-    getAllRedTravels(savedTravels, setRedTravels);
+    setRedTravels(getAllRedTravels(savedTravels));
   }, [savedTravels]);
 
   return (

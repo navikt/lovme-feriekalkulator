@@ -1,22 +1,18 @@
 import { Travel } from "@/models/Travel";
 import { addYears, differenceInDays, eachYearOfInterval } from "date-fns";
-import { Dispatch, SetStateAction } from "react";
 
 const MAX_TRAVEL_LENGTH = 365;
 const MAX_TRAVEL_LENGTH_CONSECUTIVE = 365 / 2;
 const MIN_TIME_IN_NORWAY = 7 * 5;
 
-export function getAllRedTravels(
-  travels: Array<Travel>,
-  setRedTravels: Dispatch<SetStateAction<Array<Travel>>>
-) {
+export function getAllRedTravels(travels: Array<Travel>) {
   let redTravels: Array<Travel> = [];
 
   travels.sort((a, b) => a.startDate.valueOf() - b.startDate.valueOf());
   maxLengthRule(travels, redTravels);
   consecutiveYearRule(travels, redTravels);
   registrationRule(travels, redTravels);
-  setRedTravels(redTravels);
+  return redTravels;
 }
 
 function maxLengthRule(travels: Array<Travel>, redTravels: Array<Travel>) {
