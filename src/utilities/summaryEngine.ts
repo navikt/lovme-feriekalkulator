@@ -37,7 +37,7 @@ function totalDaysInEEA(travels: Array<Travel>, year: number): number {
       );
     } else if (travel.endDate.getFullYear() != year) {
       totalDaysInEEA += differenceInDays(
-          new Date(year + 1, 0, 1),
+          new Date(year , 11, 31),
           travel.startDate
       );
     } else {
