@@ -3,11 +3,11 @@ import { Travel } from "../src/models/Travel";
 import { getAllRedTravels } from "../src/utilities/ruleEngine";
 
 test("travel over 12 months should be in redTravels array", () => {
-  expect(getAllRedTravels(listContainingOver12MonthTravel)).toStrictEqual(listContainingOver12MonthTravelResult);
+  expect(getAllRedTravels(listContainingOver12MonthTravel)).toEqual(listContainingOver12MonthTravelResult);
 });
 
 test("consecutive travels over 6 months should be in redTravels array", () => {
-  expect(getAllRedTravels(listContaining6MonthsConsecutiveOverLimit)).toStrictEqual(listContaining6MonthsConsecutiveOverLimit);
+  expect(getAllRedTravels(listContaining6MonthsConsecutiveOverLimit)).toEqual(listContaining6MonthsConsecutiveOverLimit);
 });
 
 const listContaining6MonthsConsecutiveOverLimit: Array<Travel> = [
