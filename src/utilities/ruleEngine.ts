@@ -16,7 +16,6 @@ export function getAllRedTravels(
   maxLengthRule(travels, redTravels);
   consecutiveYearRule(travels, redTravels);
   registrationRule(travels, redTravels);
-  // return redTravels
   setRedTravels(redTravels);
 }
 

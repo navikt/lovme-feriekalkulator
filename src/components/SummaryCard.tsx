@@ -30,8 +30,8 @@ const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>
           </div>
         </ExpansionCard.Header>
 
-        <ExpansionCard.Content>
-          <p className="overflow-auto max-h-[27.8rem]">Dette er en oppsummering av feriedagene dine:</p>
+        <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
+          <p >Dette er en oppsummering av feriedagene dine:</p>
           {yearlySummary.map((summary) => (
             <div key={summary.year}>
               <div className="flex justify-between font-bold">

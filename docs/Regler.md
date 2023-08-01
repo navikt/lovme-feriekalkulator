@@ -4,6 +4,7 @@
 
 - 12 måneder = 365 dager
 - 6 måneder = 183 dager
+- 5 uker = 7 dager * 5
 
 ### Spesifisering
 

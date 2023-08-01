@@ -17,9 +17,9 @@ export default function Home() {
     getAllRedTravels(savedTravels, setRedTravels);
   }, [savedTravels]);
 
-
   return (
     <div>
+      <title>Feriekalkulator</title>
       <div className="p-7 py-12 bg-white rounded-xl ">
         <div className="w-full max-w-[1900px] grid grid-cols-12 m-auto gap-4">
           <div className="lg:mx-auto w-full col-span-12 lg:col-span-3">
@@ -41,13 +41,12 @@ export default function Home() {
           </div>
         </div>
       </div>
-      
+
       <div className="w-3/4 mx-auto p-5">
         <VisualTimeline
           data={savedTravels}
           redTravels={redTravels}
         ></VisualTimeline>
-
       </div>
     </div>
   );
