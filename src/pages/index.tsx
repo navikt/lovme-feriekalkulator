@@ -37,12 +37,11 @@ export default function Home() {
           </div>
 
           <div className="justify-self-start w-full col-span-12 lg:col-span-3 md:max-w-[500px]">
-            <SummaryCard savedTravels={savedTravels} />
+            <SummaryCard savedTravels={savedTravels} redTravels={redTravels} />
           </div>
         </div>
       </div>
-
-      <SummaryCard savedTravels={savedTravels} redTravels={redTravels} />
+      
       <div className="w-3/4 mx-auto p-5">
         <VisualTimeline
           data={savedTravels}
