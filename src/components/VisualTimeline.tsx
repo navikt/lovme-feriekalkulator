@@ -1,4 +1,4 @@
-import { ParasolBeachIcon, PencilIcon } from "@navikt/aksel-icons";
+import { ParasolBeachIcon, AirplaneIcon } from "@navikt/aksel-icons";
 import { Timeline } from "@navikt/ds-react";
 import { setYear, subDays } from "date-fns";
 import { Travel } from "../models/Travel";
@@ -17,8 +17,8 @@ export const VisualTimeline = ({ data, redTravels }: { data: Array<Travel>, redT
 
   return data.length === 0 || years.length === 0 ? null : (
     <Timeline
-      startDate={new Date(0)}
-      endDate={subDays(setYear(new Date(0), 1971), 1)}
+      startDate={subDays(new Date(0), 1)}
+      endDate={setYear(new Date(0), 1971)}
       axisLabelTemplates={{ day: "DD", month: "MMM", year: "YY" }}
     >
       {years.map((year: number) => {
@@ -54,7 +54,7 @@ export const VisualTimeline = ({ data, redTravels }: { data: Array<Travel>, redT
                         : setYear(travel.endDate, 1971)
                     }
                     status={isTravelOverLimit ? "danger" : "success"}
-                    icon={<PencilIcon aria-hidden />}
+                    icon={<AirplaneIcon title="a11y-title" />}
                   >
                     {travel.country ?? null}
                   </Timeline.Period>
