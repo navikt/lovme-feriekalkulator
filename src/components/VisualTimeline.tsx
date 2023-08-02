@@ -19,6 +19,7 @@ export const VisualTimeline = ({ data, redTravels }: { data: Array<Travel>, redT
     <Timeline
       startDate={new Date(0)}
       endDate={subDays(setYear(new Date(0), 1971), 1)}
+      axisLabelTemplates={{ day: "DD", month: "MMM", year: "YY" }}
     >
       {years.map((year: number) => {
 

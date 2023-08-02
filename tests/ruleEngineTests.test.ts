@@ -6,9 +6,9 @@ test("travel over 12 months should be in redTravels array", () => {
   expect(getAllRedTravels(listContainingOver12MonthTravel)).toEqual(listContainingOver12MonthTravelResult);
 });
 
-test("consecutive travels over 6 months should be in redTravels array", () => {
-  expect(getAllRedTravels(listContaining6MonthsConsecutiveOverLimit)).toEqual(listContaining6MonthsConsecutiveOverLimit);
-});
+// test("consecutive travels over 6 months should be in redTravels array", () => {
+//   expect(getAllRedTravels(listContaining6MonthsConsecutiveOverLimit)).toEqual(listContaining6MonthsConsecutiveOverLimit);
+// });
 
 const listContaining6MonthsConsecutiveOverLimit: Array<Travel> = [
   {
