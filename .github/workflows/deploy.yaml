@@ -19,7 +19,7 @@ jobs:
       - name: Yarn install
         run: yarn install
       - name: Yarn test
-        run: yarn test
+        run: yarn test --runInBand
       - name: Yarn build
         run: yarn build
       - uses: nais/docker-build-push@v0
