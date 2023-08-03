@@ -3,9 +3,14 @@ import { ExternalLinkIcon, SunIcon } from "@navikt/aksel-icons";
 import { ExpansionCard, Link } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
 
-const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>, redTravels: Array<Travel> }) => {
-
- const yearlySummary = getYearlySummaries(savedTravels);
+const SummaryCard = ({
+  savedTravels,
+  redTravels,
+}: {
+  savedTravels: Array<Travel>;
+  redTravels: Array<Travel>;
+}) => {
+  const yearlySummary = getYearlySummaries(savedTravels);
 
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
     redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
@@ -31,7 +36,7 @@ const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>
         </ExpansionCard.Header>
 
         <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
-          <p >Dette er en oppsummering av feriedagene dine:</p>
+          <p>Dette er en oppsummering av feriedagene dine:</p>
           {yearlySummary.map((summary) => (
             <div key={summary.year}>
               <div className="flex justify-between font-bold">
@@ -42,10 +47,13 @@ const SummaryCard = ({ savedTravels, redTravels }: { savedTravels: Array<Travel>
                 </p>
               </div>
 
-              <p>Totalt antall dager utenfor Norge: {summary.totalDaysAbroad}</p>
-              <p>Totalt antall dager innenfor EØS: {summary.totalDaysInEEA}</p>
-              <p>Totalt antall dager utenfor EØS: {summary.totalDaysOutsideEEA}</p>
-              <p>Totalt antall godkjente dager i Norge: {summary.totalDaysInNorway}</p>
+              <p>
+                Totalt antall dager utenfor Norge: {summary.totalDaysAbroad}
+              </p>
+              <p>
+                Totalt antall godkjente dager i Norge:{" "}
+                {summary.totalDaysInNorway}
+              </p>
               {/* <p className="flex content-end text-border-danger">Totalt antall dager over grensen: {data.totalDaysOverLimit}</p> */}
             </div>
           ))}
