@@ -25,10 +25,13 @@ export const EditModal = ({
 
   return (
     <Modal
-      className="vw-1/3 vh-2/3 overflow-visible"
+      className=" vw-1/3 vh-2/3 overflow-visible"
       open={open}
       aria-label="Rediger"
-      onClose={() => setOpen((x) => !x)}
+      onClose={() => {
+        editFunction(travelToEdit, savedTravels, indexToPutTravel);
+        setOpen((x) => !x);
+      }}
       closeButton={false}
       aria-labelledby="modal-heading"
     >

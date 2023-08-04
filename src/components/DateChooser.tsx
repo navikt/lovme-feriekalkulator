@@ -77,12 +77,8 @@ const DateChooser = ({
   };
 
   return (
-    //<div
-    //   id="datechooser-container"
-    //   className="bg-[var(--a-white)] flex p-16 items-center flex-col gap-5 self-stretch"
-
     <div>
-      <Panel className="relative rounded-lg h-full border-gray-900">
+      <Panel className="relative rounded-lg h-full border-gray-400">
         <div
           id="icon-container"
           className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
@@ -140,7 +136,6 @@ const DateChooser = ({
         noButton="Avbryt"
       />
     </div>
-    //</div>
   );
 };
 

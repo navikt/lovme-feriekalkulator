@@ -12,7 +12,6 @@ export const ComboBox = ({
   setCountry: Dispatch<SetStateAction<string>>;
   setEEA: Dispatch<SetStateAction<boolean>>;
 }) => {
-  // Convert the country data from JSON to an array of country names
   const countryOptions = useMemo(() => {
     return [
       "Innenfor EØS",

@@ -29,7 +29,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="justify-self-stretch rounded-lg max-h-[36rem] col-span-12 lg:col-span-6 max-w-[60rem] overflow-auto">
+          <div className="border border-gray-400 justify-self-stretch rounded-lg max-h-[38rem] col-span-12 lg:col-span-6 max-w-[60rem] overflow-auto">
             <JourneyTable
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}

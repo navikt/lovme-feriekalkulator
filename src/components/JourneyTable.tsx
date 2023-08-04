@@ -61,9 +61,9 @@ const JourneyTable = ({
   });
 
   const handleDeleteTravel = (id: number) => {
-    const updatedData = savedTravels.filter((travel) => travel.id !== id); // Filter out the row with the specified ID
+    const updatedData = savedTravels.filter((travel) => travel.id !== id);
     setSavedTravels(updatedData);
-    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); // Update the state
+    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); 
   };
 
   function handleEditTravel(
@@ -80,14 +80,14 @@ const JourneyTable = ({
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
   return (
-    <div className="relative">
+    <div className="relative ">
       <Table
         zebraStripes
         className=""
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
-        <Table.Header className="sticky top-0 z-10 bg-gray-100">
+        <Table.Header className="sticky top-0 z-10 bg-gray-50">
           <Table.Row>
             <Table.ColumnHeader className="w-48" sortKey="country" sortable>
               Land
@@ -108,7 +108,7 @@ const JourneyTable = ({
             <Table.ColumnHeader sortKey="purpose" sortable>
               Formål
             </Table.ColumnHeader>
-            <Table.ColumnHeader>Action</Table.ColumnHeader>
+            <Table.ColumnHeader></Table.ColumnHeader>
           </Table.Row>
         </Table.Header>
         <>

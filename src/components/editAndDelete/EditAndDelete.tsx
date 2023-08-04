@@ -68,7 +68,7 @@ export const EditAndDelete = ({
     <div>
       <Dropdown>
         <Dropdown.Toggle className="btn">
-          <MenuElipsisHorizontalCircleIcon fontSize="1.6rem" />
+          <MenuElipsisHorizontalCircleIcon fontSize="1.8rem" />
         </Dropdown.Toggle>
         <Dropdown.Menu>
           <Dropdown.Menu.GroupedList>
