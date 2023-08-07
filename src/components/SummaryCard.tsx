@@ -8,6 +8,7 @@ import {
 import { ExpansionCard, Label, Link } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
 import { useEffect, useState } from "react";
+import { eachYearOfInterval } from "date-fns";
 
 const SummaryCard = ({
   savedTravels,
@@ -56,9 +57,7 @@ const SummaryCard = ({
 
                 <p>
                   {redTravels.some(
-                    (t) =>
-                      t.startDate.getFullYear() == summary.year ||
-                      t.endDate.getFullYear() == summary.year
+                    (t) => eachYearOfInterval({start: t.startDate, end: t.endDate}).some(y => y.getFullYear() == summary.year)
                   ) ? (
                     <Label className="text-red-500">
                       {" "}
