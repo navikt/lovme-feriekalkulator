@@ -9,6 +9,9 @@
 - [Oversikt](#oversikt)
 - [Henvendelser](#henvendelser)
 - [Languages and Tools](#languages-and-tools)
+- [Regler](/docs/Regler.md)
+- [Bugs](/docs/Bugs.md)
+
 
 ## Bruk
 
@@ -32,7 +35,9 @@ npm run dev
 ├── Dockerfile
 ├── README.md
 ├── docs
+│   ├── Bugs.md
 │   └── Regler.md
+├── jest.config.ts
 ├── nais.yaml
 ├── next-env.d.ts
 ├── next.config.js
@@ -60,7 +65,9 @@ npm run dev
 │   │       └── EditTravel.tsx
 │   ├── models
 │   │   ├── Country.tsx
-│   │   └── Travel.tsx
+│   │   ├── TotalDaysAbroadAndTravel.ts
+│   │   ├── Travel.tsx
+│   │   └── YearlySummary.ts
 │   ├── pages
 │   │   ├── _app.tsx
 │   │   ├── _document.tsx
@@ -78,9 +85,11 @@ npm run dev
 │   ├── styles
 │   │   └── globals.css
 │   └── utilities
-│       ├── dataCalculations.ts
-│       └── dataCalculationsv2.ts
+│       ├── ruleEngine.ts
+│       └── summaryEngine.ts
 ├── tailwind.config.js
+├── tests
+│   └── ruleEngineTests.test.ts
 ├── tsconfig.json
 └── yarn.lock
 
@@ -97,7 +106,6 @@ Visjon:
 - Bruker kan på en enkel måte være med å bygge opp sin egen oversikt over sitt medlemskapet i folketrygden.
 - NAV legger opplysningene til grunn på et senere tidspunkt.
 - Feriekalkulatoren kan lages for brukere som er bosatt (trygdemessig) i Norge og som ønsker å tilbringe flere perioder utenfor Norge
-
 
 ## Henvendelser
 
