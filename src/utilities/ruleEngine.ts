@@ -143,7 +143,7 @@ function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
         (t) => t.startDate < greenDate && redTravel.endDate < t.startDate
       )
     ) {
-      const newRedTravel = notRedTravels.find((t) => t.startDate < greenDate);
+      const newRedTravel = notRedTravels.find((t) => t.startDate < greenDate && t.startDate > redTravel.endDate);
       newRedTravel
         ? ((greenDate = addYears(newRedTravel.endDate, 1)),
           redTravels.push(newRedTravel))
