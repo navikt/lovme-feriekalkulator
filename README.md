@@ -49,14 +49,13 @@ npm run dev
 │   └── vercel.svg
 ├── src
 │   ├── components
-│   │   ├── ComboBox.tsx
 │   │   ├── CountryChooser.tsx
 │   │   ├── CustomDatePicker.tsx
-│   │   ├── DateChooser.tsx
 │   │   ├── JourneyTable.tsx
 │   │   ├── Navbar.tsx
 │   │   ├── Purpose.tsx
 │   │   ├── SummaryCard.tsx
+│   │   ├── TravelForm.tsx
 │   │   ├── VisualTimeline.tsx
 │   │   └── editAndDelete
 │   │       ├── DeleteModal.tsx
@@ -79,9 +78,8 @@ npm run dev
 │   │   ├── en
 │   │   │   └── world.json
 │   │   ├── eøs.json
-│   │   ├── no
-│   │   │   └── world.json
-│   │   └── utenfor.tsx
+│   │   └── no
+│   │       └── world.json
 │   ├── styles
 │   │   └── globals.css
 │   └── utilities
