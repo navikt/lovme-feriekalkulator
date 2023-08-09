@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
-import { ComboBox } from "./ComboBox";
+import { ComboBox } from "./CountryChooser";
 import { ParasolBeachIcon } from "@navikt/aksel-icons";
 import { DeleteModal } from "./editAndDelete/DeleteModal";
 

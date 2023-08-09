@@ -1,4 +1,4 @@
-import DateChooser from "@/components/DateChooser";
+import DateChooser from "@/components/TravelForm";
 import { VisualTimeline } from "@/components/VisualTimeline";
 import { useEffect, useState } from "react";
 import JourneyTable from "@/components/JourneyTable";

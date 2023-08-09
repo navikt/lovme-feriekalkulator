@@ -4,7 +4,7 @@ import { Travel } from "../../models/Travel";
 import { Purpose } from "../Purpose";
 import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
-import { ComboBox } from "../ComboBox";
+import { ComboBox } from "../CountryChooser";
 
 export const EditTravel = ({
   savedTravels,

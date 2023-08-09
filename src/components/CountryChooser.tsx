@@ -1,10 +1,9 @@
-import { Select } from "@navikt/ds-react";
-import { Dispatch, SetStateAction } from "react";
-import { Country } from "../models/Country";
+import { UNSAFE_Combobox } from "@navikt/ds-react";
+import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import AllCountries from "../resources/no/world.json";
 import EEAcountries from "../resources/eøs.json";
 
-const CountryChooser = ({
+export const ComboBox = ({
   chosenCountry,
   setCountry,
   setEEA,
@@ -13,45 +12,60 @@ const CountryChooser = ({
   setCountry: Dispatch<SetStateAction<string>>;
   setEEA: Dispatch<SetStateAction<boolean>>;
 }) => {
-  const handleChange = (event: any) => {
-    event.preventDefault();
-    const country = event.target.value;
-    setCountry(country);
-    if (country === "Innenfor EØS") {
+  const countryOptions = useMemo(() => {
+    return [
+      "Innenfor EØS",
+      "Utenfor EØS",
+      ...AllCountries.map((land) => land.name),
+    ];
+  }, []);
+
+  const [value, setValue] = useState("");
+
+  const filteredOptions = useMemo(
+    () =>
+      countryOptions.filter((option) =>
+        option.toLowerCase().includes(value.toLowerCase())
+      ),
+    [countryOptions, value]
+  );
+
+  const handleToggleSelected = (option: string) => {
+    setCountry(option);
+    if (option === "Innenfor EØS") {
       setEEA(true);
     } else {
       setEEA(
         Object.keys(EEAcountries)
           .map((l) => l.toLowerCase())
-          .includes(country.toLowerCase())
+          .includes(option.toLowerCase())
       );
     }
   };
 
   return (
-    <div>
-      <div>
-        <Select
-          onChange={handleChange}
-          className="dropdown"
-          value={chosenCountry}
-          id="country"
-          label="Hvilket land har du oppholdt deg i?"
-        >
-          <option value="">Velg land</option>
-          <option value="Innenfor EØS">Innenfor EØS</option>
-          <option value="Utenfor EØS">Utenfor EØS</option>
-          {AllCountries.map((land: Country) => {
-            return (
-              <option key={land.alpha3} value={land.name}>
-                {land.name}
-              </option>
-            );
-          })}
-        </Select>
-      </div>
+    <div
+      onKeyDown={(e) => {
+        e.key === "Enter" && e.preventDefault();
+      }}
+    >
+      <UNSAFE_Combobox
+        label="Hvilket land har du oppholdt deg i?"
+        filteredOptions={filteredOptions}
+        onToggleSelected={(option) => {
+          if (countryOptions.includes(option)) {
+            handleToggleSelected(option);
+          } else if (filteredOptions.length) {
+            handleToggleSelected(filteredOptions[0]);
+          }
+        }}
+        onChange={(event) => setValue(event.target.value)}
+        options={countryOptions}
+        selectedOptions={[chosenCountry]}
+        onClear={() => setValue("")}
+        value={value}
+        shouldAutocomplete
+      />
     </div>
   );
 };
-
-export default CountryChooser;
