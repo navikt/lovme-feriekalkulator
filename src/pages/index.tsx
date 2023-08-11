@@ -1,4 +1,4 @@
-import DateChooser from "@/components/TravelForm";
+import TravelForm from "@/components/TravelForm";
 import { VisualTimeline } from "@/components/VisualTimeline";
 import { useEffect, useState } from "react";
 import JourneyTable from "@/components/JourneyTable";
@@ -20,10 +20,10 @@ export default function Home() {
   return (
     <div>
       <title>Feriekalkulator</title>
-      <div className="p-7 py-12 bg-white rounded-xl ">
+      <div className="p-7 py-12 bg-white ">
         <div className="w-full max-w-[1900px] grid grid-cols-12 m-auto gap-4">
           <div className="lg:mx-auto w-full col-span-12 lg:col-span-3">
-            <DateChooser
+            <TravelForm
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
