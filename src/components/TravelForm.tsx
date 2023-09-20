@@ -53,7 +53,7 @@ export const TravelForm = ({
     }
   }, [startDate, endDate, country]);
 
-  function handleSubmit(event: { preventDefault: () => void }) {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     const hasError = errorHandler(
@@ -81,13 +81,14 @@ export const TravelForm = ({
         startDate ?? new Date(0)
       ),
     };
+
     const copy = [...savedTravels];
     copy.push(newTravel);
     setSavedTravels(copy);
     sessionStorage.setItem("savedTravels", JSON.stringify(copy));
 
     resetInputFields();
-  }
+  };
 
   const resetInputFields = () => {
     setCountry("");

@@ -1,3 +1,5 @@
+import React from "react";
+
 type SetErrorState = React.Dispatch<React.SetStateAction<boolean>>;
 
 export const errorHandler = (
@@ -12,7 +14,7 @@ export const errorHandler = (
     condition: Date | undefined | string,
     setErrorState: SetErrorState
   ) => {
-    const hasError = !Boolean(condition);
+    const hasError = !condition;
     setErrorState(hasError);
     return hasError;
   };
