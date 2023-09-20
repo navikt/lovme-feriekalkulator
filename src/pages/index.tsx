@@ -1,4 +1,4 @@
-import TravelForm from "@/components/TravelForm";
+import { TravelForm } from "@/components/TravelForm";
 import { VisualTimeline } from "@/components/VisualTimeline";
 import { useEffect, useState } from "react";
 import JourneyTable from "@/components/JourneyTable";

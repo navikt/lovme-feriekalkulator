@@ -12,7 +12,7 @@ export const DeleteModal = ({
 }: {
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  deleteFunction: any;
+  deleteFunction: Function;
   modalText?: string;
   description?: string;
   yesButton?: string;
@@ -32,14 +32,14 @@ export const DeleteModal = ({
       aria-labelledby="modal-heading"
     >
       <div>
-      <div className="flex flex-col items-start">
-        <Heading level="1" size="medium">
-          {modalText ?? "Er du sikker?"}
-        </Heading>
-      </div>
-      <div className=" pb-4">
-        {description?.length != 0 ? <p>{description}</p> : null}
-      </div>
+        <div className="flex flex-col items-start">
+          <Heading level="1" size="medium">
+            {modalText ?? "Er du sikker?"}
+          </Heading>
+        </div>
+        <div className=" pb-4">
+          {description?.length != 0 ? <p>{description}</p> : null}
+        </div>
         <div className="flex flex-row items-start gap-5 place-content-center">
           <Button
             variant="danger"
@@ -56,7 +56,6 @@ export const DeleteModal = ({
           </Button>
         </div>
       </div>
-
     </Modal>
   );
 };

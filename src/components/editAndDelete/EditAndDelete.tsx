@@ -17,7 +17,7 @@ export const EditAndDelete = ({
   savedTravels,
 }: {
   id: number;
-  deleteFunction: any;
+  deleteFunction: Function;
   editFunction: Function;
   savedTravels: Array<Travel>;
 }) => {
@@ -34,10 +34,10 @@ export const EditAndDelete = ({
   });
   const [index, setIndex] = useState<number>(-1);
 
-  function findIndex(){
+  function findIndex() {
     var travel = savedTravels.find((travel) => travel.id === id);
-    if(travel !== undefined){
-    setIndex(savedTravels.indexOf(travel));
+    if (travel !== undefined) {
+      setIndex(savedTravels.indexOf(travel));
     }
     setIndex(-1);
   }

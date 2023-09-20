@@ -3,14 +3,16 @@ import { Dispatch, SetStateAction, useMemo, useState } from "react";
 import AllCountries from "../resources/no/world.json";
 import EEAcountries from "../resources/eøs.json";
 
-export const ComboBox = ({
+export const CountryChooser = ({
   chosenCountry,
   setCountry,
   setEEA,
+  countryError,
 }: {
   chosenCountry: string;
   setCountry: Dispatch<SetStateAction<string>>;
   setEEA: Dispatch<SetStateAction<boolean>>;
+  countryError: boolean;
 }) => {
   const countryOptions = useMemo(() => {
     return [
@@ -59,12 +61,17 @@ export const ComboBox = ({
             handleToggleSelected(filteredOptions[0]);
           }
         }}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={(event) => {
+          if (event) {
+            setValue(event.target.value);
+          }
+        }}
         options={countryOptions}
         selectedOptions={[chosenCountry]}
         onClear={() => setValue("")}
         value={value}
         shouldAutocomplete
+        error={countryError ? "Du må velge et land" : undefined}
       />
     </div>
   );

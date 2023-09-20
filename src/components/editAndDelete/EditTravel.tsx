@@ -4,7 +4,7 @@ import { Travel } from "../../models/Travel";
 import { Purpose } from "../Purpose";
 import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
-import { ComboBox } from "../CountryChooser";
+import { CountryChooser } from "../CountryChooser";
 
 export const EditTravel = ({
   savedTravels,
@@ -38,10 +38,11 @@ export const EditTravel = ({
         Endre reise
       </Heading>
       <div className="w-full flex flex-col gap-5">
-        <ComboBox
+        <CountryChooser
           chosenCountry={country}
           setCountry={setCountry}
           setEEA={setEEA}
+          countryError={country ? false : true}
         />
 
         <CustomDatePicker
@@ -54,6 +55,8 @@ export const EditTravel = ({
             from: startDate ?? new Date(),
             to: endDate ?? new Date(),
           }}
+          startDateError={startDate ? false : true}
+          endDateError={endDate ? false : true}
         />
 
         <Purpose purpose={purpose} setPurpose={setPurpose} />
@@ -61,7 +64,7 @@ export const EditTravel = ({
           <Button
             className="basis-2/5"
             onClick={() => {
-              var newTravel: Travel = {
+              const newTravel: Travel = {
                 id: Date.now(),
                 country: country,
                 startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk

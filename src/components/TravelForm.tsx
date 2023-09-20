@@ -4,11 +4,12 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
-import { ComboBox } from "./CountryChooser";
+import { CountryChooser } from "./CountryChooser";
 import { ParasolBeachIcon } from "@navikt/aksel-icons";
 import { DeleteModal } from "./editAndDelete/DeleteModal";
+import { errorHandler } from "@/utilities/errorHandler";
 
-const DateChooser = ({
+export const TravelForm = ({
   savedTravels,
   setSavedTravels,
 }: {
@@ -21,7 +22,10 @@ const DateChooser = ({
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const datePickerRef = useRef<any>(null);
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);
+  const [countryError, setCountryError] = useState(false);
+  const datePickerRef = useRef<any>();
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -37,8 +41,33 @@ const DateChooser = ({
     );
   }, [setSavedTravels]);
 
-  function handleSubmit(event: any) {
+  useEffect(() => {
+    if (startDate) {
+      setStartDateError(false);
+    }
+    if (endDate) {
+      setEndDateError(false);
+    }
+    if (country) {
+      setCountryError(false);
+    }
+  }, [startDate, endDate, country]);
+
+  function handleSubmit(event: { preventDefault: () => void }) {
     event.preventDefault();
+
+    const hasError = errorHandler(
+      startDate,
+      endDate,
+      country,
+      setStartDateError,
+      setEndDateError,
+      setCountryError
+    );
+
+    if (hasError) {
+      return;
+    }
 
     let newTravel: Travel = {
       id: Date.now(),
@@ -94,11 +123,12 @@ const DateChooser = ({
           </Heading>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>
-              <ComboBox
+              <CountryChooser
                 chosenCountry={country}
                 setCountry={setCountry}
                 setEEA={setEEA}
-              ></ComboBox>
+                countryError={countryError}
+              />
             </div>
             <CustomDatePicker
               startDate={startDate}
@@ -108,20 +138,24 @@ const DateChooser = ({
               ref={datePickerRef}
               savedTravels={savedTravels}
               selectedDates={undefined}
+              startDateError={startDateError}
+              endDateError={endDateError}
             />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="gap-5 flex flex-row justify-between">
               <Button className="basis-2/5" variant="primary" type="submit">
                 Legg til
               </Button>
-              <Button
-                className="basis-2/5"
-                variant="danger"
-                onClick={() => setOpenDeleteModal(true)}
-                type="button"
-              >
-                Slett tabelldata
-              </Button>
+              {savedTravels.length > 0 ? (
+                <Button
+                  className="basis-2/5"
+                  variant="danger"
+                  onClick={() => setOpenDeleteModal(true)}
+                  type="button"
+                >
+                  Slett tabelldata
+                </Button>
+              ) : null}
             </div>
           </form>
         </div>
@@ -138,5 +172,3 @@ const DateChooser = ({
     </div>
   );
 };
-
-export default DateChooser;

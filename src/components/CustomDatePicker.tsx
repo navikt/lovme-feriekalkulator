@@ -22,6 +22,8 @@ interface CustomDatePickerProps {
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
   savedTravels: Array<Travel>;
   selectedDates: DateRange | undefined;
+  startDateError: boolean;
+  endDateError: boolean;
 }
 
 export const CustomDatePicker = forwardRef(function Test(
@@ -32,6 +34,8 @@ export const CustomDatePicker = forwardRef(function Test(
     setEndDate,
     savedTravels,
     selectedDates,
+    startDateError,
+    endDateError,
   }: CustomDatePickerProps,
   ref
 ) {
@@ -89,8 +93,20 @@ export const CustomDatePicker = forwardRef(function Test(
     <div>
       <DatePicker {...datepickerProps} dropdownCaption>
         <div className="flex items-start gap-5 flex-col">
-          <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
-          <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
+          <DatePicker.Input
+            id="startDate"
+            {...fromInputProps}
+            label="Velg fra og til dato"
+            error={startDateError ? "Du må velge fra og til dato" : undefined}
+          />
+          {startDate ? (
+            <DatePicker.Input
+              id="endDate"
+              {...toInputProps}
+              label="Til"
+              error={endDateError ? "Du må velge fra og til dato" : undefined}
+            />
+          ) : null}
         </div>
       </DatePicker>
       {startDate && endDate && <div id="differenceInDays"></div>}
