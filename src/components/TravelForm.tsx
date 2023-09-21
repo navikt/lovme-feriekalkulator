@@ -72,14 +72,11 @@ export const TravelForm = ({
     let newTravel: Travel = {
       id: Date.now(),
       country: country,
-      startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      endDate: endDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      EEA: EEA ?? false,
+      startDate: startDate!,
+      endDate: endDate!,
+      EEA: EEA,
       purpose: purpose,
-      duration: differenceInCalendarDays(
-        endDate ?? new Date(0),
-        startDate ?? new Date(0)
-      ),
+      duration: differenceInCalendarDays(endDate!, startDate!),
     };
 
     const copy = [...savedTravels];

@@ -71,7 +71,7 @@ export const CountryChooser = ({
         onClear={() => setValue("")}
         value={value}
         shouldAutocomplete
-        error={countryError ? "Du må velge et land" : undefined}
+        error={countryError && "Du må velge hvor du har oppholdt deg"}
       />
     </div>
   );

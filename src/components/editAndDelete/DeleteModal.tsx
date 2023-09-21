@@ -1,5 +1,5 @@
 import { Button, Heading, Modal } from "@navikt/ds-react";
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React from "react";
 
 export const DeleteModal = ({
   open,
@@ -11,24 +11,18 @@ export const DeleteModal = ({
   noButton,
 }: {
   open: boolean;
-  setOpen: Dispatch<SetStateAction<boolean>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   deleteFunction: Function;
   modalText?: string;
   description?: string;
   yesButton?: string;
   noButton?: string;
 }) => {
-  useEffect(() => {
-    Modal.setAppElement("#__next");
-  }, []);
-
   return (
     <Modal
       className="vw-1/3 vh-1/3 flex px-10 py-10 gap-5 overflow-visible"
       open={open}
-      aria-label="Slette"
-      onClose={() => setOpen((x) => !x)}
-      closeButton={false}
+      onClose={() => setOpen(false)}
       aria-labelledby="modal-heading"
     >
       <div>
@@ -37,8 +31,8 @@ export const DeleteModal = ({
             {modalText ?? "Er du sikker?"}
           </Heading>
         </div>
-        <div className=" pb-4">
-          {description?.length != 0 ? <p>{description}</p> : null}
+        <div className="pb-4">
+          {description?.length !== 0 ? <p>{description}</p> : null}
         </div>
         <div className="flex flex-row items-start gap-5 place-content-center">
           <Button
