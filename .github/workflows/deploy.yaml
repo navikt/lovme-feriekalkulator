@@ -9,7 +9,7 @@ env:
 
 jobs:
   build:
-    name: Build and deploy to NAIS
+    name: ${{ startsWith(github.ref, 'refs/heads/main') && 'Deploy to ekstern' || format('Deploy {0} to ekstern', github.ref_name) }}
     permissions:
       contents: "read"
       id-token: "write"
