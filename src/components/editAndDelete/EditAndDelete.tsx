@@ -91,24 +91,26 @@ export const EditAndDelete = ({
           </Dropdown.Menu.GroupedList>
         </Dropdown.Menu>
       </Dropdown>
-
-      <EditModal
-        open={openEditModal}
-        setOpen={setOpenEditModal}
-        savedTravels={savedTravels}
-        travelToEdit={travelToEdit}
-        indexToPutTravel={index}
-        editFunction={editFunction}
-      />
-
-      <DeleteModal
-        open={openDeleteModal}
-        setOpen={setOpenDeleteModal}
-        deleteFunction={() => deleteFunction(id)}
-        modalText="Sikker på at du vil slette reisen?"
-        yesButton="Slett"
-        noButton="Avbryt"
-      />
+      {openEditModal ? (
+        <EditModal
+          open={openEditModal}
+          setOpen={setOpenEditModal}
+          savedTravels={savedTravels}
+          travelToEdit={travelToEdit}
+          indexToPutTravel={index}
+          editFunction={editFunction}
+        />
+      ) : null}
+      {openDeleteModal ? (
+        <DeleteModal
+          open={openDeleteModal}
+          setOpen={setOpenDeleteModal}
+          deleteFunction={() => deleteFunction(id)}
+          modalText="Sikker på at du vil slette reisen?"
+          yesButton="Slett"
+          noButton="Avbryt"
+        />
+      ) : null}
     </div>
   );
 };

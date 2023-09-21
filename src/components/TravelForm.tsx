@@ -158,15 +158,17 @@ export const TravelForm = ({
           </form>
         </div>
       </Panel>
-      <DeleteModal
-        open={openDeleteModal}
-        setOpen={setOpenDeleteModal}
-        deleteFunction={() => handleDeleteAll()}
-        modalText="Er du sikker på at du vil starte på nytt?"
-        description="(Du mister all data i tabellen)"
-        yesButton="Slett tabelldata"
-        noButton="Avbryt"
-      />
+      {openDeleteModal ? (
+        <DeleteModal
+          open={openDeleteModal}
+          setOpen={setOpenDeleteModal}
+          deleteFunction={() => handleDeleteAll()}
+          modalText="Er du sikker på at du vil starte på nytt?"
+          description="(Du mister all data i tabellen)"
+          yesButton="Slett tabelldata"
+          noButton="Avbryt"
+        />
+      ) : null}
     </div>
   );
 };

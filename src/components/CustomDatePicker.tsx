@@ -96,7 +96,7 @@ export const CustomDatePicker = forwardRef(function Test(
           <DatePicker.Input
             id="startDate"
             {...fromInputProps}
-            label="Velg fra og til dato"
+            label={endDate ? "Fra" : "Velg fra og til dato"}
             error={startDateError ? "Du må velge fra og til dato" : undefined}
           />
           {startDate ? (
