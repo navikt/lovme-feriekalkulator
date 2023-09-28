@@ -26,6 +26,27 @@ export const TravelForm = ({
   const [endDateError, setEndDateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const datePickerRef = useRef<any>();
+  const [headingName, setHeadingName] = useState("Oppholdskalkulator");
+  const [clickCount, setClickCount] = useState(0);
+  const [shouldBlink, setShouldBlink] = useState(false);
+
+  const handleHeadingClick = () => {
+    if (clickCount === 2) {
+      // Your existing logic
+      setHeadingName("Feriekalkulator");
+      setTimeout(() => {
+        setHeadingName("Oppholdskalkulator");
+      }, 10000); // Reset the name after 10 seconds
+
+      // New blinking logic
+      setShouldBlink(true);
+      setTimeout(() => setShouldBlink(false), 10000); // Stop blinking after 10 seconds
+
+      setClickCount(0); // Reset click count
+    } else {
+      setClickCount((prevCount) => prevCount + 1);
+    }
+  };
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -111,13 +132,20 @@ export const TravelForm = ({
           className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
         >
           <ParasolBeachIcon
-            className="align-middle text-[3rem] absolute -top-[1.5rem]"
+            className={`align-middle text-[3rem] absolute -top-[1.5rem] ${
+              shouldBlink ? "blink-animation" : ""
+            }`}
             aria-hidden
           />
         </div>
         <div id="form-container" className="mt-4">
-          <Heading className="mb-8" level="1" size="xlarge">
-            Feriekalkulator
+          <Heading
+            className="mb-8"
+            level="1"
+            size="xlarge"
+            onClick={handleHeadingClick}
+          >
+            {headingName}
           </Heading>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>

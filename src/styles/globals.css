@@ -2,3 +2,15 @@
 @import "@navikt/ds-css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+@keyframes colorBlink {
+    0% { color: red; }
+    25% { color: blue; }
+    50% { color: green; }
+    75% { color: yellow; }
+    100% { color: red; }
+  }
+  
+  .blink-animation {
+    animation: colorBlink 1s infinite;
+  }
