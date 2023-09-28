@@ -68,13 +68,8 @@ export const CustomDatePicker = forwardRef(function Test(
         to: travel.endDate,
       })),
       onRangeChange: (selectedRange) => {
-        if (
-          selectedRange?.from !== undefined &&
-          selectedRange?.to !== undefined
-        ) {
-          setEndDate(selectedRange.to);
-          setStartDate(selectedRange.from);
-        }
+        setStartDate(selectedRange?.from);
+        setEndDate(selectedRange?.to);
       },
     });
 
@@ -89,6 +84,29 @@ export const CustomDatePicker = forwardRef(function Test(
     calculateInitialEndDate();
   }, []);
 
+  const getStartDateLabel = () => {
+    if (!startDate && !endDate) {
+      return "Velg fra og til dato";
+    }
+    return "Fra";
+  };
+
+  const getStartDateError = () => {
+    if (startDateError) return "Du må velge fra dato";
+    if (!startDate && endDateError) return "Du må velge fra og til dato";
+    return undefined;
+  };
+
+  const getEndDateError = () => {
+    if (endDateError) return "Du må velge til dato";
+    if (!endDate && startDateError) return "Du må velge til dato";
+    return undefined;
+  };
+
+  const shouldDisplayEndDateInput = () => {
+    return startDate || endDate || endDateError;
+  };
+
   return (
     <div>
       <DatePicker {...datepickerProps} dropdownCaption>
@@ -96,17 +114,17 @@ export const CustomDatePicker = forwardRef(function Test(
           <DatePicker.Input
             id="startDate"
             {...fromInputProps}
-            label={endDate ? "Fra" : "Velg fra og til dato"}
-            error={startDateError ? "Du må velge fra og til dato" : undefined}
+            label={getStartDateLabel()}
+            error={getStartDateError()}
           />
-          {startDate ? (
+          {shouldDisplayEndDateInput() && (
             <DatePicker.Input
               id="endDate"
               {...toInputProps}
               label="Til"
-              error={endDateError ? "Du må velge fra og til dato" : undefined}
+              error={getEndDateError()}
             />
-          ) : null}
+          )}
         </div>
       </DatePicker>
       {startDate && endDate && <div id="differenceInDays"></div>}
