@@ -17,11 +17,7 @@ export const EditTravel = ({
   travelToEdit: Travel;
   setOpen: Dispatch<SetStateAction<boolean>>;
   indexToPutTravel: number;
-  editFunction: (
-    newTravel: Travel,
-    savedTravels: Array<Travel>,
-    index: number
-  ) => void;
+  editFunction: Function;
 }) => {
   const [startDate, setStartDate] = useState<Date | undefined>(
     travelToEdit.startDate
