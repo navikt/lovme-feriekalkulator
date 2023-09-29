@@ -4,11 +4,12 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
-import { ComboBox } from "./CountryChooser";
+import { CountryChooser } from "./CountryChooser";
 import { ParasolBeachIcon } from "@navikt/aksel-icons";
 import { DeleteModal } from "./editAndDelete/DeleteModal";
+import { errorHandler } from "@/utilities/errorHandler";
 
-const DateChooser = ({
+export const TravelForm = ({
   savedTravels,
   setSavedTravels,
 }: {
@@ -21,7 +22,10 @@ const DateChooser = ({
   const [EEA, setEEA] = useState<boolean>(false);
   const [purpose, setPurpose] = useState("Ferie");
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const datePickerRef = useRef<any>(null);
+  const [startDateError, setStartDateError] = useState(false);
+  const [endDateError, setEndDateError] = useState(false);
+  const [countryError, setCountryError] = useState(false);
+  const datePickerRef = useRef<any>();
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -37,28 +41,51 @@ const DateChooser = ({
     );
   }, [setSavedTravels]);
 
-  function handleSubmit(event: any) {
+  useEffect(() => {
+    if (startDate) {
+      setStartDateError(false);
+    }
+    if (endDate) {
+      setEndDateError(false);
+    }
+    if (country) {
+      setCountryError(false);
+    }
+  }, [startDate, endDate, country]);
+
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
+
+    const hasError = errorHandler(
+      startDate,
+      endDate,
+      country,
+      setStartDateError,
+      setEndDateError,
+      setCountryError
+    );
+
+    if (hasError) {
+      return;
+    }
 
     let newTravel: Travel = {
       id: Date.now(),
       country: country,
-      startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      endDate: endDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-      EEA: EEA ?? false,
+      startDate: startDate!,
+      endDate: endDate!,
+      EEA: EEA,
       purpose: purpose,
-      duration: differenceInCalendarDays(
-        endDate ?? new Date(0),
-        startDate ?? new Date(0)
-      ),
+      duration: differenceInCalendarDays(endDate!, startDate!),
     };
+
     const copy = [...savedTravels];
     copy.push(newTravel);
     setSavedTravels(copy);
     sessionStorage.setItem("savedTravels", JSON.stringify(copy));
 
     resetInputFields();
-  }
+  };
 
   const resetInputFields = () => {
     setCountry("");
@@ -94,11 +121,12 @@ const DateChooser = ({
           </Heading>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>
-              <ComboBox
+              <CountryChooser
                 chosenCountry={country}
                 setCountry={setCountry}
                 setEEA={setEEA}
-              ></ComboBox>
+                countryError={countryError}
+              />
             </div>
             <CustomDatePicker
               startDate={startDate}
@@ -108,35 +136,39 @@ const DateChooser = ({
               ref={datePickerRef}
               savedTravels={savedTravels}
               selectedDates={undefined}
+              startDateError={startDateError}
+              endDateError={endDateError}
             />
             <Purpose purpose={purpose} setPurpose={setPurpose} />
             <div className="gap-5 flex flex-row justify-between">
               <Button className="basis-2/5" variant="primary" type="submit">
                 Legg til
               </Button>
-              <Button
-                className="basis-2/5"
-                variant="danger"
-                onClick={() => setOpenDeleteModal(true)}
-                type="button"
-              >
-                Slett tabelldata
-              </Button>
+              {savedTravels.length > 0 ? (
+                <Button
+                  className="basis-2/5"
+                  variant="danger"
+                  onClick={() => setOpenDeleteModal(true)}
+                  type="button"
+                >
+                  Slett tabelldata
+                </Button>
+              ) : null}
             </div>
           </form>
         </div>
       </Panel>
-      <DeleteModal
-        open={openDeleteModal}
-        setOpen={setOpenDeleteModal}
-        deleteFunction={() => handleDeleteAll()}
-        modalText="Er du sikker på at du vil starte på nytt?"
-        description="(Du mister all data i tabellen)"
-        yesButton="Slett tabelldata"
-        noButton="Avbryt"
-      />
+      {openDeleteModal ? (
+        <DeleteModal
+          open={openDeleteModal}
+          setOpen={setOpenDeleteModal}
+          deleteFunction={() => handleDeleteAll()}
+          modalText="Er du sikker på at du vil starte på nytt?"
+          description="(Du mister all data i tabellen)"
+          yesButton="Slett tabelldata"
+          noButton="Avbryt"
+        />
+      ) : null}
     </div>
   );
 };
-
-export default DateChooser;

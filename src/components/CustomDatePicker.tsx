@@ -22,6 +22,8 @@ interface CustomDatePickerProps {
   setEndDate: Dispatch<SetStateAction<Date | undefined>>;
   savedTravels: Array<Travel>;
   selectedDates: DateRange | undefined;
+  startDateError: boolean;
+  endDateError: boolean;
 }
 
 export const CustomDatePicker = forwardRef(function Test(
@@ -32,6 +34,8 @@ export const CustomDatePicker = forwardRef(function Test(
     setEndDate,
     savedTravels,
     selectedDates,
+    startDateError,
+    endDateError,
   }: CustomDatePickerProps,
   ref
 ) {
@@ -64,13 +68,8 @@ export const CustomDatePicker = forwardRef(function Test(
         to: travel.endDate,
       })),
       onRangeChange: (selectedRange) => {
-        if (
-          selectedRange?.from !== undefined &&
-          selectedRange?.to !== undefined
-        ) {
-          setEndDate(selectedRange.to);
-          setStartDate(selectedRange.from);
-        }
+        setStartDate(selectedRange?.from);
+        setEndDate(selectedRange?.to);
       },
     });
 
@@ -85,12 +84,47 @@ export const CustomDatePicker = forwardRef(function Test(
     calculateInitialEndDate();
   }, []);
 
+  const getStartDateLabel = () => {
+    if (!startDate && !endDate) {
+      return "Velg fra og til dato";
+    }
+    return "Fra";
+  };
+
+  const getStartDateError = () => {
+    if (startDateError) return "Du må velge fra dato";
+    if (!startDate && endDateError) return "Du må velge fra og til dato";
+    return undefined;
+  };
+
+  const getEndDateError = () => {
+    if (endDateError) return "Du må velge til dato";
+    if (!endDate && startDateError) return "Du må velge til dato";
+    return undefined;
+  };
+
+  const shouldDisplayEndDateInput = () => {
+    return startDate || endDate || endDateError;
+  };
+
   return (
     <div>
       <DatePicker {...datepickerProps} dropdownCaption>
         <div className="flex items-start gap-5 flex-col">
-          <DatePicker.Input id="startDate" {...fromInputProps} label="Fra" />
-          <DatePicker.Input id="endDate" {...toInputProps} label="Til" />
+          <DatePicker.Input
+            id="startDate"
+            {...fromInputProps}
+            label={getStartDateLabel()}
+            error={getStartDateError()}
+          />
+          {shouldDisplayEndDateInput() && (
+            <DatePicker.Input
+              id="endDate"
+              {...toInputProps}
+              label="Til"
+              error={getEndDateError()}
+            />
+          )}
         </div>
       </DatePicker>
       {startDate && endDate && <div id="differenceInDays"></div>}

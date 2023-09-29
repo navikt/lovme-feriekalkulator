@@ -17,7 +17,7 @@ export const EditAndDelete = ({
   savedTravels,
 }: {
   id: number;
-  deleteFunction: any;
+  deleteFunction: Function;
   editFunction: Function;
   savedTravels: Array<Travel>;
 }) => {
@@ -34,10 +34,10 @@ export const EditAndDelete = ({
   });
   const [index, setIndex] = useState<number>(-1);
 
-  function findIndex(){
+  function findIndex() {
     var travel = savedTravels.find((travel) => travel.id === id);
-    if(travel !== undefined){
-    setIndex(savedTravels.indexOf(travel));
+    if (travel !== undefined) {
+      setIndex(savedTravels.indexOf(travel));
     }
     setIndex(-1);
   }
@@ -91,24 +91,26 @@ export const EditAndDelete = ({
           </Dropdown.Menu.GroupedList>
         </Dropdown.Menu>
       </Dropdown>
-
-      <EditModal
-        open={openEditModal}
-        setOpen={setOpenEditModal}
-        savedTravels={savedTravels}
-        travelToEdit={travelToEdit}
-        indexToPutTravel={index}
-        editFunction={editFunction}
-      />
-
-      <DeleteModal
-        open={openDeleteModal}
-        setOpen={setOpenDeleteModal}
-        deleteFunction={() => deleteFunction(id)}
-        modalText="Sikker på at du vil slette reisen?"
-        yesButton="Slett"
-        noButton="Avbryt"
-      />
+      {openEditModal ? (
+        <EditModal
+          open={openEditModal}
+          setOpen={setOpenEditModal}
+          savedTravels={savedTravels}
+          travelToEdit={travelToEdit}
+          indexToPutTravel={index}
+          editFunction={editFunction}
+        />
+      ) : null}
+      {openDeleteModal ? (
+        <DeleteModal
+          open={openDeleteModal}
+          setOpen={setOpenDeleteModal}
+          deleteFunction={() => deleteFunction(id)}
+          modalText="Sikker på at du vil slette reisen?"
+          yesButton="Slett"
+          noButton="Avbryt"
+        />
+      ) : null}
     </div>
   );
 };

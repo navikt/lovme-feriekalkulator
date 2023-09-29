@@ -4,7 +4,7 @@ import { Travel } from "../../models/Travel";
 import { Purpose } from "../Purpose";
 import { Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
-import { ComboBox } from "../CountryChooser";
+import { CountryChooser } from "../CountryChooser";
 
 export const EditTravel = ({
   savedTravels,
@@ -17,7 +17,11 @@ export const EditTravel = ({
   travelToEdit: Travel;
   setOpen: Dispatch<SetStateAction<boolean>>;
   indexToPutTravel: number;
-  editFunction: Function;
+  editFunction: (
+    newTravel: Travel,
+    savedTravels: Array<Travel>,
+    index: number
+  ) => void;
 }) => {
   const [startDate, setStartDate] = useState<Date | undefined>(
     travelToEdit.startDate
@@ -29,6 +33,35 @@ export const EditTravel = ({
   const [EEA, setEEA] = useState<boolean>(travelToEdit.EEA);
   const [purpose, setPurpose] = useState(travelToEdit.purpose);
 
+  const countryIsValid = !!country;
+  const startDateIsValid = !!startDate;
+  const endDateIsValid = !!endDate;
+  const purposeIsValid = !!purpose;
+
+  const isValid =
+    countryIsValid && startDateIsValid && endDateIsValid && purposeIsValid;
+
+  const validateAndSaveChanges = () => {
+    if (!isValid) {
+      return;
+    }
+
+    const newTravel: Travel = {
+      id: Date.now(),
+      country: country,
+      startDate: startDate ?? new Date(0),
+      endDate: endDate ?? new Date(0),
+      EEA: EEA ?? false,
+      purpose: purpose,
+      duration: differenceInCalendarDays(
+        endDate ?? new Date(0),
+        startDate ?? new Date(0)
+      ),
+    };
+    editFunction(newTravel, savedTravels, indexToPutTravel);
+    setOpen(false);
+  };
+
   return (
     <div
       id="EditTravel-container"
@@ -38,10 +71,11 @@ export const EditTravel = ({
         Endre reise
       </Heading>
       <div className="w-full flex flex-col gap-5">
-        <ComboBox
+        <CountryChooser
           chosenCountry={country}
           setCountry={setCountry}
           setEEA={setEEA}
+          countryError={!countryIsValid}
         />
 
         <CustomDatePicker
@@ -54,29 +88,13 @@ export const EditTravel = ({
             from: startDate ?? new Date(),
             to: endDate ?? new Date(),
           }}
+          startDateError={!startDateIsValid}
+          endDateError={!endDateIsValid}
         />
 
         <Purpose purpose={purpose} setPurpose={setPurpose} />
         <div className="gap-5 flex flex-row justify-between">
-          <Button
-            className="basis-2/5"
-            onClick={() => {
-              var newTravel: Travel = {
-                id: Date.now(),
-                country: country,
-                startDate: startDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-                endDate: endDate ?? new Date(0), //TODO: Fjerne ved input sjekk
-                EEA: EEA ?? false,
-                purpose: purpose,
-                duration: differenceInCalendarDays(
-                  endDate ?? new Date(0),
-                  startDate ?? new Date(0)
-                ),
-              };
-              editFunction(newTravel, savedTravels, indexToPutTravel);
-              setOpen(false);
-            }}
-          >
+          <Button className="basis-2/5" onClick={validateAndSaveChanges}>
             Lagre endringer
           </Button>
           <Button
