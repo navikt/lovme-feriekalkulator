@@ -22,13 +22,19 @@ const SummaryCard = ({
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
     redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
   }`;
-  const [open , setOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  useEffect(() => {setOpen(savedTravels.length > 0 ?true :false)}, [savedTravels])
+  useEffect(() => {
+    setOpen(savedTravels.length > 0 ? true : false);
+  }, [savedTravels]);
 
   return (
     <div className="subtle-card">
-      <ExpansionCard open={open} onClick={() => setOpen(x => !x)} aria-label="Kort med oppsummering">
+      <ExpansionCard
+        open={open}
+        onClick={() => setOpen((x) => !x)}
+        aria-label="Kort med oppsummering"
+      >
         <ExpansionCard.Header>
           <div className="with-icon">
             <div className="icon">
@@ -56,8 +62,11 @@ const SummaryCard = ({
                 <h3>{summary.year}</h3>
 
                 <p>
-                  {redTravels.some(
-                    (t) => eachYearOfInterval({start: t.startDate, end: t.endDate}).some(y => y.getFullYear() == summary.year)
+                  {redTravels.some((t) =>
+                    eachYearOfInterval({
+                      start: t.startDate,
+                      end: t.endDate,
+                    }).some((y) => y.getFullYear() == summary.year)
                   ) ? (
                     <Label className="text-red-500">
                       {" "}
@@ -78,8 +87,8 @@ const SummaryCard = ({
                 </p>
               </div>
 
-              <p>Dager utenfor Norge: {summary.totalDaysAbroad}</p>
-              <p>Godkjente dager i Norge: {summary.totalDaysInNorway}</p>
+              <p>Dager i utlandet: {summary.totalDaysAbroad}</p>
+              <p>Dager i Norge: {summary.totalDaysInNorway}</p>
               <div className="leading-4">
                 <br />
               </div>
