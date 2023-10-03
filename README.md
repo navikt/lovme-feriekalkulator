@@ -1,6 +1,7 @@
-# LovMe-Feriekalkulator
+# LetMe-Oppholdskalkulator
 
 ## Innholdsfortegnelse
+
 - [Bruk](#bruk)
 - [Installere avhengigheter](#installere-avhengigheter)
 - [Start opp applikasjonen](#start-opp-applikasjonen)
@@ -12,24 +13,26 @@
 - [Regler](/docs/Regler.md)
 - [Bugs](/docs/Bugs.md)
 
-
 ## Bruk
 
 #### Installere avhengigheter
+
 ```bash
 yarn install #or
 npm install
 ```
 
 #### Start opp applikasjonen
+
 ```bash
-yarn run dev #or 
+yarn run dev #or
 npm run dev
 ```
 
-
 ## Struktur
+
 ### Kildekode
+
 ```
 .
 ├── Dockerfile
@@ -93,7 +96,6 @@ npm run dev
 
 ```
 
-
 ## Oversikt
 
 Visjon:
@@ -111,10 +113,8 @@ Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på Git
 Interne henvendelser kan sendes via Slack i kanalen #team-ferie-værsågod.
 
 ## Languages and Tools
+
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
 ![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
-
-
-

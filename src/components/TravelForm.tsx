@@ -1,5 +1,6 @@
 import { Button, Heading, Panel } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
+import ConfettiExplosion from "react-confetti-explosion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
 import { CustomDatePicker } from "./CustomDatePicker";
@@ -25,6 +26,7 @@ export const TravelForm = ({
   const [startDateError, setStartDateError] = useState(false);
   const [endDateError, setEndDateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
+  const [isExplodingConfetti, setIsExplodingConfetti] = useState(false);
   const datePickerRef = useRef<any>();
 
   useEffect(() => {
@@ -103,6 +105,13 @@ export const TravelForm = ({
     sessionStorage.clear();
   };
 
+  const handleConfettiExplosion = () => {
+    setIsExplodingConfetti(true);
+    setTimeout(() => {
+      setIsExplodingConfetti(false);
+    }, 3000);
+  };
+
   return (
     <div>
       <Panel className="relative rounded-lg h-full border-gray-400">
@@ -111,13 +120,18 @@ export const TravelForm = ({
           className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
         >
           <ParasolBeachIcon
+            onClick={() => handleConfettiExplosion()}
             className="align-middle text-[3rem] absolute -top-[1.5rem]"
             aria-hidden
           />
+          {isExplodingConfetti ? <ConfettiExplosion /> : null}
         </div>
         <div id="form-container" className="mt-4">
-          <Heading className="mb-8" level="1" size="xlarge">
-            Feriekalkulator
+          <Heading level="1" size="xlarge">
+            TellMe
+          </Heading>
+          <Heading className="mb-8" level="2" size="xsmall" textColor="subtle">
+            Oppholdskalkulator
           </Heading>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>
