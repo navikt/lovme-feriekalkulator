@@ -116,8 +116,11 @@ export const TravelForm = ({
           />
         </div>
         <div id="form-container" className="mt-4">
-          <Heading className="mb-8" level="1" size="xlarge">
-            Feriekalkulator
+          <Heading level="1" size="xlarge">
+            TellMe
+          </Heading>
+          <Heading className="mb-8" level="2" size="xsmall" textColor="subtle">
+            Oppholdskalkulator
           </Heading>
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div>

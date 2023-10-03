@@ -52,7 +52,7 @@ export const CountryChooser = ({
       }}
     >
       <UNSAFE_Combobox
-        label="Hvilket land har du oppholdt deg i?"
+        label="I hvilket land har bruker oppholdt seg?"
         filteredOptions={filteredOptions}
         onToggleSelected={(option) => {
           if (countryOptions.includes(option)) {
@@ -71,7 +71,7 @@ export const CountryChooser = ({
         onClear={() => setValue("")}
         value={value}
         shouldAutocomplete
-        error={countryError && "Du må velge hvor du har oppholdt deg"}
+        error={countryError && "Du må velge hvor bruker har oppholdt seg"}
       />
     </div>
   );
