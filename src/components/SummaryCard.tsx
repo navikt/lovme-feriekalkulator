@@ -7,7 +7,6 @@ import {
 } from "@navikt/aksel-icons";
 import { ExpansionCard, Label, Link, LinkPanel } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
-import { useEffect } from "react";
 import { eachYearOfInterval } from "date-fns";
 
 const SummaryCard = ({
