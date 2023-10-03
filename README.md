@@ -1,4 +1,4 @@
-# LetMe-Oppholdskalkulator
+# TellMe-Oppholdskalkulator
 
 ## Innholdsfortegnelse
 
