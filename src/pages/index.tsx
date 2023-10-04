@@ -1,6 +1,7 @@
 import { TravelForm } from "@/components/TravelForm";
 import { VisualTimeline } from "@/components/VisualTimeline";
 import { useEffect, useState } from "react";
+import { injectDecoratorClientSide } from "@navikt/nav-dekoratoren-moduler";
 import JourneyTable from "@/components/JourneyTable";
 import { Travel } from "@/models/Travel";
 import SummaryCard from "@/components/SummaryCard";
@@ -8,6 +9,15 @@ import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getAllRedTravels } from "@/utilities/ruleEngine";
 setDefaultOptions({ locale: nb });
+
+injectDecoratorClientSide({
+  env: "dev",
+  params: {
+    simple: true,
+    chatbot: false,
+    shareScreen: false,
+  },
+});
 
 export default function Home() {
   const [savedTravels, setSavedTravels] = useState<Array<Travel>>([]);
