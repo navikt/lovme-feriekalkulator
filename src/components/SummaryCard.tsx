@@ -5,7 +5,7 @@ import {
   SunIcon,
   XMarkOctagonFillIcon,
 } from "@navikt/aksel-icons";
-import { ExpansionCard, Label, Link, LinkPanel } from "@navikt/ds-react";
+import { ExpansionCard, Label, Link, LinkPanel, Alert } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
 import { eachYearOfInterval } from "date-fns";
 
@@ -48,13 +48,12 @@ const SummaryCard = ({
               <div key={summary.year}>
                 <div className="flex justify-between font-bold">
                   <h3>{summary.year}</h3>
-
                   <p>
                     {redTravels.some((t) =>
                       eachYearOfInterval({
                         start: t.startDate,
                         end: t.endDate,
-                      }).some((y) => y.getFullYear() == summary.year)
+                      }).some((y) => y.getFullYear() === summary.year)
                     ) ? (
                       <Label className="text-red-500">
                         {" "}
@@ -76,6 +75,13 @@ const SummaryCard = ({
                 </div>
 
                 <p>Dager i utlandet: {summary.totalDaysAbroad}</p>
+                {summary.totalDaysAbroad >= 180 &&
+                summary.totalDaysAbroad <= 185 ? (
+                  <Alert variant="warning">
+                    Advarsel: {summary.totalDaysAbroad} dager i utlandet i{" "}
+                    {summary.year}. Nærmere kontroll nødvendig.
+                  </Alert>
+                ) : null}
                 <p>Dager i Norge: {summary.totalDaysInNorway}</p>
                 <div className="leading-4">
                   <br />
