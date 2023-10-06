@@ -20,8 +20,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "18.x"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@navikt"
       - name: Yarn install
         run: yarn install
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Yarn test
         run: yarn test --runInBand
       - name: Yarn build
