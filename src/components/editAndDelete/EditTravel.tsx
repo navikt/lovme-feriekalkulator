@@ -61,6 +61,7 @@ export const EditTravel = ({
   return (
     <div
       id="EditTravel-container"
+      tabIndex={-1}
       className="w-[36rem] bg-white flex p-10 items-center flex-col gap-5 self-stretch"
     >
       <Heading level="1" size="xlarge">
