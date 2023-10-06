@@ -17,6 +17,7 @@ class MyDocument extends Document {
         language: "nb",
         simple: true,
         chatbot: false,
+        shareScreen: false,
       },
     });
 
