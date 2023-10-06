@@ -6,7 +6,7 @@ metadata:
   labels:
     team: medlemskap
 spec:
-  image: {{ image }}
+  image: { { image } }
   port: 3000
   liveness:
     path: /api/isAlive
@@ -30,4 +30,4 @@ spec:
     max: 1
     cpuThresholdPercentage: 80
   ingresses:
-    - https://lovme-feriekalkulator.ekstern.dev.nav.no
+    - https://tellme-oppholdskalkulator.ekstern.dev.nav.no
