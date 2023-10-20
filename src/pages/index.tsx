@@ -7,7 +7,6 @@ import SummaryCard from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getAllRedTravels } from "@/utilities/ruleEngine";
-import { Header } from "@/components/Header";
 setDefaultOptions({ locale: nb });
 
 export default function Home() {
