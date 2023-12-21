@@ -3,7 +3,9 @@ import { totalDaysAbroadYear, totalDaysInNorway } from "./ruleEngine";
 import { differenceInDays } from "date-fns";
 import { YearlySummary } from "@/models/YearlySummary";
 
-export function getYearlySummaries(travels: Array<Travel>): Array<YearlySummary> {
+export function getYearlySummaries(
+  travels: Array<Travel>
+): Array<YearlySummary> {
   const years = getAllYears(travels);
   const summarys: Array<YearlySummary> = [];
 
@@ -16,7 +18,7 @@ export function getYearlySummaries(travels: Array<Travel>): Array<YearlySummary>
       totalDaysOutsideEEA:
         totalDaysAbroadYear(travels, year) - totalDaysInEEA(travels, year),
     };
-    summarys.push(yearlySummary)
+    summarys.push(yearlySummary);
   }
   return summarys;
 }
@@ -32,13 +34,13 @@ function totalDaysInEEA(travels: Array<Travel>, year: number): number {
   for (const travel of travelsThisYear) {
     if (travel.startDate.getFullYear() != year) {
       totalDaysInEEA += differenceInDays(
-          travel.endDate,
-          new Date(year - 1, 11, 31)
+        travel.endDate,
+        new Date(year - 1, 11, 31)
       );
     } else if (travel.endDate.getFullYear() != year) {
       totalDaysInEEA += differenceInDays(
-          new Date(year , 11, 31),
-          travel.startDate
+        new Date(year, 11, 31),
+        travel.startDate
       );
     } else {
       totalDaysInEEA += differenceInDays(travel.endDate, travel.startDate);
@@ -48,14 +50,18 @@ function totalDaysInEEA(travels: Array<Travel>, year: number): number {
   return totalDaysInEEA;
 }
 
-function getAllYears(travels: Array<Travel>):Set<number>{
-    const years: Array<number> = []
+function getAllYears(travels: Array<Travel>): Set<number> {
+  const years = new Set<number>();
 
-    for(const travel of travels){
-        for(let year = travel.startDate.getFullYear(); year <= travel.endDate.getFullYear(); year++){
-            years.push(year);
-        }
+  for (const travel of travels) {
+    for (
+      let year = travel.startDate.getFullYear();
+      year <= travel.endDate.getFullYear();
+      year++
+    ) {
+      years.add(year);
     }
-    return new Set(years);
-}
+  }
 
+  return years;
+}
