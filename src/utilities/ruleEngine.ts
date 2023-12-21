@@ -79,10 +79,6 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
       t.startDate.getFullYear() === year || t.endDate.getFullYear() === year
   );
 
-  let lastTravelEndDate =
-    travels.filter((t) => t.endDate.getFullYear() < year).pop()?.endDate ||
-    new Date(year - 1, 11, 31);
-
   for (const travel of travelsThisYear) {
     let periodStart =
       travel.startDate.getFullYear() === year
@@ -98,8 +94,6 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
     if (period > MIN_TIME_IN_NORWAY) {
       totalDaysInNorway += period;
     }
-
-    lastTravelEndDate = travel.endDate;
   }
 
   return totalDaysInNorway;
