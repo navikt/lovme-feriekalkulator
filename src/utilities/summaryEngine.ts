@@ -51,7 +51,7 @@ function totalDaysInEEA(travels: Array<Travel>, year: number): number {
 }
 
 function getAllYears(travels: Array<Travel>): Set<number> {
-  const years = new Set<number>();
+  const years: Array<number> = [];
 
   for (const travel of travels) {
     for (
@@ -59,9 +59,8 @@ function getAllYears(travels: Array<Travel>): Set<number> {
       year <= travel.endDate.getFullYear();
       year++
     ) {
-      years.add(year);
+      years.push(year);
     }
   }
-
-  return years;
+  return new Set(years);
 }
