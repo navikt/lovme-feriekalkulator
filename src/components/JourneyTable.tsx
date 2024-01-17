@@ -1,5 +1,11 @@
 import { Table } from "@navikt/ds-react";
-import { format, formatDuration } from "date-fns";
+import {
+  differenceInCalendarDays,
+  format,
+  formatDuration,
+  isLeapYear,
+  parseISO,
+} from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
 import { EditAndDelete } from "./editAndDelete/EditAndDelete";
@@ -63,7 +69,7 @@ const JourneyTable = ({
   const handleDeleteTravel = (id: number) => {
     const updatedData = savedTravels.filter((travel) => travel.id !== id);
     setSavedTravels(updatedData);
-    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData)); 
+    sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   };
 
   function handleEditTravel(
@@ -79,6 +85,29 @@ const JourneyTable = ({
     setSavedTravels(updatedData);
     sessionStorage.setItem("savedTravels", JSON.stringify(updatedData));
   }
+
+  const calculateAccurateDuration = (startDate: Date, endDate: Date) => {
+    let duration = differenceInCalendarDays(endDate, startDate) + 1;
+
+    if (startDate.getFullYear() !== endDate.getFullYear()) {
+      for (
+        let year = startDate.getFullYear();
+        year <= endDate.getFullYear();
+        year++
+      ) {
+        if (isLeapYear(year)) {
+          let feb29 = new Date(year, 1, 29);
+          if (startDate <= feb29 && endDate >= feb29) {
+            duration += 1;
+            break;
+          }
+        }
+      }
+    }
+
+    return formatDuration({ days: duration });
+  };
+
   return (
     <div className="relative ">
       <Table
@@ -118,6 +147,9 @@ const JourneyTable = ({
                 { id, country, startDate, endDate, EEA, purpose, duration },
                 i
               ) => {
+                // Create a travel object from the current iteration
+                const currentTravel = { startDate, endDate, duration };
+
                 return (
                   <Table.Row key={i}>
                     <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
@@ -128,7 +160,10 @@ const JourneyTable = ({
                       {format(new Date(endDate), "dd.MM.yyyy")}
                     </Table.DataCell>
                     <Table.DataCell>
-                      {formatDuration({ days: duration })}
+                      {calculateAccurateDuration(
+                        new Date(startDate),
+                        new Date(endDate)
+                      )}
                     </Table.DataCell>
                     <Table.DataCell>{EEA ? "Ja" : "Nei"}</Table.DataCell>
                     <Table.DataCell>{purpose}</Table.DataCell>

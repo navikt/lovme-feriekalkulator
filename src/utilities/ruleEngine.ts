@@ -3,11 +3,14 @@ import {
   addYears,
   differenceInCalendarDays,
   eachYearOfInterval,
+  isLeapYear,
   setYear,
 } from "date-fns";
 
-const MAX_TRAVEL_LENGTH = 365;
-const MAX_TRAVEL_LENGTH_CONSECUTIVE = 365 / 2;
+const MAX_TRAVEL_LENGTH_STANDARD = 365;
+const MAX_TRAVEL_LENGTH_LEAP_YEAR = 366;
+const MAX_TRAVEL_LENGTH_CONSECUTIVE_STANDARD = 365 / 2;
+const MAX_TRAVEL_LENGTH_CONSECUTIVE_LEAP_YEAR = 366 / 2;
 const MIN_TIME_IN_NORWAY = 7 * 5;
 
 export function getAllRedTravels(travels: Array<Travel>) {
@@ -22,10 +25,10 @@ export function getAllRedTravels(travels: Array<Travel>) {
 
 function maxLengthRule(travels: Array<Travel>, redTravels: Array<Travel>) {
   travels.forEach((travel) => {
-    if (
-      differenceInCalendarDays(travel.endDate, travel.startDate) >=
-      MAX_TRAVEL_LENGTH
-    ) {
+    const maxTravelLength = isLeapYear(travel.startDate)
+      ? MAX_TRAVEL_LENGTH_LEAP_YEAR
+      : MAX_TRAVEL_LENGTH_STANDARD;
+    if (travel.duration > maxTravelLength) {
       redTravels.push(travel);
     }
   });
@@ -35,26 +38,21 @@ function consecutiveYearRule(
   travels: Array<Travel>,
   redTravels: Array<Travel>
 ) {
-  let years = Array.from(
-    new Set(travels.map((t) => t.startDate.getFullYear()).sort())
-  );
+  const years = new Set(travels.map((t) => t.startDate.getFullYear()));
 
-  years.forEach((year, index) => {
-    if (index < years.length - 1) {
-      let nextYear = years[index + 1];
-      let totalDaysAbroadCurrentYear = totalDaysAbroadYear(travels, year);
-      let totalDaysAbroadNextYear = totalDaysAbroadYear(travels, nextYear);
-
-      if (
-        totalDaysAbroadCurrentYear > MAX_TRAVEL_LENGTH_CONSECUTIVE &&
-        totalDaysAbroadNextYear > MAX_TRAVEL_LENGTH_CONSECUTIVE
-      ) {
-        travels.forEach((travel) => {
+  years.forEach((year) => {
+    const maxTravelConsecutive = isLeapYear(new Date(year, 0, 1))
+      ? MAX_TRAVEL_LENGTH_CONSECUTIVE_LEAP_YEAR
+      : MAX_TRAVEL_LENGTH_CONSECUTIVE_STANDARD;
+    if (totalDaysInNorway(travels, year) < maxTravelConsecutive) {
+      if (totalDaysInNorway(travels, year + 1) < maxTravelConsecutive) {
+        travels.forEach((t) => {
           if (
-            travel.startDate.getFullYear() === year ||
-            travel.startDate.getFullYear() === nextYear
+            (!redTravels.includes(t) && t.startDate.getFullYear() === year) ||
+            t.endDate.getFullYear() === year ||
+            t.startDate.getFullYear() === year + 1
           ) {
-            redTravels.push(travel);
+            redTravels.push(t);
           }
         });
       }
@@ -64,33 +62,33 @@ function consecutiveYearRule(
 
 export function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
   let totalDaysAbroad = 0;
+  const nextYear = new Date(year + 1, 0, 1);
 
   for (const travel of travels.filter((t) =>
     eachYearOfInterval({ start: t.startDate, end: t.endDate }).some(
-      (t) => t.getFullYear() == year
+      (y) => y.getFullYear() === year
     )
   )) {
     if (
-      travel.startDate.getFullYear() == year &&
-      travel.endDate.getFullYear() == year
+      travel.startDate.getFullYear() === year &&
+      travel.endDate.getFullYear() === year
     ) {
       totalDaysAbroad += travel.duration;
     } else if (
-      travel.endDate.getFullYear() != year &&
-      travel.startDate.getFullYear() == year
+      travel.endDate.getFullYear() !== year &&
+      travel.startDate.getFullYear() === year
     ) {
-      totalDaysAbroad +=
-        differenceInCalendarDays(new Date(year, 11, 31), travel.startDate) + 1;
+      totalDaysAbroad += differenceInCalendarDays(nextYear, travel.startDate);
     } else if (
-      travel.endDate.getFullYear() == year &&
-      travel.startDate.getFullYear() != year
+      travel.endDate.getFullYear() === year &&
+      travel.startDate.getFullYear() !== year
     ) {
       totalDaysAbroad += differenceInCalendarDays(
         travel.endDate,
         new Date(year, 0, 1)
       );
     } else {
-      totalDaysAbroad = 365;
+      totalDaysAbroad = isLeapYear(new Date(year, 0, 1)) ? 366 : 365;
     }
   }
   return totalDaysAbroad;
@@ -103,11 +101,13 @@ export function totalDaysInNorway(travels: Array<Travel>, year: number) {
     (t) => t.startDate.getFullYear() == year || t.endDate.getFullYear() == year
   );
 
-  let lastTravelEndDate = travels.findLast(
-    (t) => t.startDate.getFullYear() < year
-  )?.endDate;
-
-  lastTravelEndDate == undefined ? (lastTravelEndDate = new Date(0)) : null;
+  let lastTravelEndDate = new Date(0);
+  for (let i = travels.length - 1; i >= 0; i--) {
+    if (travels[i].startDate.getFullYear() < year) {
+      lastTravelEndDate = travels[i].endDate;
+      break;
+    }
+  }
 
   let firstTravelAfterThisYear = travels.find(
     (t) => t.startDate.getFullYear() > year
