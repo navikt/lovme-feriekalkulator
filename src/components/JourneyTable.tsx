@@ -4,7 +4,6 @@ import {
   format,
   formatDuration,
   isLeapYear,
-  parseISO,
 } from "date-fns";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Travel } from "../models/Travel";
@@ -143,15 +142,9 @@ const JourneyTable = ({
         <>
           <Table.Body>
             {sortData.map(
-              (
-                { id, country, startDate, endDate, EEA, purpose, duration },
-                i
-              ) => {
-                // Create a travel object from the current iteration
-                const currentTravel = { startDate, endDate, duration };
-
+              ({ id, country, startDate, endDate, EEA, purpose }, index) => {
                 return (
-                  <Table.Row key={i}>
+                  <Table.Row key={index}>
                     <Table.HeaderCell scope="row">{country}</Table.HeaderCell>
                     <Table.DataCell>
                       {format(new Date(startDate), "dd.MM.yyyy")}
