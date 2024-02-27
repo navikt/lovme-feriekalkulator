@@ -28,7 +28,7 @@ export const SummaryCard = ({
       1 >=
       181;
 
-  const hasWarning = yearlySummary.some(
+  const hasOverallWarning = yearlySummary.some(
     (summary) =>
       !isSingleLongTravel &&
       summary.totalDaysAbroad >= 180 &&
@@ -36,7 +36,7 @@ export const SummaryCard = ({
   );
 
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
-    hasWarning
+    hasOverallWarning
       ? "bg-orange-200"
       : redTravels.length > 0
       ? "bg-red-300"
@@ -63,7 +63,29 @@ export const SummaryCard = ({
           <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
             <p>Oppsummering:</p>
             {yearlySummary.map((summary) => {
-              const showWarning =
+              const iconToShow = hasOverallWarning ? (
+                <Label className="text-orange-600">
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize={25}
+                    title="Advarsel"
+                  />
+                </Label>
+              ) : redTravels.some((t) =>
+                  eachYearOfInterval({
+                    start: t.startDate,
+                    end: t.endDate,
+                  }).some((y) => y.getFullYear() === summary.year)
+                ) ? (
+                <Label className="text-red-500">
+                  <XMarkOctagonFillIcon fontSize={25} title="Advarsel" />
+                </Label>
+              ) : (
+                <Label className="text-green-500">
+                  <CheckmarkCircleFillIcon fontSize={25} title="Alt er godt" />
+                </Label>
+              );
+
+              const shouldShowAlert =
                 !isSingleLongTravel &&
                 summary.totalDaysAbroad >= 180 &&
                 summary.totalDaysAbroad <= 185;
@@ -72,44 +94,16 @@ export const SummaryCard = ({
                 <div key={summary.year}>
                   <div className="flex justify-between font-bold">
                     <h3>{summary.year}</h3>
-                    <p>
-                      {showWarning ? (
-                        <Label className="text-orange-600">
-                          <ExclamationmarkTriangleFillIcon
-                            fontSize={25}
-                            title="Advarsel"
-                          />
-                        </Label>
-                      ) : redTravels.some((t) =>
-                          eachYearOfInterval({
-                            start: t.startDate,
-                            end: t.endDate,
-                          }).some((y) => y.getFullYear() === summary.year)
-                        ) ? (
-                        <Label className="text-red-500">
-                          <XMarkOctagonFillIcon
-                            fontSize={25}
-                            title="Advarsel"
-                          />
-                        </Label>
-                      ) : (
-                        <Label className="text-green-500">
-                          <CheckmarkCircleFillIcon
-                            fontSize={25}
-                            title="Alt er godt"
-                          />
-                        </Label>
-                      )}
-                    </p>
+                    <p>{iconToShow}</p>
                   </div>
 
                   <p>Dager i utlandet: {summary.totalDaysAbroad}</p>
-                  {showWarning ? (
+                  {shouldShowAlert && (
                     <Alert variant="warning">
                       Advarsel: {summary.totalDaysAbroad} dager i utlandet i{" "}
                       {summary.year}. Nærmere kontroll nødvendig.
                     </Alert>
-                  ) : null}
+                  )}
 
                   <p>Dager i Norge: {summary.totalDaysInNorway}</p>
                 </div>
