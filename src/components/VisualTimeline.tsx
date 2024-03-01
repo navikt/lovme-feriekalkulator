@@ -26,9 +26,11 @@ export const VisualTimeline = ({
     )
   ).sort((a, b) => a - b);
 
-  const isSingleLongTravel =
-    data.length === 1 &&
-    differenceInCalendarDays(data[0].endDate, data[0].startDate) + 1 >= 181;
+  const hasMultiplePeriods = data.length > 1;
+  const hasWarningPeriod = data.some((travel) => {
+    const days = differenceInCalendarDays(travel.endDate, travel.startDate) + 1;
+    return days >= 181 && days <= 185;
+  });
 
   return data.length === 0 || years.length === 0 ? null : (
     <Timeline
@@ -52,13 +54,12 @@ export const VisualTimeline = ({
                     travel.endDate.getFullYear() > year)
               )
               .map((travel: Travel, i) => {
-                const isDanger = redTravels.includes(travel);
-                const showWarning =
-                  !isSingleLongTravel &&
-                  differenceInCalendarDays(travel.endDate, travel.startDate) +
-                    1 >=
-                    181 &&
-                  !isDanger;
+                const status =
+                  hasMultiplePeriods && hasWarningPeriod
+                    ? "warning"
+                    : redTravels.includes(travel)
+                    ? "danger"
+                    : "success";
 
                 return (
                   <Timeline.Period
@@ -73,13 +74,11 @@ export const VisualTimeline = ({
                         ? setYear(travel.endDate, 1970)
                         : setYear(travel.endDate, 1971)
                     }
-                    status={
-                      isDanger ? "danger" : showWarning ? "warning" : "success"
-                    }
+                    status={status}
                     icon={
-                      isDanger ? (
+                      status === "danger" ? (
                         <XMarkOctagonIcon title="Danger" />
-                      ) : showWarning ? (
+                      ) : status === "warning" ? (
                         <ExclamationmarkTriangleIcon title="Warning" />
                       ) : (
                         <AirplaneIcon title="Travel" />

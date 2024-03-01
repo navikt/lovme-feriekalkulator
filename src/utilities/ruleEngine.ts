@@ -3,6 +3,7 @@ import {
   addYears,
   differenceInCalendarDays,
   eachYearOfInterval,
+  isLeapYear,
   setYear,
 } from "date-fns";
 
@@ -90,49 +91,26 @@ export function totalDaysAbroadYear(travels: Array<Travel>, year: number) {
 }
 
 export function totalDaysInNorway(travels: Array<Travel>, year: number) {
-  let totalDaysInNorway = 0;
+  const yearLength = isLeapYear(new Date(year, 0, 1)) ? 366 : 365;
+  let totalDaysInNorway = yearLength;
 
-  const travelsThisYear = travels.filter(
-    (t) => t.startDate.getFullYear() == year || t.endDate.getFullYear() == year
-  );
-
-  let lastTravelEndDate = travels.findLast(
-    (t) => t.startDate.getFullYear() < year
-  )?.endDate;
-
-  lastTravelEndDate == undefined ? (lastTravelEndDate = new Date(0)) : null;
-
-  let firstTravelAfterThisYear = travels.find(
-    (t) => t.startDate.getFullYear() > year
-  )?.startDate;
-  console.log(
-    differenceInCalendarDays(new Date(2023, 0, 31), new Date(2023, 0, 1))
-  );
-  for (let i = 0; i < travelsThisYear.length + 2; i++) {
-    let period = differenceInCalendarDays(
-      travelsThisYear[i]?.startDate
-        ? travelsThisYear[i]?.startDate
-        : firstTravelAfterThisYear ?? new Date(year + 10, 0, 1),
-      lastTravelEndDate
-    );
-    if (period > MIN_TIME_IN_NORWAY) {
-      if (lastTravelEndDate < setYear(new Date(0), year)) {
-        totalDaysInNorway += differenceInCalendarDays(
-          travelsThisYear[i]?.startDate ?? new Date(year + 1, 0, 1),
-          new Date(year, 0, 1)
-        );
-      } else {
-        totalDaysInNorway += differenceInCalendarDays(
-          travelsThisYear[i]?.startDate ?? new Date(year + 1, 0, 1),
-          lastTravelEndDate.getFullYear() == year
-            ? lastTravelEndDate
-            : new Date(year + 1, 0, 1)
-        );
-      }
+  for (const travel of travels) {
+    if (
+      travel.startDate.getFullYear() <= year &&
+      travel.endDate.getFullYear() >= year
+    ) {
+      const abroadStart =
+        travel.startDate.getFullYear() < year
+          ? new Date(year, 0, 1)
+          : travel.startDate;
+      const abroadEnd =
+        travel.endDate.getFullYear() > year
+          ? new Date(year + 1, 0, 1)
+          : travel.endDate;
+      totalDaysInNorway -= differenceInCalendarDays(abroadEnd, abroadStart) + 1;
     }
-    lastTravelEndDate = travelsThisYear[i]?.endDate ?? new Date(year + 1, 0, 1);
   }
-  return totalDaysInNorway;
+  return Math.max(totalDaysInNorway, 0);
 }
 
 function registrationRule(travels: Array<Travel>, redTravels: Array<Travel>) {
