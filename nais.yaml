@@ -30,4 +30,4 @@ spec:
     max: 1
     cpuThresholdPercentage: 80
   ingresses:
-    - https://tellme-fra-lovme.ekstern.dev.nav.no
+    - https://tellme-fra-lovme.intern.dev.nav.no
