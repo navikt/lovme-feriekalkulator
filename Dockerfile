@@ -1,4 +1,4 @@
-FROM node:18
+FROM cgr.dev/chainguard/node:latest
 
 COPY . .
 
