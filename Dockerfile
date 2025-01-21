@@ -1,7 +1,11 @@
 FROM gcr.io/distroless/nodejs22-debian12
+WORKDIR /app
 
-COPY . .
+COPY .next/standalone /app
+COPY .next/static /app/.next/static
+COPY public /app/public
 
 EXPOSE 3000
 
-CMD ["./node_modules/.bin/next", "start"]
+ENV NODE_ENV=production
+CMD ["server.js"]
