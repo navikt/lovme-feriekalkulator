@@ -1,4 +1,4 @@
-name: Deploy to mock-ekstern
+name: Deploy to NAIS
 run-name: Deploy '${{ github.ref_name }}' to 'mock'
 
 on:

@@ -3,7 +3,7 @@ import { VisualTimeline } from "@/components/VisualTimeline";
 import { useEffect, useState } from "react";
 import JourneyTable from "@/components/JourneyTable";
 import { Travel } from "@/models/Travel";
-import SummaryCard from "@/components/SummaryCard";
+import { SummaryCard } from "@/components/SummaryCard";
 import { setDefaultOptions } from "date-fns";
 import { nb } from "date-fns/locale";
 import { getAllRedTravels } from "@/utilities/ruleEngine";
@@ -43,10 +43,7 @@ export default function Home() {
       </div>
 
       <div className="w-3/4 mx-auto p-5">
-        <VisualTimeline
-          data={savedTravels}
-          redTravels={redTravels}
-        ></VisualTimeline>
+        <VisualTimeline data={savedTravels} redTravels={redTravels} />
       </div>
     </div>
   );

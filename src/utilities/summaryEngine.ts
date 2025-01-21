@@ -1,6 +1,6 @@
 import { Travel } from "@/models/Travel";
 import { totalDaysAbroadYear, totalDaysInNorway } from "./ruleEngine";
-import { differenceInDays, isLeapYear } from "date-fns";
+import { differenceInDays } from "date-fns";
 import { YearlySummary } from "@/models/YearlySummary";
 
 export function getYearlySummaries(
@@ -25,25 +25,28 @@ export function getYearlySummaries(
 
 function totalDaysInEEA(travels: Array<Travel>, year: number): number {
   let totalDaysInEEA = 0;
-  const yearStart = new Date(year, 0, 1);
-  const yearEnd = isLeapYear(yearStart)
-    ? new Date(year + 1, 0, 1)
-    : new Date(year, 11, 31);
-
-  for (const travel of travels.filter(
+  const travelsThisYear = travels.filter(
     (t) =>
-      (t.startDate.getFullYear() === year ||
-        t.endDate.getFullYear() === year) &&
-      t.EEA
-  )) {
-    if (travel.startDate.getFullYear() !== year) {
-      totalDaysInEEA += differenceInDays(travel.endDate, yearStart);
-    } else if (travel.endDate.getFullYear() !== year) {
-      totalDaysInEEA += differenceInDays(yearEnd, travel.startDate);
+      (t.startDate.getFullYear() == year && t.EEA) ||
+      (t.endDate.getFullYear() == year && t.EEA)
+  );
+
+  for (const travel of travelsThisYear) {
+    if (travel.startDate.getFullYear() != year) {
+      totalDaysInEEA += differenceInDays(
+        travel.endDate,
+        new Date(year - 1, 11, 31)
+      );
+    } else if (travel.endDate.getFullYear() != year) {
+      totalDaysInEEA += differenceInDays(
+        new Date(year, 11, 31),
+        travel.startDate
+      );
     } else {
       totalDaysInEEA += differenceInDays(travel.endDate, travel.startDate);
     }
   }
+
   return totalDaysInEEA;
 }
 

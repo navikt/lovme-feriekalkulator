@@ -4,12 +4,13 @@ import {
   ExternalLinkIcon,
   SunIcon,
   XMarkOctagonFillIcon,
+  ExclamationmarkTriangleFillIcon,
 } from "@navikt/aksel-icons";
 import { ExpansionCard, Label, Link, LinkPanel, Alert } from "@navikt/ds-react";
 import { getYearlySummaries } from "@/utilities/summaryEngine";
-import { eachYearOfInterval } from "date-fns";
+import { differenceInCalendarDays, eachYearOfInterval } from "date-fns";
 
-const SummaryCard = ({
+export const SummaryCard = ({
   savedTravels,
   redTravels,
 }: {
@@ -18,8 +19,28 @@ const SummaryCard = ({
 }) => {
   const yearlySummary = getYearlySummaries(savedTravels);
 
+  const isSingleLongTravel =
+    savedTravels.length === 1 &&
+    differenceInCalendarDays(
+      savedTravels[0].endDate,
+      savedTravels[0].startDate
+    ) +
+      1 >=
+      181;
+
+  const hasOverallWarning = yearlySummary.some(
+    (summary) =>
+      !isSingleLongTravel &&
+      summary.totalDaysAbroad >= 180 &&
+      summary.totalDaysAbroad <= 185
+  );
+
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
-    redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
+    hasOverallWarning
+      ? "bg-orange-200"
+      : redTravels.length > 0
+      ? "bg-red-300"
+      : "bg-green-200"
   }`;
 
   return (
@@ -41,53 +62,53 @@ const SummaryCard = ({
 
           <ExpansionCard.Content className="overflow-auto max-h-[27.8rem]">
             <p>Oppsummering:</p>
-            <div className="leading-[0.5rem]">
-              <br />
-            </div>
-            {yearlySummary.map((summary) => (
-              <div key={summary.year}>
-                <div className="flex justify-between font-bold">
-                  <h3>{summary.year}</h3>
-                  <p>
-                    {redTravels.some((t) =>
-                      eachYearOfInterval({
-                        start: t.startDate,
-                        end: t.endDate,
-                      }).some((y) => y.getFullYear() === summary.year)
-                    ) ? (
-                      <Label className="text-red-500">
-                        {" "}
-                        <XMarkOctagonFillIcon
-                          fontSize={25}
-                          title="a11y-title"
-                        />{" "}
-                      </Label>
-                    ) : (
-                      <Label className="text-green-500">
-                        {" "}
-                        <CheckmarkCircleFillIcon
-                          fontSize={25}
-                          title="a11y-title"
-                        />
-                      </Label>
-                    )}
-                  </p>
-                </div>
+            {yearlySummary.map((summary) => {
+              const iconToShow = hasOverallWarning ? (
+                <Label className="text-orange-600">
+                  <ExclamationmarkTriangleFillIcon
+                    fontSize={25}
+                    title="Advarsel"
+                  />
+                </Label>
+              ) : redTravels.some((t) =>
+                  eachYearOfInterval({
+                    start: t.startDate,
+                    end: t.endDate,
+                  }).some((y) => y.getFullYear() === summary.year)
+                ) ? (
+                <Label className="text-red-500">
+                  <XMarkOctagonFillIcon fontSize={25} title="Advarsel" />
+                </Label>
+              ) : (
+                <Label className="text-green-500">
+                  <CheckmarkCircleFillIcon fontSize={25} title="Alt er godt" />
+                </Label>
+              );
 
-                <p>Dager i utlandet: {summary.totalDaysAbroad}</p>
-                {summary.totalDaysAbroad >= 180 &&
-                summary.totalDaysAbroad <= 185 ? (
-                  <Alert variant="warning">
-                    Advarsel: {summary.totalDaysAbroad} dager i utlandet i{" "}
-                    {summary.year}. Nærmere kontroll nødvendig.
-                  </Alert>
-                ) : null}
-                <p>Dager i Norge: {summary.totalDaysInNorway}</p>
-                <div className="leading-4">
-                  <br />
+              const shouldShowAlert =
+                !isSingleLongTravel &&
+                summary.totalDaysAbroad >= 180 &&
+                summary.totalDaysAbroad <= 185;
+
+              return (
+                <div key={summary.year}>
+                  <div className="flex justify-between font-bold">
+                    <h3>{summary.year}</h3>
+                    <p>{iconToShow}</p>
+                  </div>
+
+                  <p>Dager i utlandet: {summary.totalDaysAbroad}</p>
+                  {shouldShowAlert && (
+                    <Alert variant="warning">
+                      Advarsel: {summary.totalDaysAbroad} dager i utlandet i{" "}
+                      {summary.year}. Nærmere kontroll nødvendig.
+                    </Alert>
+                  )}
+
+                  <p>Dager i Norge: {summary.totalDaysInNorway}</p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             <div className="">
               <Link href="https://www.nav.no/no/person/flere-tema/arbeid-og-opphold-i-norge/relatert-informasjon/medlemskap-i-folketrygden">
                 Mer informasjon om medlemskap i folketrygden (nav.no)
@@ -125,5 +146,3 @@ const SummaryCard = ({
     </div>
   );
 };
-
-export default SummaryCard;
