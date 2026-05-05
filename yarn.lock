@@ -3984,9 +3984,9 @@ lodash.merge@^4.6.2:
   integrity sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==
 
 lodash@^4.17.21:
-  version "4.17.23"
-  resolved "https://registry.npmjs.org/lodash/-/lodash-4.17.23.tgz"
-  integrity sha512-PNyZAXBhFhOlXbWFg/zm4RkiNg/iN2MKIV4M2SoqnxQJ3CQnnqDuEVFrnMIHHOqFdN7K7qj3NOWvsP6z9TiLw==
+  version "4.18.1"
+  resolved "https://registry.npmjs.org/lodash/-/lodash-4.18.1.tgz"
+  integrity sha512-mKnGUMfBEqOLMFMcABEfkBLFXBQe21X6j/1bkLuoynY79SnPBJYllxArFMFKHNeGEqMRjBzisYkpjZQoVYbOQ==
 
 loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
