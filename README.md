@@ -1,13 +1,10 @@
 # TellMe-Oppholdskalkulator
 
-
 ## Innholdsfortegnelse
 
 - [Bruk](#bruk)
 - [Installere avhengigheter](#installere-avhengigheter)
 - [Start opp applikasjonen](#start-opp-applikasjonen)
-- [Struktur](#struktur)
-- [Kildekode](#kildekode)
 - [Oversikt](#oversikt)
 - [Henvendelser](#henvendelser)
 - [Languages and Tools](#languages-and-tools)
@@ -16,85 +13,16 @@
 
 ## Bruk
 
-#### Installere avhengigheter
+### Installere avhengigheter
 
 ```bash
-yarn install #or
-npm install
+pnpm install
 ```
 
-#### Start opp applikasjonen
+### Start opp applikasjonen
 
 ```bash
-yarn run dev #or
-npm run dev
-```
-
-## Struktur
-
-### Kildekode
-
-```
-.
-├── Dockerfile
-├── README.md
-├── docs
-│   ├── Bugs.md
-│   └── Regler.md
-├── jest.config.ts
-├── nais.yaml
-├── next-env.d.ts
-├── next.config.js
-├── package.json
-├── postcss.config.js
-├── public
-│   ├── favicon.ico
-│   ├── next.svg
-│   └── vercel.svg
-├── src
-│   ├── components
-│   │   ├── CountryChooser.tsx
-│   │   ├── CustomDatePicker.tsx
-│   │   ├── JourneyTable.tsx
-│   │   ├── Navbar.tsx
-│   │   ├── Purpose.tsx
-│   │   ├── SummaryCard.tsx
-│   │   ├── TravelForm.tsx
-│   │   ├── VisualTimeline.tsx
-│   │   └── editAndDelete
-│   │       ├── DeleteModal.tsx
-│   │       ├── EditAndDelete.tsx
-│   │       ├── EditModal.tsx
-│   │       └── EditTravel.tsx
-│   ├── models
-│   │   ├── Country.tsx
-│   │   ├── TotalDaysAbroadAndTravel.ts
-│   │   ├── Travel.tsx
-│   │   └── YearlySummary.ts
-│   ├── pages
-│   │   ├── _app.tsx
-│   │   ├── _document.tsx
-│   │   ├── api
-│   │   │   ├── isAlive.ts
-│   │   │   └── isReady.ts
-│   │   └── index.tsx
-│   ├── resources
-│   │   ├── en
-│   │   │   └── world.json
-│   │   ├── eøs.json
-│   │   └── no
-│   │       └── world.json
-│   ├── styles
-│   │   └── globals.css
-│   └── utilities
-│       ├── ruleEngine.ts
-│       └── summaryEngine.ts
-├── tailwind.config.js
-├── tests
-│   └── ruleEngineTests.test.ts
-├── tsconfig.json
-└── yarn.lock
-
+pnpm dev
 ```
 
 ## Oversikt
@@ -111,11 +39,11 @@ Visjon:
 ## Henvendelser
 
 Spørsmål knyttet til koden eller prosjektet kan stilles som issues her på GitHub.  
-Interne henvendelser kan sendes via Slack i kanalen #team-ferie-værsågod.
+Interne henvendelser kan sendes via Slack i kanalen #lovme-værsågod
 
 ## Languages and Tools
 
 ![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
-![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+![pnpm](https://img.shields.io/badge/pnpm-%234a4a4a.svg?style=for-the-badge&logo=pnpm&logoColor=f69220)
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
