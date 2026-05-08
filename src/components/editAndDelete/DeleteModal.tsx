@@ -36,16 +36,16 @@ export const DeleteModal = ({
         </div>
         <div className="flex flex-row items-start gap-5 place-content-center">
           <Button
-            variant="danger"
+            data-color="danger"
+            variant="primary"
             onClick={() => {
               deleteFunction();
               setOpen(false);
-            }}
-          >
+            }}>
             {yesButton ?? "Ja"}
           </Button>
 
-          <Button variant="secondary-neutral" onClick={() => setOpen(false)}>
+          <Button data-color="neutral" variant="secondary" onClick={() => setOpen(false)}>
             {noButton ?? "Nei"}
           </Button>
         </div>

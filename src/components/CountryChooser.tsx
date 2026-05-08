@@ -61,10 +61,8 @@ export const CountryChooser = ({
             handleToggleSelected(filteredOptions[0]);
           }
         }}
-        onChange={(event) => {
-          if (event) {
-            setValue(event.target.value);
-          }
+        onChange={(value) => {
+          setValue(value ?? "");
         }}
         options={countryOptions}
         selectedOptions={[chosenCountry]}

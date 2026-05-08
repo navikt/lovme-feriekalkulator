@@ -115,7 +115,7 @@ const JourneyTable = ({
         sort={sort}
         onSortChange={(sortKey) => handleSort(sortKey as keyof Travel)}
       >
-        <Table.Header className="sticky top-0 z-10 bg-gray-50">
+        <Table.Header className="sticky top-0 z-10 bg-ax-neutral-100">
           <Table.Row>
             <Table.ColumnHeader className="w-48" sortKey="country" sortable>
               Land

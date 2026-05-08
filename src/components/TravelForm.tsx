@@ -1,4 +1,4 @@
-import { Button, Heading, Panel } from "@navikt/ds-react";
+import { Box, Button, Heading } from "@navikt/ds-react";
 import { differenceInCalendarDays } from "date-fns";
 import ConfettiExplosion from "react-confetti-explosion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
@@ -114,10 +114,17 @@ export const TravelForm = ({
 
   return (
     <div>
-      <Panel className="relative rounded-lg h-full border-gray-400">
+      <Box
+        background="default"
+        borderRadius="12"
+        padding="space-24"
+        borderColor="neutral"
+        borderWidth="1"
+        className="relative h-full"
+      >
         <div
           id="icon-container"
-          className="before:absolute before:-top-[2rem] before:rounded-full before:bg-orange-200 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
+          className="before:absolute before:-top-[2rem] before:rounded-full before:bg-ax-warning-300 before:h-16 before:w-16 my-0 mx-auto text-center flex items-center justify-center"
         >
           <ParasolBeachIcon
             onClick={() => handleConfettiExplosion()}
@@ -160,18 +167,18 @@ export const TravelForm = ({
               </Button>
               {savedTravels.length > 0 ? (
                 <Button
+                  data-color="danger"
                   className="basis-2/5"
-                  variant="danger"
+                  variant="primary"
                   onClick={() => setOpenDeleteModal(true)}
-                  type="button"
-                >
+                  type="button">
                   Slett tabelldata
                 </Button>
               ) : null}
             </div>
           </form>
         </div>
-      </Panel>
+      </Box>
       {openDeleteModal ? (
         <DeleteModal
           open={openDeleteModal}

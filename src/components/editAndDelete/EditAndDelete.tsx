@@ -4,7 +4,6 @@ import {
   TrashFillIcon,
 } from "@navikt/aksel-icons";
 import { Dropdown } from "@navikt/ds-react";
-import "@navikt/ds-tokens";
 import { DeleteModal } from "./DeleteModal";
 import { useState } from "react";
 import { Travel } from "@/models/Travel";

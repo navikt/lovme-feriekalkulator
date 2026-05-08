@@ -32,7 +32,7 @@ export const EditModal = ({
       <div id="icon-container" className="top-8 justify-center relative flex">
         <DocPencilIcon
           title="a11y-title"
-          className="bg-orange-200 rounded-full w-16 h-16 p-1 top-0 "
+          className="bg-ax-warning-300 rounded-full w-16 h-16 p-1 top-0 "
         />
       </div>
       <EditTravel
