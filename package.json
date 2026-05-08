@@ -10,7 +10,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "^5.5.0",
+    "@navikt/aksel-icons": "^8.10.3",
     "@navikt/ds-css": "^5.5.0",
     "@navikt/ds-react": "^5.5.0",
     "@navikt/ds-tailwind": "^5.5.0",
