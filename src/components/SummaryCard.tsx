@@ -19,11 +19,11 @@ const SummaryCard = ({
   const yearlySummary = getYearlySummaries(savedTravels);
 
   const sunIconClass = `w-16 h-16 p-1 top-0 rounded-full ${
-    redTravels.length > 0 ? "bg-red-300" : "bg-green-200"
+    redTravels.length > 0 ? "bg-ax-danger-400" : "bg-ax-success-300"
   }`;
 
   return (
-    <div className="subtle-card">
+    <div>
       {savedTravels.length > 0 ? (
         <ExpansionCard open={true} aria-label="Kort med oppsummering">
           <ExpansionCard.Header>
@@ -46,7 +46,7 @@ const SummaryCard = ({
             </div>
             {yearlySummary.map((summary) => (
               <div key={summary.year}>
-                <div className="flex justify-between font-bold">
+                <div className="flex justify-between font-ax-bold">
                   <h3>{summary.year}</h3>
                   <p>
                     {redTravels.some((t) =>
@@ -55,7 +55,7 @@ const SummaryCard = ({
                         end: t.endDate,
                       }).some((y) => y.getFullYear() === summary.year)
                     ) ? (
-                      <Label className="text-red-500">
+                      <Label className="text-ax-danger-600">
                         {" "}
                         <XMarkOctagonFillIcon
                           fontSize={25}
@@ -63,7 +63,7 @@ const SummaryCard = ({
                         />{" "}
                       </Label>
                     ) : (
-                      <Label className="text-green-500">
+                      <Label className="text-ax-success-600">
                         {" "}
                         <CheckmarkCircleFillIcon
                           fontSize={25}

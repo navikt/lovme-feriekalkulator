@@ -22,21 +22,21 @@ export default function Home() {
       <title>TellMe</title>
       <div className="p-7 py-12 bg-white ">
         <div className="w-full max-w-[1900px] grid grid-cols-12 m-auto gap-4">
-          <div className="lg:mx-auto w-full col-span-12 lg:col-span-3">
+          <div className="ax-lg:mx-auto w-full col-span-12 ax-lg:col-span-3">
             <TravelForm
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
 
-          <div className="border border-gray-400 justify-self-stretch rounded-lg max-h-[36.4rem] col-span-12 lg:col-span-6 max-w-[60rem] overflow-auto">
+          <div className="border border-ax-neutral-500 justify-self-stretch rounded-lg max-h-[36.4rem] col-span-12 ax-lg:col-span-6 max-w-[60rem] overflow-auto">
             <JourneyTable
               savedTravels={savedTravels}
               setSavedTravels={setSavedTravels}
             />
           </div>
 
-          <div className="justify-self-start w-full col-span-12 lg:col-span-3 md:max-w-[500px]">
+          <div className="justify-self-start w-full col-span-12 ax-lg:col-span-3 ax-md:max-w-[500px]">
             <SummaryCard savedTravels={savedTravels} redTravels={redTravels} />
           </div>
         </div>

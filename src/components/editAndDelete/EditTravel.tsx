@@ -95,13 +95,13 @@ export const EditTravel = ({
             Lagre endringer
           </Button>
           <Button
+            data-color="danger"
             className="basis-1/3"
-            variant="danger"
+            variant="primary"
             onClick={() => {
               editFunction(travelToEdit, savedTravels, indexToPutTravel);
               setOpen(false);
-            }}
-          >
+            }}>
             Avbryt
           </Button>
         </div>
