@@ -31,14 +31,14 @@ jobs:
         run: pnpm test --runInBand
       - name: Build
         run: pnpm build
-      - uses: nais/docker-build-push@dd7421d5068057a020ca46ead966c26190c516b1 # ratchet:nais/docker-build-push@v0
+      - uses: nais/docker-build-push@d3a1f7e259ecc381a50435e1d4add9059429ebd7 # ratchet:nais/docker-build-push@v0
         id: docker-push
         with:
           team: medlemskap
           dockerfile: Dockerfile
           identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
-      - uses: nais/deploy/actions/deploy@1064e26587ab2794266a35f477387e561899a7ef # ratchet:nais/deploy/actions/deploy@v2
+      - uses: nais/deploy/actions/deploy@7b60caaded00332e9aa117a8342daa0876851dfe # ratchet:nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
           RESOURCE: nais.yaml
