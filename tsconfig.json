@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "rootDir": ".",
+    "types": ["node", "jest"],
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
