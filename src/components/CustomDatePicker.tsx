@@ -15,6 +15,10 @@ interface DateRange {
   to: Date;
 }
 
+export interface CustomDatePickerHandle {
+  reset: () => void;
+}
+
 interface CustomDatePickerProps {
   startDate: Date | undefined;
   endDate: Date | undefined;
@@ -26,7 +30,7 @@ interface CustomDatePickerProps {
   endDateError: boolean;
 }
 
-export const CustomDatePicker = forwardRef(function Test(
+export const CustomDatePicker = forwardRef<CustomDatePickerHandle, CustomDatePickerProps>(function Test(
   {
     startDate,
     endDate,
