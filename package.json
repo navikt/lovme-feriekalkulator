@@ -24,7 +24,7 @@
     "autoprefixer": "10.6.2",
     "date-fns": "^4.4.0",
     "eslint": "8.57.1",
-    "eslint-config-next": "15.5.28",
+    "eslint-config-next": "15.5.29",
     "jsdom": "^31.0.0",
     "next": "16.4.5",
     "postcss": "8.5.32",
