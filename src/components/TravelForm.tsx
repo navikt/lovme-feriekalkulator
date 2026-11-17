@@ -3,7 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import ConfettiExplosion from "react-confetti-explosion";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { Travel } from "../models/Travel";
-import { CustomDatePicker } from "./CustomDatePicker";
+import { CustomDatePicker, type CustomDatePickerHandle } from "./CustomDatePicker";
 import { Purpose } from "./Purpose";
 import { CountryChooser } from "./CountryChooser";
 import { ParasolBeachIcon } from "@navikt/aksel-icons";
@@ -27,7 +27,7 @@ export const TravelForm = ({
   const [endDateError, setEndDateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [isExplodingConfetti, setIsExplodingConfetti] = useState(false);
-  const datePickerRef = useRef<any>();
+  const datePickerRef = useRef<CustomDatePickerHandle>(null);
 
   useEffect(() => {
     const dataString = sessionStorage.getItem("savedTravels");
@@ -95,9 +95,7 @@ export const TravelForm = ({
     setEndDate(undefined);
     setEEA(false);
     setPurpose("Ferie");
-    if (datePickerRef.current && datePickerRef.current.reset) {
-      datePickerRef.current.reset();
-    }
+    datePickerRef.current?.reset();
   };
 
   const handleDeleteAll = () => {
